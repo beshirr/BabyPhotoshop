@@ -4,6 +4,9 @@
 using namespace std;
 
 
+bool input_validity(){};
+
+
 void save(){};
 
 
