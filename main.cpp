@@ -52,22 +52,53 @@ void blur(){};
 
 int main(){
 
+    cout << "Welcome to BabyPhotoshop" << endl << endl;
     string menu;
 
     while (true){
         // Program Menu
-        cout << "Welcome to BabyPhotoshop" << endl << endl;
         cout << "1- Load an image (1)" << endl;
-        cout << "2- exit (-1)" << endl << endl;
+        cout << "2- exit (-1)" << endl;
+        cout << "->";
 
         cin >> menu;
-
+        cout << endl;
 
         if (menu == "-1"){
+            cout << "Goodbye!" << endl;
             break;
         }
 
         else if (menu == "1"){
+            string fileName;
+
+            cout << "Enter the image name" << endl;
+            cout << "->";
+            cin >> fileName;
+
+            Image image(fileName);
+
+            cout << "Choose a filter: " << endl;
+            cout << "1- Invert" << endl;
+            cout << "2- Rotate" << endl;
+
+
+            char filter;
+            cin >> filter;
+
+            switch(filter){
+
+                case '1':
+                    invert();
+                    break;
+
+                case '2':
+                    rotate();
+                    break;
+
+                default:
+                    cout << "Invalid choice, try again." << endl << endl;
+            }
 
         }
 
