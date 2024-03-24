@@ -92,6 +92,9 @@ int main(){
             cout << "Choose a filter: " << endl;
             cout << "1- Invert" << endl;
             cout << "2- Rotate" << endl;
+            cout << "3- " << endl;
+            cout << "4- " << endl;
+            cout << "5- " << endl;
 
 
             char filter;
@@ -106,6 +109,19 @@ int main(){
                 case '2':
                     rotate();
                     break;
+
+                case '3':
+
+                    break;
+
+                case '4':
+
+                    break;
+
+                case '5':
+
+                    break;
+
 
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
