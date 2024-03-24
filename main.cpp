@@ -85,7 +85,6 @@ int main(){
                 }
                 catch (...){
 
-                    cin >> fileName;
                 }
             }
 
