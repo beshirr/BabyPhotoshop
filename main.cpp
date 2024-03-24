@@ -72,12 +72,24 @@ int main(){
         else if (menu == "1"){
             string fileName;
 
-            cout << "Enter the image name" << endl;
-            cout << "->";
-            cin >> fileName;
+            while (true){
+                try{
+                    cout << "Enter the image name" << endl;
+                    cout << "->";
+                    cin >> fileName;
 
-            Image image(fileName);
+                    Image image(fileName);
 
+                    break;
+
+                }
+                catch (...){
+
+                    cin >> fileName;
+                }
+            }
+
+            cout << endl;
             cout << "Choose a filter: " << endl;
             cout << "1- Invert" << endl;
             cout << "2- Rotate" << endl;
