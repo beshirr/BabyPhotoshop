@@ -55,6 +55,8 @@ int main(){
     cout << "Welcome to BabyPhotoshop" << endl << endl;
     string menu;
 
+    Image image;
+
     while (true){
         // Program Menu
         cout << "1- Load an image (1)" << endl;
@@ -78,7 +80,7 @@ int main(){
                     cout << "->";
                     cin >> fileName;
 
-                    Image image(fileName);
+                    image.loadNewImage(fileName);
 
                     break;
 
