@@ -1,4 +1,5 @@
 # include <bits/stdc++.h>
+# include <cmath>
 # include "Image_Class.h"
 
 using namespace std;
@@ -28,7 +29,7 @@ void grey_scale(Image image){
     }
 
     string newFileName;
-    cout << "please enter the filtered image name:";
+    cout << "please enter the filtered image name: ";
     cin >> newFileName;
     image.saveImage(newFileName);
 }
@@ -49,13 +50,70 @@ void invert(Image image){
     }
 
     string newFileName;
-    cout << "please enter the filtered image name:";
+    cout << "please enter the filtered image name: ";
     cin >> newFileName;
     image.saveImage(newFileName);
 };
 
 
-void merge(){};
+void merger(Image image){
+
+    int counter = 0;
+    string mergeFileName;
+    cout << "please enter the name of the image you want to merge: ";
+    cin >> mergeFileName;
+    Image mergeImage(mergeFileName);
+    if ((image.width == mergeImage.width) and (image.height == mergeImage.height)){
+        Image mergedImage(image.width, image.height);
+        for (int i = 0; i < mergedImage.width; ++i) {
+            for (int j = 0; j < mergedImage.height; ++j) {
+                if (counter % 2 == 0){
+                    mergedImage(i, j, 0) = image(i, j, 0);
+                    mergedImage(i, j, 1) = image(i, j, 1);
+                    mergedImage(i, j, 2) = image(i, j, 2);
+                    counter++;
+                }
+                else{
+                    mergedImage(i, j, 0) = mergeImage(i, j, 0);
+                    mergedImage(i, j, 1) = mergeImage(i, j, 1);
+                    mergedImage(i, j, 2) = mergeImage(i, j, 2);
+                    counter++;
+                }
+            }
+        }
+        string newFileName;
+        cout << "please enter the filtered image name: ";
+        cin >> newFileName;
+        mergedImage.saveImage(newFileName);
+        counter = 0;
+    }
+    else{
+        Image mergedImage(min(image.width , mergeImage.width), min(image.height , mergeImage.height));
+        for (int i = 0; i < mergedImage.width; ++i) {
+            for (int j = 0; j < mergedImage.height; ++j) {
+                if (counter % 2 == 0){
+                    mergedImage(i, j, 0) = image(i, j, 0);
+                    mergedImage(i, j, 1) = image(i, j, 1);
+                    mergedImage(i, j, 2) = image(i, j, 2);
+                    counter++;
+                }
+                else{
+                    mergedImage(i, j, 0) = mergeImage(i, j, 0);
+                    mergedImage(i, j, 1) = mergeImage(i, j, 1);
+                    mergedImage(i, j, 2) = mergeImage(i, j, 2);
+                    counter++;
+                }
+            }
+        }
+        string newFileName;
+        cout << "please enter the filtered image name: ";
+        cin >> newFileName;
+        mergedImage.saveImage(newFileName);
+        counter = 0;
+    }
+
+
+};
 
 
 void flip(){};
