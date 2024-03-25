@@ -13,7 +13,27 @@ void save(){};
 void load(){};
 
 
-void grey_scale(){};
+void grey_scale(Image image){
+
+    for (int i = 0; i < image.width; i++)
+    {
+        for (int j = 0; j < image.height; j++)
+        {
+            int avg = (image(i, j, 0) + image(i, j, 1) + image(i, j, 2)) / 3;
+            image(i, j, 0) = avg;
+            image(i, j, 1) = avg;
+            image(i, j, 2) = avg;
+        }
+
+    }
+
+    string newFileName;
+    cout << "please enter the filtered image name: ";
+    cin >> newFileName;
+    image.saveImage(newFileName);
+
+
+}
 
 
 void black_and_white(){};
@@ -94,7 +114,7 @@ int main(){
             cout << "Choose a filter: " << endl;
             cout << "1- Invert" << endl;
             cout << "2- Rotate" << endl;
-            cout << "3- " << endl;
+            cout << "3- Gray_Scale" << endl;
             cout << "4- " << endl;
             cout << "5- " << endl;
 
@@ -113,7 +133,7 @@ int main(){
                     break;
 
                 case '3':
-
+                    grey_scale(image);
                     break;
 
                 case '4':
