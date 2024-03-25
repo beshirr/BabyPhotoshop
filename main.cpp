@@ -82,7 +82,36 @@ void invert(Image image){
 void merge(){};
 
 
-void flip(){};
+void flip(Image image){
+    string choice;
+    cout << "Please select:\n1 - Horizontal flip\n2 - Vertical flip\nEnter your choice: ";
+    cin >> choice;
+
+    if (choice == "1") {
+        for (int i = 0; i < image.width / 2; ++i) {
+            for (int j = 0; j < image.height; ++j) {
+                for (int k = 0; k < 3; ++k) {
+                    swap(image(i, j, k), image(image.width - i - 1, j, k));
+                }
+            }
+        }
+    }
+    else if (choice == "2") {
+        for (int i = 0; i < image.width; ++i) {
+            for (int j = 0; j < image.height / 2; ++j) {
+                for (int k = 0; k < 3; ++k) {
+                    swap(image(i, j, k), image(i, image.height - j - 1, k));
+                }
+            }
+        }
+    }
+
+    string newFileName;
+    cout << "Please enter the filtered image name: ";
+    cin >> newFileName;
+    image.saveImage(newFileName);
+}
+
 
 
 void rotate(Image image){
@@ -155,7 +184,7 @@ int main(){
             cout << "2- Rotate" << endl;
             cout << "3- Gray_Scale" << endl;
             cout << "4- Black and white" << endl;
-            cout << "5- " << endl;
+            cout << "5- Flip" << endl;
 
 
             char filter;
@@ -180,7 +209,7 @@ int main(){
                     break;
 
                 case '5':
-
+                    flip(image);
                     break;
 
 
