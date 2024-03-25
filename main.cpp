@@ -19,7 +19,7 @@ void grey_scale(Image image){
         for (int j = 0; j < image.height; j++){
 
             int avg = (image(i, j, 0) + image(i, j, 1) +
-                    image(i, j, 2)) / 3;
+                       image(i, j, 2)) / 3;
             image(i, j, 0) = avg;
             image(i, j, 1) = avg;
             image(i, j, 2) = avg;
@@ -34,7 +34,31 @@ void grey_scale(Image image){
 }
 
 
-void black_and_white(){};
+void black_and_white(Image pic) {
+    for (int i = 0; i < pic.width; ++i) {
+        for (int j = 0; j < pic.height; ++j) {
+            unsigned int avg = 0;
+            for (int k = 0; k < 3; ++k) {
+                avg += pic(i, j, k);
+            }
+            avg /= 3;
+            int y;
+            if (avg < 127)
+                y = 0;
+            else
+                y = 255;
+            for (int k = 0; k < 3; ++k) {
+                pic(i, j, k) = y;
+            }
+        }
+    }
+    string newFileName;
+    cout << "Please enter the filtered image name: ";
+    cin >> newFileName;
+    pic.saveImage(newFileName);
+    cout << "Done well" << endl;
+}
+
 
 
 void invert(Image image){
@@ -52,7 +76,7 @@ void invert(Image image){
     cout << "please enter the filtered image name:";
     cin >> newFileName;
     image.saveImage(newFileName);
-};
+}
 
 
 void merge(){};
@@ -130,7 +154,7 @@ int main(){
             cout << "1- Invert" << endl;
             cout << "2- Rotate" << endl;
             cout << "3- Gray_Scale" << endl;
-            cout << "4- " << endl;
+            cout << "4- Black and white" << endl;
             cout << "5- " << endl;
 
 
@@ -152,7 +176,7 @@ int main(){
                     break;
 
                 case '4':
-
+                    black_and_white(image);
                     break;
 
                 case '5':
