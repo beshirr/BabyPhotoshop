@@ -15,11 +15,11 @@ void load(){};
 
 void grey_scale(Image image){
 
-    for (int i = 0; i < image.width; i++)
-    {
-        for (int j = 0; j < image.height; j++)
-        {
-            int avg = (image(i, j, 0) + image(i, j, 1) + image(i, j, 2)) / 3;
+    for (int i = 0; i < image.width; i++){
+        for (int j = 0; j < image.height; j++){
+
+            int avg = (image(i, j, 0) + image(i, j, 1) +
+                    image(i, j, 2)) / 3;
             image(i, j, 0) = avg;
             image(i, j, 1) = avg;
             image(i, j, 2) = avg;
@@ -28,18 +28,31 @@ void grey_scale(Image image){
     }
 
     string newFileName;
-    cout << "please enter the filtered image name: ";
+    cout << "please enter the filtered image name:";
     cin >> newFileName;
     image.saveImage(newFileName);
-
-
 }
 
 
 void black_and_white(){};
 
 
-void invert(){};
+void invert(Image image){
+
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+
+            for (int k = 0; k < 3; ++k) {
+                image(i,j,k) = 255 - image(i, j, k);
+            }
+        }
+    }
+
+    string newFileName;
+    cout << "please enter the filtered image name:";
+    cin >> newFileName;
+    image.saveImage(newFileName);
+};
 
 
 void merge(){};
@@ -48,7 +61,9 @@ void merge(){};
 void flip(){};
 
 
-void rotate(){};
+void rotate(Image image){
+
+};
 
 
 void darken_lighten(){};
@@ -125,11 +140,11 @@ int main(){
             switch(filter){
 
                 case '1':
-                    invert();
+                    invert(image);
                     break;
 
                 case '2':
-                    rotate();
+                    rotate(image);
                     break;
 
                 case '3':
