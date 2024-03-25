@@ -239,7 +239,7 @@ int main(){
             cout << endl;
             cout << "Choose a filter: " << endl;
             cout << "1- Invert" << endl;
-            cout << "2- Rotate" << endl;
+            cout << "2- Merge" << endl;
             cout << "3- Gray_Scale" << endl;
             cout << "4- Black and white" << endl;
             cout << "5- Flip" << endl;
@@ -255,7 +255,7 @@ int main(){
                     break;
 
                 case '2':
-                    rotate(image);
+                    merger(image);
                     break;
 
                 case '3':
