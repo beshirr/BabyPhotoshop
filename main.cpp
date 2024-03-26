@@ -1,17 +1,8 @@
 # include <bits/stdc++.h>
-# include <cmath>
 # include "Image_Class.h"
 
 using namespace std;
 
-
-bool input_validity(){};
-
-
-void save(){};
-
-
-void load(){};
 
 
 void grey_scale(Image image){
@@ -61,7 +52,6 @@ void black_and_white(Image pic) {
 }
 
 
-
 void invert(Image image){
 
     for (int i = 0; i < image.width; ++i) {
@@ -84,19 +74,24 @@ void merger(Image image){
 
     int counter = 0;
     string mergeFileName;
-    cout << "please enter the name of the image you want to merge: ";
+    cout << "please enter the name of the image you want to merge:";
     cin >> mergeFileName;
+
     Image mergeImage(mergeFileName);
+
     if ((image.width == mergeImage.width) and (image.height == mergeImage.height)){
         Image mergedImage(image.width, image.height);
+
         for (int i = 0; i < mergedImage.width; ++i) {
             for (int j = 0; j < mergedImage.height; ++j) {
+
                 if (counter % 2 == 0){
                     mergedImage(i, j, 0) = image(i, j, 0);
                     mergedImage(i, j, 1) = image(i, j, 1);
                     mergedImage(i, j, 2) = image(i, j, 2);
                     counter++;
                 }
+
                 else{
                     mergedImage(i, j, 0) = mergeImage(i, j, 0);
                     mergedImage(i, j, 1) = mergeImage(i, j, 1);
@@ -105,22 +100,27 @@ void merger(Image image){
                 }
             }
         }
+
         string newFileName;
-        cout << "please enter the filtered image name: ";
+        cout << "please enter the filtered image name:";
         cin >> newFileName;
         mergedImage.saveImage(newFileName);
         counter = 0;
     }
+
     else{
         Image mergedImage(min(image.width , mergeImage.width), min(image.height , mergeImage.height));
+
         for (int i = 0; i < mergedImage.width; ++i) {
             for (int j = 0; j < mergedImage.height; ++j) {
+
                 if (counter % 2 == 0){
                     mergedImage(i, j, 0) = image(i, j, 0);
                     mergedImage(i, j, 1) = image(i, j, 1);
                     mergedImage(i, j, 2) = image(i, j, 2);
                     counter++;
                 }
+
                 else{
                     mergedImage(i, j, 0) = mergeImage(i, j, 0);
                     mergedImage(i, j, 1) = mergeImage(i, j, 1);
@@ -129,15 +129,14 @@ void merger(Image image){
                 }
             }
         }
+
         string newFileName;
         cout << "please enter the filtered image name: ";
         cin >> newFileName;
         mergedImage.saveImage(newFileName);
         counter = 0;
     }
-
-
-};
+}
 
 
 void flip(Image image){
@@ -172,27 +171,25 @@ void flip(Image image){
 
 
 
-void rotate(Image image){
-
-};
+void rotate(){}
 
 
-void darken_lighten(){};
+void darken_lighten(){}
 
 
-void crop(){};
+void crop(){}
 
 
-void frame(){};
+void frame(){}
 
 
-void detect_edges(){};
+void detect_edges(){}
 
 
-void resize(){};
+void resize(){}
 
 
-void blur(){};
+void blur(){}
 
 
 
@@ -240,7 +237,7 @@ int main(){
             cout << "Choose a filter: " << endl;
             cout << "1- Invert" << endl;
             cout << "2- Merge" << endl;
-            cout << "3- Gray_Scale" << endl;
+            cout << "3- Gray Scale" << endl;
             cout << "4- Black and white" << endl;
             cout << "5- Flip" << endl;
 
