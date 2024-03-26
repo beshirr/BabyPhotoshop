@@ -1,4 +1,5 @@
 # include <bits/stdc++.h>
+# include <cmath>
 # include "Image_Class.h"
 
 using namespace std;
@@ -186,7 +187,27 @@ void frame(){}
 void detect_edges(){}
 
 
-void resize(){}
+void resize(Image image){
+
+    int width_, height_;
+    cout << "enter the dimentions of the new image: ";
+    cin >> width_ >> height_;
+    Image resizedImage(width_, height_);
+    double widthRatio = image.width / resizedImage.width;
+    double heightRatio = image.height / resizedImage.height;
+    for (int i = 0; i < resizedImage.width; ++i) {
+        for (int j = 0; j < resizedImage.height; ++j) {
+            resizedImage(i, j, 0) = image(ceil(i * widthRatio), ceil(j * heightRatio), 0);
+            resizedImage(i, j, 1) = image(ceil(i * widthRatio), ceil(j * heightRatio), 1);
+            resizedImage(i, j, 2) = image(ceil(i * widthRatio), ceil(j * heightRatio), 2);
+        }
+    }
+    string newFileName;
+    cout << "please enter the filtered image name: ";
+    cin >> newFileName;
+    resizedImage.saveImage(newFileName);
+
+}
 
 
 void blur(){}
@@ -236,7 +257,7 @@ int main(){
             cout << endl;
             cout << "Choose a filter: " << endl;
             cout << "1- Invert" << endl;
-            cout << "2- Merge" << endl;
+            cout << "2- Resize" << endl;
             cout << "3- Gray Scale" << endl;
             cout << "4- Black and white" << endl;
             cout << "5- Flip" << endl;
@@ -252,7 +273,7 @@ int main(){
                     break;
 
                 case '2':
-                    merger(image);
+                    resize(image);
                     break;
 
                 case '3':
