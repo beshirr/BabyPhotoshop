@@ -142,8 +142,22 @@ void merger(Image image){
 
 void flip(Image image){
     string choice;
-    cout << "Please select:\n1 - Horizontal flip\n2 - Vertical flip\nEnter your choice: ";
-    cin >> choice;
+    while (true){
+        cout << "Please select:\n1 - Horizontal flip \n2 - Vertical flip \nEnter your choice: ";
+        cin >> choice;
+        if (choice == "1"){
+            choice = "1";
+            break;
+        }else if (choice == "2"){
+            choice = "2";
+            break;
+
+        } else{
+            cout << endl <<"Invalid choice !"<<endl;
+            continue;
+        }
+
+    }
 
     if (choice == "1") {
         for (int i = 0; i < image.width / 2; ++i) {
@@ -172,10 +186,62 @@ void flip(Image image){
 
 
 
+
 void rotate(){}
 
 
-void darken_lighten(){}
+void darken_lighten(Image image) {
+    string choice;
+    while (true){
+        cout << "Please select:\n1 - Lighten filter \n2 - Darken filter\nEnter your choice: ";
+        cin >> choice;
+        if (choice == "1"){
+            choice = "1";
+            break;
+        }else if (choice == "2"){
+            choice = "2";
+            break;
+
+        } else{
+            cout << endl <<"Invalid choice !"<<endl;
+            continue;
+        }
+
+    }
+
+    if (choice == "1"){
+        // Iterate through each pixel of the image
+        for (int i = 0; i < image.width; ++i) {
+            for (int j = 0; j < image.height; ++j) {
+                for (int k = 0; k < 3; ++k) {
+                    // Make the image lighter by 50%
+                    float newPixelValue = image(i, j, k) * 1.5;
+                    // Clamp pixel value to range [0, 255]
+                    image(i, j, k) = static_cast<unsigned char>(min(max(newPixelValue, 0.0f), 255.0f));
+                }
+            }
+        }
+
+    } else if (choice== "2" ){
+        for (int i = 0; i < image.width; ++i) {
+            for (int j = 0; j < image.height; ++j) {
+                for (int k = 0; k < 3; ++k) {
+                    // Make the image lighter by 50%
+                    float newPixelValue = image(i, j, k) * 0.5;
+                    // Clamp pixel value to range [0, 255]
+                    image(i, j, k) = static_cast<unsigned char>(min(max(newPixelValue, 0.0f), 255.0f));
+                }
+            }
+        }
+
+    }
+    // Save the modified image
+    string newFileName;
+    cout << "Please enter the filtered image name: ";
+    cin >> newFileName;
+    image.saveImage(newFileName);
+    cout << "Done well" << endl;
+}
 
 
 void crop(){}
