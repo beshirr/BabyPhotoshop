@@ -20,35 +20,43 @@ void grey_scale(Image image){
     }
 
     string newFileName;
-    cout << "please enter the filtered image name: ";
+    cout << "Please enter the new image name: ";
     cin >> newFileName;
+
     image.saveImage(newFileName);
+    cout << "Done!" << endl << endl;
 }
 
 
 void black_and_white(Image pic) {
+
     for (int i = 0; i < pic.width; ++i) {
         for (int j = 0; j < pic.height; ++j) {
+
             unsigned int avg = 0;
             for (int k = 0; k < 3; ++k) {
                 avg += pic(i, j, k);
             }
+
             avg /= 3;
             int y;
+
             if (avg < 127)
                 y = 0;
             else
                 y = 255;
+
             for (int k = 0; k < 3; ++k) {
                 pic(i, j, k) = y;
             }
         }
     }
     string newFileName;
-    cout << "Please enter the filtered image name: ";
+    cout << "Please enter the new image name: ";
     cin >> newFileName;
+
     pic.saveImage(newFileName);
-    cout << "Done well" << endl;
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -64,9 +72,11 @@ void invert(Image image){
     }
 
     string newFileName;
-    cout << "please enter the filtered image name: ";
+    cout << "Please enter the new image name: ";
     cin >> newFileName;
+
     image.saveImage(newFileName);
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -74,7 +84,7 @@ void merger(Image image){
 
     int counter = 0;
     string mergeFileName;
-    cout << "please enter the name of the image you want to merge:";
+    cout << "Please enter the second image's name:";
     cin >> mergeFileName;
 
     Image mergeImage(mergeFileName);
@@ -102,10 +112,12 @@ void merger(Image image){
         }
 
         string newFileName;
-        cout << "please enter the filtered image name:";
+        cout << "Please enter the new image name:";
         cin >> newFileName;
         mergedImage.saveImage(newFileName);
         counter = 0;
+
+        cout << "Done!" << endl << endl;
     }
 
     else{
@@ -131,10 +143,11 @@ void merger(Image image){
         }
 
         string newFileName;
-        cout << "please enter the filtered image name: ";
+        cout << "Please enter the new image name: ";
         cin >> newFileName;
         mergedImage.saveImage(newFileName);
         counter = 0;
+        cout << "Done!" << endl << endl;
     }
 }
 
@@ -164,9 +177,11 @@ void flip(Image image){
     }
 
     string newFileName;
-    cout << "Please enter the filtered image name: ";
+    cout << "Please enter the new image name: ";
     cin >> newFileName;
     image.saveImage(newFileName);
+
+    cout << "Done!" << endl << endl;
 }
 
 
