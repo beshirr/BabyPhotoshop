@@ -8,18 +8,21 @@ using namespace std;
 
 void grey_scale(Image image){
 
+    // iterate through the image matrix
     for (int i = 0; i < image.width; i++){
         for (int j = 0; j < image.height; j++){
 
+            // calculating the average of all the colors(Green, Red, Blue) in each pixel.
             int avg = (image(i, j, 0) + image(i, j, 1) +
                        image(i, j, 2)) / 3;
+            // assigning the average to all the colors in each pixel to get a gray scale.
             image(i, j, 0) = avg;
             image(i, j, 1) = avg;
             image(i, j, 2) = avg;
         }
 
     }
-
+    // saving the image.
     string newFileName;
     cout << "please enter the filtered image name: ";
     cin >> newFileName;
@@ -71,7 +74,7 @@ void invert(Image image){
 }
 
 
-void merger(Image image){
+void merger(Image image){ // not complete.
 
     int counter = 0;
     string mergeFileName;
@@ -255,12 +258,16 @@ void detect_edges(){}
 
 void resize(Image image){
 
+    // getting the dimensions of the resized image from the user.
     int width_, height_;
-    cout << "enter the dimentions of the new image: ";
+    cout << "enter the dimensions of the new image: ";
     cin >> width_ >> height_;
+    // create a new image with the dimensions we got from the user.
     Image resizedImage(width_, height_);
+    // calculating the ratio between the width and height of the original image and the resized one.
     double widthRatio = image.width / resizedImage.width;
     double heightRatio = image.height / resizedImage.height;
+    // iterate through the resized image and assigning the colors of the original image to the resized one using the ratio we calculated earlier.
     for (int i = 0; i < resizedImage.width; ++i) {
         for (int j = 0; j < resizedImage.height; ++j) {
             resizedImage(i, j, 0) = image(ceil(i * widthRatio), ceil(j * heightRatio), 0);
@@ -268,6 +275,7 @@ void resize(Image image){
             resizedImage(i, j, 2) = image(ceil(i * widthRatio), ceil(j * heightRatio), 2);
         }
     }
+    // saving the image.
     string newFileName;
     cout << "please enter the filtered image name: ";
     cin >> newFileName;
