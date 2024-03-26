@@ -1,4 +1,5 @@
 # include <bits/stdc++.h>
+# include <cmath>
 # include "Image_Class.h"
 
 using namespace std;
@@ -20,43 +21,35 @@ void grey_scale(Image image){
     }
 
     string newFileName;
-    cout << "Please enter the new image name: ";
+    cout << "please enter the filtered image name: ";
     cin >> newFileName;
-
     image.saveImage(newFileName);
-    cout << "Done!" << endl << endl;
 }
 
 
 void black_and_white(Image pic) {
-
     for (int i = 0; i < pic.width; ++i) {
         for (int j = 0; j < pic.height; ++j) {
-
             unsigned int avg = 0;
             for (int k = 0; k < 3; ++k) {
                 avg += pic(i, j, k);
             }
-
             avg /= 3;
             int y;
-
             if (avg < 127)
                 y = 0;
             else
                 y = 255;
-
             for (int k = 0; k < 3; ++k) {
                 pic(i, j, k) = y;
             }
         }
     }
     string newFileName;
-    cout << "Please enter the new image name: ";
+    cout << "Please enter the filtered image name: ";
     cin >> newFileName;
-
     pic.saveImage(newFileName);
-    cout << "Done!" << endl << endl;
+    cout << "Done well" << endl;
 }
 
 
@@ -72,11 +65,9 @@ void invert(Image image){
     }
 
     string newFileName;
-    cout << "Please enter the new image name: ";
+    cout << "please enter the filtered image name: ";
     cin >> newFileName;
-
     image.saveImage(newFileName);
-    cout << "Done!" << endl << endl;
 }
 
 
@@ -84,7 +75,7 @@ void merger(Image image){
 
     int counter = 0;
     string mergeFileName;
-    cout << "Please enter the second image's name:";
+    cout << "please enter the name of the image you want to merge:";
     cin >> mergeFileName;
 
     Image mergeImage(mergeFileName);
@@ -112,12 +103,10 @@ void merger(Image image){
         }
 
         string newFileName;
-        cout << "Please enter the new image name:";
+        cout << "please enter the filtered image name:";
         cin >> newFileName;
         mergedImage.saveImage(newFileName);
         counter = 0;
-
-        cout << "Done!" << endl << endl;
     }
 
     else{
@@ -143,19 +132,32 @@ void merger(Image image){
         }
 
         string newFileName;
-        cout << "Please enter the new image name: ";
+        cout << "please enter the filtered image name: ";
         cin >> newFileName;
         mergedImage.saveImage(newFileName);
         counter = 0;
-        cout << "Done!" << endl << endl;
     }
 }
 
 
 void flip(Image image){
     string choice;
-    cout << "Please select:\n1 - Horizontal flip\n2 - Vertical flip\nEnter your choice: ";
-    cin >> choice;
+    while (true){
+        cout << "Please select:\n1 - Horizontal flip \n2 - Vertical flip \nEnter your choice: ";
+        cin >> choice;
+        if (choice == "1"){
+            choice = "1";
+            break;
+        }else if (choice == "2"){
+            choice = "2";
+            break;
+
+        } else{
+            cout << endl <<"Invalid choice !"<<endl;
+            continue;
+        }
+
+    }
 
     if (choice == "1") {
         for (int i = 0; i < image.width / 2; ++i) {
@@ -177,19 +179,69 @@ void flip(Image image){
     }
 
     string newFileName;
-    cout << "Please enter the new image name: ";
+    cout << "Please enter the filtered image name: ";
     cin >> newFileName;
     image.saveImage(newFileName);
-
-    cout << "Done!" << endl << endl;
 }
+
 
 
 
 void rotate(){}
 
 
-void darken_lighten(){}
+void darken_lighten(Image image) {
+    string choice;
+    while (true){
+        cout << "Please select:\n1 - Lighten filter \n2 - Darken filter\nEnter your choice: ";
+        cin >> choice;
+        if (choice == "1"){
+            choice = "1";
+            break;
+        }else if (choice == "2"){
+            choice = "2";
+            break;
+
+        } else{
+            cout << endl <<"Invalid choice !"<<endl;
+            continue;
+        }
+
+    }
+
+    if (choice == "1"){
+        // Iterate through each pixel of the image
+        for (int i = 0; i < image.width; ++i) {
+            for (int j = 0; j < image.height; ++j) {
+                for (int k = 0; k < 3; ++k) {
+                    // Make the image lighter by 50%
+                    float newPixelValue = image(i, j, k) * 1.5;
+                    // Clamp pixel value to range [0, 255]
+                    image(i, j, k) = static_cast<unsigned char>(min(max(newPixelValue, 0.0f), 255.0f));
+                }
+            }
+        }
+
+    } else if (choice== "2" ){
+        for (int i = 0; i < image.width; ++i) {
+            for (int j = 0; j < image.height; ++j) {
+                for (int k = 0; k < 3; ++k) {
+                    // Make the image lighter by 50%
+                    float newPixelValue = image(i, j, k) * 0.5;
+                    // Clamp pixel value to range [0, 255]
+                    image(i, j, k) = static_cast<unsigned char>(min(max(newPixelValue, 0.0f), 255.0f));
+                }
+            }
+        }
+
+    }
+    // Save the modified image
+    string newFileName;
+    cout << "Please enter the filtered image name: ";
+    cin >> newFileName;
+    image.saveImage(newFileName);
+    cout << "Done well" << endl;
+}
 
 
 void crop(){}
@@ -201,7 +253,27 @@ void frame(){}
 void detect_edges(){}
 
 
-void resize(){}
+void resize(Image image){
+
+    int width_, height_;
+    cout << "enter the dimentions of the new image: ";
+    cin >> width_ >> height_;
+    Image resizedImage(width_, height_);
+    double widthRatio = image.width / resizedImage.width;
+    double heightRatio = image.height / resizedImage.height;
+    for (int i = 0; i < resizedImage.width; ++i) {
+        for (int j = 0; j < resizedImage.height; ++j) {
+            resizedImage(i, j, 0) = image(ceil(i * widthRatio), ceil(j * heightRatio), 0);
+            resizedImage(i, j, 1) = image(ceil(i * widthRatio), ceil(j * heightRatio), 1);
+            resizedImage(i, j, 2) = image(ceil(i * widthRatio), ceil(j * heightRatio), 2);
+        }
+    }
+    string newFileName;
+    cout << "please enter the filtered image name: ";
+    cin >> newFileName;
+    resizedImage.saveImage(newFileName);
+
+}
 
 
 void blur(){}
@@ -251,7 +323,7 @@ int main(){
             cout << endl;
             cout << "Choose a filter: " << endl;
             cout << "1- Invert" << endl;
-            cout << "2- Merge" << endl;
+            cout << "2- Resize" << endl;
             cout << "3- Gray Scale" << endl;
             cout << "4- Black and white" << endl;
             cout << "5- Flip" << endl;
@@ -267,7 +339,7 @@ int main(){
                     break;
 
                 case '2':
-                    merger(image);
+                    resize(image);
                     break;
 
                 case '3':
