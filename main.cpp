@@ -336,23 +336,28 @@ void resize(Image image){
     // getting the dimensions of the resized image from the user.
     int width_, height_;
     cout << "Enter the dimensions of the new image: ";
-    cin >> width_ >> height_;
-
+    while(!(cin >> width_) or !(cin >> height_)){
+        cin.clear();
+        cin.ignore();
+        cout << "Please enter a valid width or height (a positive integer.)" << endl;
+    }
     // create a new image with the dimensions we got from the user.
     Image resizedImage(width_, height_);
 
     // calculating the ratio between the width and height of the original image and the resized one.
-    double widthRatio = image.width / resizedImage.width;
-    double heightRatio = image.height / resizedImage.height;
-
+    double widthRatio = static_cast<double>(image.width) / resizedImage.width;
+    double heightRatio = static_cast<double>(image.height) / resizedImage.height;
     // iterate through the resized image and assigning the colors of the original image to the resized one
-    // using the ratio we calculated earlier.
+    //using the ratio we calculated earlier.
     for (int i = 0; i < resizedImage.width; ++i) {
         for (int j = 0; j < resizedImage.height; ++j) {
 
             resizedImage(i, j, 0) = image(ceil(i * widthRatio), ceil(j * heightRatio), 0);
             resizedImage(i, j, 1) = image(ceil(i * widthRatio), ceil(j * heightRatio), 1);
             resizedImage(i, j, 2) = image(ceil(i * widthRatio), ceil(j * heightRatio), 2);
+            resizedImage(i, j, 0) = image(floor(i * widthRatio), floor(j * heightRatio), 0);
+            resizedImage(i, j, 1) = image(floor(i * widthRatio), floor(j * heightRatio), 1);
+            resizedImage(i, j, 2) = image(floor(i * widthRatio), floor(j * heightRatio), 2);
         }
     }
 
