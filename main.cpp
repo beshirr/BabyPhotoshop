@@ -181,22 +181,43 @@ void merger(Image image){ // not complete.
     }
 
     else{
-        Image mergedImage(min(image.width , mergeImage.width), min(image.height , mergeImage.height));
+        Image mergedImage(max(image.width , mergeImage.width), max(image.height , mergeImage.height));
+        Image resizedImage_1(max(image.width, mergeImage.width), max(image.height , mergeImage.height));
+        double widthRatio = static_cast<double>(image.width) / max(image.width , mergeImage.width);
+        double heightRatio = static_cast<double>(image.height) / max(image.height , mergeImage.height);
+        for (int i = 0; i < max(image.width , mergeImage.width); ++i) {
+            for (int j = 0; j < max(image.height , mergeImage.height); ++j) {
+                resizedImage_1(i, j, 0) = image(floor(i * widthRatio), floor(j * heightRatio), 0);
+                resizedImage_1(i, j, 1) = image(floor(i * widthRatio), floor(j * heightRatio), 1);
+                resizedImage_1(i, j, 2) = image(floor(i * widthRatio), floor(j * heightRatio), 2);
+            }
+        }
+
+        Image resizedImage_2(max(image.width, mergeImage.width), max(image.height , mergeImage.height));
+        widthRatio = static_cast<double>(mergeImage.width) / max(image.width , mergeImage.width);
+        heightRatio = static_cast<double>(mergeImage.height) / max(image.height , mergeImage.height);
+        for (int i = 0; i < max(image.width , mergeImage.width); ++i) {
+            for (int j = 0; j < max(image.height , mergeImage.height); ++j) {
+                resizedImage_2(i, j, 0) = mergeImage(floor(i * widthRatio), floor(j * heightRatio), 0);
+                resizedImage_2(i, j, 1) = mergeImage(floor(i * widthRatio), floor(j * heightRatio), 1);
+                resizedImage_2(i, j, 2) = mergeImage(floor(i * widthRatio), floor(j * heightRatio), 2);
+            }
+        }
 
         for (int i = 0; i < mergedImage.width; ++i) {
             for (int j = 0; j < mergedImage.height; ++j) {
 
                 if (counter % 2 == 0){
-                    mergedImage(i, j, 0) = image(i, j, 0);
-                    mergedImage(i, j, 1) = image(i, j, 1);
-                    mergedImage(i, j, 2) = image(i, j, 2);
+                    mergedImage(i, j, 0) = resizedImage_1(i, j, 0);
+                    mergedImage(i, j, 1) = resizedImage_1(i, j, 1);
+                    mergedImage(i, j, 2) = resizedImage_1(i, j, 2);
                     counter++;
                 }
 
                 else{
-                    mergedImage(i, j, 0) = mergeImage(i, j, 0);
-                    mergedImage(i, j, 1) = mergeImage(i, j, 1);
-                    mergedImage(i, j, 2) = mergeImage(i, j, 2);
+                    mergedImage(i, j, 0) = resizedImage_2(i, j, 0);
+                    mergedImage(i, j, 1) = resizedImage_2(i, j, 1);
+                    mergedImage(i, j, 2) = resizedImage_2(i, j, 2);
                     counter++;
                 }
             }
@@ -474,7 +495,7 @@ int main(){
                 case '5':
                     flip(image);
                     break;
-
+                    
 
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
