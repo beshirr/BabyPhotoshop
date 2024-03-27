@@ -24,53 +24,89 @@ void grey_scale(Image image){
     }
     // saving the image.
     string newFileName;
-    cout << "please enter the filtered image name: ";
-    cin >> newFileName;
-    image.saveImage(newFileName);
+    while(true){
+
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        catch(...){}
+    }
+
 }
 
 
 void black_and_white(Image pic) {
+
     for (int i = 0; i < pic.width; ++i) {
         for (int j = 0; j < pic.height; ++j) {
+
             unsigned int avg = 0;
             for (int k = 0; k < 3; ++k) {
                 avg += pic(i, j, k);
             }
             avg /= 3;
             int y;
+
             if (avg < 127)
                 y = 0;
             else
                 y = 255;
+
             for (int k = 0; k < 3; ++k) {
                 pic(i, j, k) = y;
             }
         }
     }
+
     string newFileName;
-    cout << "Please enter the filtered image name: ";
-    cin >> newFileName;
-    pic.saveImage(newFileName);
-    cout << "Done well" << endl;
+    while(true){
+
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            pic.saveImage(newFileName);
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        catch(...){}
+
+    }
+
 }
 
 
 void invert(Image image){
 
+    // Iterate through the image
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
 
             for (int k = 0; k < 3; ++k) {
+                // Colour inversion is achieved by subtracting each RGB colour value from the maximum possible value
                 image(i,j,k) = 255 - image(i, j, k);
             }
         }
     }
 
     string newFileName;
-    cout << "please enter the filtered image name: ";
-    cin >> newFileName;
-    image.saveImage(newFileName);
+    while (true){
+        // File existence and valid extension handling
+        try{
+            cout << "Please enter the filtered image name:";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            break;
+        }
+
+        catch(...){}
+    }
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -78,7 +114,7 @@ void merger(Image image){ // not complete.
 
     int counter = 0;
     string mergeFileName;
-    cout << "please enter the name of the image you want to merge:";
+    cout << "Please enter the name of the image you want to merge:";
     cin >> mergeFileName;
 
     Image mergeImage(mergeFileName);
@@ -106,10 +142,20 @@ void merger(Image image){ // not complete.
         }
 
         string newFileName;
-        cout << "please enter the filtered image name:";
-        cin >> newFileName;
-        mergedImage.saveImage(newFileName);
-        counter = 0;
+        while(true){
+
+            try{
+                cout << "Please enter the new image name:";
+                cin >> newFileName;
+                mergedImage.saveImage(newFileName);
+                counter = 0;
+                cout << "Done!" << endl << endl;
+                break;
+            }
+
+            catch(...){}
+        }
+
     }
 
     else{
@@ -135,19 +181,31 @@ void merger(Image image){ // not complete.
         }
 
         string newFileName;
-        cout << "please enter the filtered image name: ";
-        cin >> newFileName;
-        mergedImage.saveImage(newFileName);
-        counter = 0;
+        while(true){
+
+            try{
+                cout << "Please enter the new image name:";
+                cin >> newFileName;
+                mergedImage.saveImage(newFileName);
+                counter = 0;
+                cout << "Done!" << endl << endl;
+                break;
+            }
+
+            catch(...){}
+        }
+
     }
 }
 
 
 void flip(Image image){
+
     string choice;
     while (true){
-        cout << "Please select:\n1 - Horizontal flip \n2 - Vertical flip \nEnter your choice: ";
+        cout << "Please select:\n1- Horizontal flip \n2- Vertical flip \nEnter your choice:";
         cin >> choice;
+
         if (choice == "1"){
             choice = "1";
             break;
@@ -156,7 +214,7 @@ void flip(Image image){
             break;
 
         } else{
-            cout << endl <<"Invalid choice !"<<endl;
+            cout << endl << "Invalid choice !" << endl;
             continue;
         }
 
@@ -182,21 +240,30 @@ void flip(Image image){
     }
 
     string newFileName;
-    cout << "Please enter the filtered image name: ";
-    cin >> newFileName;
-    image.saveImage(newFileName);
+    while(true){
+
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        catch(...){}
+    }
+
 }
-
-
 
 
 void rotate(){}
 
 
 void darken_lighten(Image image) {
+
     string choice;
     while (true){
-        cout << "Please select:\n1 - Lighten filter \n2 - Darken filter\nEnter your choice: ";
+        cout << "Please select:\n1- Lighten filter \n2- Darken filter\nEnter your choice:";
         cin >> choice;
         if (choice == "1"){
             choice = "1";
@@ -206,7 +273,7 @@ void darken_lighten(Image image) {
             break;
 
         } else{
-            cout << endl <<"Invalid choice !"<<endl;
+            cout << endl << "Invalid choice!" <<endl;
             continue;
         }
 
@@ -240,10 +307,18 @@ void darken_lighten(Image image) {
     }
     // Save the modified image
     string newFileName;
-    cout << "Please enter the filtered image name: ";
-    cin >> newFileName;
-    image.saveImage(newFileName);
-    cout << "Done well" << endl;
+    while(true){
+
+        try{
+            cout << "Please enter the new image name: ";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        catch(...){}
+    }
 }
 
 
@@ -260,26 +335,41 @@ void resize(Image image){
 
     // getting the dimensions of the resized image from the user.
     int width_, height_;
-    cout << "enter the dimensions of the new image: ";
+    cout << "Enter the dimensions of the new image: ";
     cin >> width_ >> height_;
+
     // create a new image with the dimensions we got from the user.
     Image resizedImage(width_, height_);
+
     // calculating the ratio between the width and height of the original image and the resized one.
     double widthRatio = image.width / resizedImage.width;
     double heightRatio = image.height / resizedImage.height;
-    // iterate through the resized image and assigning the colors of the original image to the resized one using the ratio we calculated earlier.
+
+    // iterate through the resized image and assigning the colors of the original image to the resized one
+    // using the ratio we calculated earlier.
     for (int i = 0; i < resizedImage.width; ++i) {
         for (int j = 0; j < resizedImage.height; ++j) {
+
             resizedImage(i, j, 0) = image(ceil(i * widthRatio), ceil(j * heightRatio), 0);
             resizedImage(i, j, 1) = image(ceil(i * widthRatio), ceil(j * heightRatio), 1);
             resizedImage(i, j, 2) = image(ceil(i * widthRatio), ceil(j * heightRatio), 2);
         }
     }
+
     // saving the image.
     string newFileName;
-    cout << "please enter the filtered image name: ";
-    cin >> newFileName;
-    resizedImage.saveImage(newFileName);
+    while(true){
+
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            resizedImage.saveImage(newFileName);
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        catch(...){}
+    }
 
 }
 
