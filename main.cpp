@@ -385,7 +385,7 @@ int main(){
     string menu;
 
     Image image;
-
+    
     while (true){
         // Program Menu
         cout << "1- Load an image (1)" << endl;
