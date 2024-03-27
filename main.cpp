@@ -24,7 +24,6 @@ Youssef Ahmed Beshir:
 
 # include <bits/stdc++.h>
 # include "Image_Class.h"
-# include <cstdlib>
 
 
 using namespace std;
@@ -55,7 +54,7 @@ void grey_scale(Image image){
             cin >> newFileName;
             image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            system(newFileName.c_str());
+            //system(newFileName.c_str());
             break;
         }
 
@@ -96,7 +95,7 @@ void black_and_white(Image pic) {
             cin >> newFileName;
             pic.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            system(newFileName.c_str());
+            //system(newFileName.c_str());
             break;
         }
 
@@ -126,7 +125,7 @@ void invert(Image image){
             cout << "Please enter the new image name:";
             cin >> newFileName;
             image.saveImage(newFileName);
-            system(newFileName.c_str());
+            //system(newFileName.c_str());
             break;
         }
 
@@ -176,7 +175,7 @@ void merger(Image image){ // not complete.
                 mergedImage.saveImage(newFileName);
                 counter = 0;
                 cout << "Done!" << endl << endl;
-                system(newFileName.c_str());
+                //system(newFileName.c_str());
                 break;
             }
 
@@ -237,7 +236,7 @@ void merger(Image image){ // not complete.
                 mergedImage.saveImage(newFileName);
                 counter = 0;
                 cout << "Done!" << endl << endl;
-                system(newFileName.c_str());
+                //system(newFileName.c_str());
                 break;
             }
 
@@ -280,7 +279,7 @@ void flip(Image image){
             }
         }
     }
-    // Apply Vertical flip
+        // Apply Vertical flip
     else if (choice == "2") {
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height / 2; ++j) {
@@ -300,7 +299,7 @@ void flip(Image image){
             cin >> newFileName;
             image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            system(newFileName.c_str());
+            //system(newFileName.c_str());
             break;
         }
 
@@ -346,7 +345,7 @@ void darken_lighten(Image image) {
                 }
             }
         }
-    //Apply darker one
+        //Apply darker one
     } else if (choice== "2" ){
         // Iterate through each pixel of the image
         for (int i = 0; i < image.width; ++i) {
@@ -370,7 +369,7 @@ void darken_lighten(Image image) {
             cin >> newFileName;
             image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            system(newFileName.c_str());
+            //system(newFileName.c_str());
             break;
         }
 
@@ -423,7 +422,7 @@ void resize(Image image){
             cin >> newFileName;
             resizedImage.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            system(newFileName.c_str());
+            //system(newFileName.c_str());
             break;
         }
 
@@ -509,7 +508,6 @@ int main(){
                 case '5':
                     flip(image);
                     break;
-
 
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
