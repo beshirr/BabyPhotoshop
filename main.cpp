@@ -351,10 +351,6 @@ void resize(Image image){
     //using the ratio we calculated earlier.
     for (int i = 0; i < resizedImage.width; ++i) {
         for (int j = 0; j < resizedImage.height; ++j) {
-
-            resizedImage(i, j, 0) = image(ceil(i * widthRatio), ceil(j * heightRatio), 0);
-            resizedImage(i, j, 1) = image(ceil(i * widthRatio), ceil(j * heightRatio), 1);
-            resizedImage(i, j, 2) = image(ceil(i * widthRatio), ceil(j * heightRatio), 2);
             resizedImage(i, j, 0) = image(floor(i * widthRatio), floor(j * heightRatio), 0);
             resizedImage(i, j, 1) = image(floor(i * widthRatio), floor(j * heightRatio), 1);
             resizedImage(i, j, 2) = image(floor(i * widthRatio), floor(j * heightRatio), 2);
