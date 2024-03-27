@@ -2,6 +2,7 @@
     "workbench.colorTheme": "Monokai",
     "workbench.preferredHighContrastColorTheme": "Default High Contrast Light",
     "files.associations": {
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "iostream": "cpp"
     }
 }

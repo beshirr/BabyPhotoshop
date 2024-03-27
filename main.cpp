@@ -20,12 +20,29 @@ Youssef Ahmed Beshir:
     Invert filter.
 */
 // ============================================================================================================================
+
+
 # include <bits/stdc++.h>
-# include <cmath>
 # include "Image_Class.h"
+# include <cstdlib>
+
 
 using namespace std;
 
+Image image;
+
+bool input(const string& fileName){
+
+    // for input validation
+    try{
+        image.loadNewImage(fileName);
+        return true;
+    }
+
+    catch(...){
+        return false;
+    }
+}
 
 
 void grey_scale(Image image){
@@ -53,6 +70,7 @@ void grey_scale(Image image){
             cin >> newFileName;
             image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
+            system(newFileName.c_str());
             break;
         }
 
@@ -93,11 +111,11 @@ void black_and_white(Image pic) {
             cin >> newFileName;
             pic.saveImage(newFileName);
             cout << "Done!" << endl << endl;
+            system(newFileName.c_str());
             break;
         }
 
         catch(...){}
-
     }
 
 }
@@ -120,9 +138,10 @@ void invert(Image image){
     while (true){
         // File existence and valid extension handling
         try{
-            cout << "Please enter the filtered image name:";
+            cout << "Please enter the new image name:";
             cin >> newFileName;
             image.saveImage(newFileName);
+            system(newFileName.c_str());
             break;
         }
 
@@ -172,6 +191,7 @@ void merger(Image image){ // not complete.
                 mergedImage.saveImage(newFileName);
                 counter = 0;
                 cout << "Done!" << endl << endl;
+                system(newFileName.c_str());
                 break;
             }
 
@@ -232,6 +252,7 @@ void merger(Image image){ // not complete.
                 mergedImage.saveImage(newFileName);
                 counter = 0;
                 cout << "Done!" << endl << endl;
+                system(newFileName.c_str());
                 break;
             }
 
@@ -294,6 +315,7 @@ void flip(Image image){
             cin >> newFileName;
             image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
+            system(newFileName.c_str());
             break;
         }
 
@@ -363,6 +385,7 @@ void darken_lighten(Image image) {
             cin >> newFileName;
             image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
+            system(newFileName.c_str());
             break;
         }
 
@@ -415,6 +438,7 @@ void resize(Image image){
             cin >> newFileName;
             resizedImage.saveImage(newFileName);
             cout << "Done!" << endl << endl;
+            system(newFileName.c_str());
             break;
         }
 
@@ -433,9 +457,8 @@ int main(){
     cout << "Welcome to BabyPhotoshop" << endl << endl;
     string menu;
 
-    Image image;
-
     while (true){
+
         // Program Menu
         cout << "1- Load an image (1)" << endl;
         cout << "2- exit (-1)" << endl;
@@ -453,20 +476,17 @@ int main(){
             string fileName;
 
             while (true){
-                try{
-                    cout << "Enter the image name" << endl;
-                    cout << "->";
-                    cin >> fileName;
 
-                    image.loadNewImage(fileName);
+                cout << "Enter the image name:" << endl;
+                cout << "->";
+                cin >> fileName;
 
-                    break;
+                input(fileName);
 
-                }
-                catch (...){
-
-                }
+                break;
             }
+
+
 
             cout << endl;
             cout << "Choose a filter: " << endl;
