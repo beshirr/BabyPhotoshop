@@ -54,7 +54,6 @@ void grey_scale(Image image){
             cin >> newFileName;
             image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            //system(newFileName.c_str());
             break;
         }
 
@@ -95,7 +94,6 @@ void black_and_white(Image pic) {
             cin >> newFileName;
             pic.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            //system(newFileName.c_str());
             break;
         }
 
@@ -125,7 +123,6 @@ void invert(Image image){
             cout << "Please enter the new image name:";
             cin >> newFileName;
             image.saveImage(newFileName);
-            //system(newFileName.c_str());
             break;
         }
 
@@ -175,7 +172,6 @@ void merger(Image image){ // not complete.
                 mergedImage.saveImage(newFileName);
                 counter = 0;
                 cout << "Done!" << endl << endl;
-                //system(newFileName.c_str());
                 break;
             }
 
@@ -236,7 +232,6 @@ void merger(Image image){ // not complete.
                 mergedImage.saveImage(newFileName);
                 counter = 0;
                 cout << "Done!" << endl << endl;
-                //system(newFileName.c_str());
                 break;
             }
 
@@ -248,6 +243,7 @@ void merger(Image image){ // not complete.
 
 
 void flip(Image image){
+
     // make user select any flip
     string choice;
     // check validation of input
@@ -258,17 +254,22 @@ void flip(Image image){
         if (choice == "1"){
             choice = "1";
             break;
-        }else if (choice == "2"){
+        }
+
+        else if (choice == "2"){
             choice = "2";
             break;
 
-        } else{
-            cout << endl << "Invalid choice !" << endl;
+        }
+
+        else{
+            cout << endl << "Invalid choice!" << endl;
             continue;
         }
 
     }
-    // Apply Horizontal flip
+
+    // Horizontal flip
     if (choice == "1") {
         for (int i = 0; i < image.width / 2; ++i) {
             for (int j = 0; j < image.height; ++j) {
@@ -279,7 +280,8 @@ void flip(Image image){
             }
         }
     }
-        // Apply Vertical flip
+
+    // Vertical flip
     else if (choice == "2") {
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height / 2; ++j) {
@@ -290,6 +292,7 @@ void flip(Image image){
             }
         }
     }
+
     // make user select name to photo and save it
     string newFileName;
     while(true){
@@ -299,7 +302,6 @@ void flip(Image image){
             cin >> newFileName;
             image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            //system(newFileName.c_str());
             break;
         }
 
@@ -313,20 +315,27 @@ void rotate(){}
 
 
 void darken_lighten(Image image) {
+
     // make user select darken or lighten
     string choice;
+
     // check validation of input
     while (true){
         cout << "Please select:\n1- Lighten filter \n2- Darken filter\nEnter your choice:";
         cin >> choice;
+
         if (choice == "1"){
             choice = "1";
             break;
-        }else if (choice == "2"){
+        }
+
+        else if (choice == "2"){
             choice = "2";
             break;
 
-        } else{
+        }
+
+        else{
             cout << endl << "Invalid choice!" <<endl;
             continue;
         }
@@ -345,8 +354,11 @@ void darken_lighten(Image image) {
                 }
             }
         }
-        //Apply darker one
-    } else if (choice== "2" ){
+
+    }
+
+    //Apply darker filter
+    else if (choice== "2" ){
         // Iterate through each pixel of the image
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height; ++j) {
@@ -360,16 +372,16 @@ void darken_lighten(Image image) {
         }
 
     }
+
     // make user select name to photo and save it
     string newFileName;
     while(true){
 
         try{
-            cout << "Please enter the new image name: ";
+            cout << "Please enter the new image name:";
             cin >> newFileName;
             image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            //system(newFileName.c_str());
             break;
         }
 
@@ -391,7 +403,7 @@ void resize(Image image){
 
     // getting the dimensions of the resized image from the user.
     int width_, height_;
-    cout << "Enter the dimensions of the new image: ";
+    cout << "Enter the dimensions of the new image:";
     while(!(cin >> width_) or !(cin >> height_)){
         cin.clear();
         cin.ignore();
@@ -422,7 +434,6 @@ void resize(Image image){
             cin >> newFileName;
             resizedImage.saveImage(newFileName);
             cout << "Done!" << endl << endl;
-            //system(newFileName.c_str());
             break;
         }
 
@@ -517,8 +528,6 @@ int main(){
 
         else
             cout << "Invalid Choice." << endl << endl;
-
     }
-
     return 0;
 }
