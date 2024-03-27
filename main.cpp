@@ -243,8 +243,9 @@ void merger(Image image){ // not complete.
 
 
 void flip(Image image){
-
+    // make user select any flip
     string choice;
+    // check validation of input 
     while (true){
         cout << "Please select:\n1- Horizontal flip \n2- Vertical flip \nEnter your choice:";
         cin >> choice;
@@ -262,26 +263,29 @@ void flip(Image image){
         }
 
     }
-
+    // Apply Horizontal flip 
     if (choice == "1") {
         for (int i = 0; i < image.width / 2; ++i) {
             for (int j = 0; j < image.height; ++j) {
+                // here we replace first pixel with last one from width and continue others   
                 for (int k = 0; k < 3; ++k) {
                     swap(image(i, j, k), image(image.width - i - 1, j, k));
                 }
             }
         }
     }
+    // Apply Vertical flip 
     else if (choice == "2") {
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height / 2; ++j) {
                 for (int k = 0; k < 3; ++k) {
+                    // here we replace first pixel with last one from height and continue others 
                     swap(image(i, j, k), image(i, image.height - j - 1, k));
                 }
             }
         }
     }
-
+    // make user select name to photo and save it  
     string newFileName;
     while(true){
 
@@ -303,8 +307,9 @@ void rotate(){}
 
 
 void darken_lighten(Image image) {
-
+    // make user select darken or lighten 
     string choice;
+    // check validation of input 
     while (true){
         cout << "Please select:\n1- Lighten filter \n2- Darken filter\nEnter your choice:";
         cin >> choice;
@@ -321,34 +326,35 @@ void darken_lighten(Image image) {
         }
 
     }
-
+    // Apply lighter filter
     if (choice == "1"){
         // Iterate through each pixel of the image
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height; ++j) {
                 for (int k = 0; k < 3; ++k) {
-                    // Make the image lighter by 50%
-                    float newPixelValue = image(i, j, k) * 1.5;
-                    // Clamp pixel value to range [0, 255]
-                    image(i, j, k) = static_cast<unsigned char>(min(max(newPixelValue, 0.0f), 255.0f));
+                    // Make the image lighter by 50% by + 0.5 of light 
+                    float new_Value = image(i, j, k) * 1.5;
+                    // make pixel value in range [0, 255]
+                    image(i, j, k) = static_cast<unsigned char>(min(max(new_Value, 0.0f), 255.0f));
                 }
             }
         }
-
+    //Apply darker one 
     } else if (choice== "2" ){
+        // Iterate through each pixel of the image
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height; ++j) {
                 for (int k = 0; k < 3; ++k) {
-                    // Make the image lighter by 50%
-                    float newPixelValue = image(i, j, k) * 0.5;
-                    // Clamp pixel value to range [0, 255]
-                    image(i, j, k) = static_cast<unsigned char>(min(max(newPixelValue, 0.0f), 255.0f));
+                    // Make the image lighter by 50% by - 0.5 of lights
+                    float new_Value = image(i, j, k) * 0.5;
+                    // make pixel value in range [0, 255]
+                    image(i, j, k) = static_cast<unsigned char>(min(max(new_Value, 0.0f), 255.0f));
                 }
             }
         }
 
     }
-    // Save the modified image
+    // make user select name to photo and save it
     string newFileName;
     while(true){
 
@@ -495,7 +501,7 @@ int main(){
                 case '5':
                     flip(image);
                     break;
-                    
+
 
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
