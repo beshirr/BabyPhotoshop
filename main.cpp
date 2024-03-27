@@ -477,11 +477,12 @@ int main(){
 
             while (true){
 
-                cout << "Enter the image name:" << endl;
-                cout << "->";
-                cin >> fileName;
-
-                input(fileName);
+                do {
+                    cout << "Enter the image name:" << endl;
+                    cout << "->";
+                    cin >> fileName;
+                }
+                while(!input(fileName));
 
                 break;
             }
