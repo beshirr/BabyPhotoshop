@@ -29,21 +29,6 @@ Youssef Ahmed Beshir:
 
 using namespace std;
 
-Image image;
-
-bool input(const string& fileName){
-
-    // for input validation
-    try{
-        image.loadNewImage(fileName);
-        return true;
-    }
-
-    catch(...){
-        return false;
-    }
-}
-
 
 void grey_scale(Image image){
 
@@ -457,6 +442,8 @@ int main(){
     cout << "Welcome to BabyPhotoshop" << endl << endl;
     string menu;
 
+    Image image;
+
     while (true){
 
         // Program Menu
@@ -476,18 +463,19 @@ int main(){
             string fileName;
 
             while (true){
-
-                do {
+                try{
                     cout << "Enter the image name:" << endl;
                     cout << "->";
                     cin >> fileName;
+
+                    image.loadNewImage(fileName);
+
+                    break;
                 }
-                while(!input(fileName));
 
-                break;
+                catch(...){}
+
             }
-
-
 
             cout << endl;
             cout << "Choose a filter: " << endl;
@@ -496,7 +484,6 @@ int main(){
             cout << "3- Gray Scale" << endl;
             cout << "4- Black and white" << endl;
             cout << "5- Flip" << endl;
-
 
             char filter;
             cin >> filter;
