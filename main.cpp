@@ -1,3 +1,25 @@
+// ======================================== Header ==================================================================
+/*
+File: CS112_A3_part1_21_20230161_20230109_20230476.cpp
+Purpose: manipulating images with some filters.
+Authors:
+    Zeyad Mohamed Arafat - 20230161   s21   zeyadarafat833@gmail.com
+    John Ayman Demian    - 20230109   s21   johnayman03@gmail.com
+    Youssef Ahmed Beshir - 20230476   s21   youssefahmedbeshir@gmail.com
+
+Zeyad Mohamed Arafat:
+    Gray scale filter.
+    Resize filter.
+
+John Ayman Demian:
+    Black and White filter.
+    Flip filter.
+
+Youssef Ahmed Beshir:
+    Menu.
+    Invert filter.
+*/
+// ============================================================================================================================
 # include <bits/stdc++.h>
 # include <cmath>
 # include "Image_Class.h"
