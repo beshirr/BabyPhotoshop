@@ -479,7 +479,55 @@ void darken_lighten(Image image) {
 }
 
 
-void crop(){}
+void crop(Image image){
+
+    int x, y, h, w;
+    cout << "enter the index of the starting point(x, y): ";
+    cin >> x >> y;
+    while (true) {
+        if ((x > image.width) or (y > image.height)){
+            cout << "please enter a valid index!" << endl;
+            cout << "enter the index of the starting point(x, y): ";
+            cin >> x >> y;
+        }
+        else {
+            break;
+        }
+    }
+    cout << "enter the size of the cropped image(ex: 600 900): ";
+    cin >> w >> h;
+    while (true) {
+        if ((w + x > image.width) or (h + y > image.height)) {
+            cout << "this size seems too high for the image you are trying to crop!" << endl;
+            cout << "enter the size of the cropped image(ex: 600 900): ";
+            cin >> w >> h;
+        }
+        else {
+            break;
+        }
+    }
+    Image croppedImage(w, h);
+    for (int i = 0; i < w; ++i) {
+        for (int j = 0; j < h; ++j) {
+            croppedImage(i, j, 0) = image(i+x, j+y, 0);
+            croppedImage(i, j, 1) = image(i+x, j+y, 1);
+            croppedImage(i, j, 2) = image(i+x, j+y, 2);
+        }
+    }
+    string newFileName;
+    while (true){
+        // File existence and valid extension handling
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            break;
+        }
+
+        catch(...){}
+    }
+    cout << "Done!" << endl << endl;
+}
 
 
 void frame(){}
@@ -583,7 +631,8 @@ int main(){
             cout << "3- Gray Scale" << endl;
             cout << "4- Black and white" << endl;
             cout << "5- Flip" << endl;
-            cout << "6- merge" << endl;
+            cout << "6- Merge" << endl;
+            cout << "7- Crop" << endl;
 
             char filter;
             cin >> filter;
@@ -632,6 +681,11 @@ int main(){
                         }
                     }
 
+                case '7':
+                    crop(image);
+                    break;
+
+                    
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
             }
