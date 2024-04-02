@@ -132,7 +132,96 @@ void invert(Image image){
 }
 
 
-void merger(Image image){ // not complete.
+void crop_merge(Image image){ // not complete.
+
+    int counter = 0;
+    string mergeFileName;
+    cout << "Please enter the name of the image you want to merge:";
+    cin >> mergeFileName;
+
+    Image mergeImage(mergeFileName);
+
+    if ((image.width == mergeImage.width) and (image.height == mergeImage.height)){
+        Image mergedImage(image.width, image.height);
+
+        for (int i = 0; i < mergedImage.width; ++i) {
+            for (int j = 0; j < mergedImage.height; ++j) {
+
+                if (counter % 2 == 0){
+                    mergedImage(i, j, 0) = image(i, j, 0);
+                    mergedImage(i, j, 1) = image(i, j, 1);
+                    mergedImage(i, j, 2) = image(i, j, 2);
+                    counter++;
+                }
+
+                else{
+                    mergedImage(i, j, 0) = mergeImage(i, j, 0);
+                    mergedImage(i, j, 1) = mergeImage(i, j, 1);
+                    mergedImage(i, j, 2) = mergeImage(i, j, 2);
+                    counter++;
+                }
+            }
+        }
+
+        string newFileName;
+        while(true){
+
+            try{
+                cout << "Please enter the new image name:";
+                cin >> newFileName;
+                mergedImage.saveImage(newFileName);
+                counter = 0;
+                cout << "Done!" << endl << endl;
+                break;
+            }
+
+            catch(...){}
+        }
+
+    }
+
+    else{
+        Image mergedImage(min(image.width , mergeImage.width), min(image.height , mergeImage.height));
+
+        for (int i = 0; i < mergedImage.width; ++i) {
+            for (int j = 0; j < mergedImage.height; ++j) {
+
+                if (counter % 2 == 0){
+                    mergedImage(i, j, 0) = image(i, j, 0);
+                    mergedImage(i, j, 1) = image(i, j, 1);
+                    mergedImage(i, j, 2) = image(i, j, 2);
+                    counter++;
+                }
+
+                else{
+                    mergedImage(i, j, 0) = mergeImage(i, j, 0);
+                    mergedImage(i, j, 1) = mergeImage(i, j, 1);
+                    mergedImage(i, j, 2) = mergeImage(i, j, 2);
+                    counter++;
+                }
+            }
+        }
+
+        string newFileName;
+        while(true){
+
+            try{
+                cout << "Please enter the new image name:";
+                cin >> newFileName;
+                mergedImage.saveImage(newFileName);
+                counter = 0;
+                cout << "Done!" << endl << endl;
+                break;
+            }
+
+            catch(...){}
+        }
+
+    }
+}
+
+
+void resize_merge(Image image){ // not complete.
 
     int counter = 0;
     string mergeFileName;
@@ -494,6 +583,7 @@ int main(){
             cout << "3- Gray Scale" << endl;
             cout << "4- Black and white" << endl;
             cout << "5- Flip" << endl;
+            cout << "6- merge" << endl;
 
             char filter;
             cin >> filter;
@@ -519,6 +609,28 @@ int main(){
                 case '5':
                     flip(image);
                     break;
+
+                case '6':
+                    string mergeType;
+                    cout << "choose the type of merging:" << endl;
+                    cout << "1- merge by resize" << endl;
+                    cout << "2- merge by crop" << endl;
+                    cout << "->";
+                    cin >> mergeType;
+                    while (true) {
+                        if (mergeType == "1") {
+                            resize_merge(image);
+                            break;
+                        }
+                        else if (mergeType == "2") {
+                            crop_merge(image);
+                            break;
+                        }
+                        else {
+                            cout << "please choose a valid option" << endl;
+                            cin >> mergeType;
+                        }
+                    }
 
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
