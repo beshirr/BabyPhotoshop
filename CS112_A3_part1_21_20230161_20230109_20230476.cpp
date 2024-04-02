@@ -588,6 +588,7 @@ int main(){
 
     cout << "Welcome to BabyPhotoshop" << endl << endl;
     string menu;
+    string mergeType;
 
     Image image;
 
@@ -660,7 +661,6 @@ int main(){
                     break;
 
                 case '6':
-                    string mergeType;
                     cout << "choose the type of merging:" << endl;
                     cout << "1- merge by resize" << endl;
                     cout << "2- merge by crop" << endl;
@@ -680,6 +680,7 @@ int main(){
                             cin >> mergeType;
                         }
                     }
+                    break;
 
                 case '7':
                     crop(image);
