@@ -520,7 +520,7 @@ void crop(Image image){
         try{
             cout << "Please enter the new image name:";
             cin >> newFileName;
-            image.saveImage(newFileName);
+            croppedImage.saveImage(newFileName);
             break;
         }
 
