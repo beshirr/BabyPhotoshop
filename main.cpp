@@ -136,10 +136,17 @@ void crop_merge(Image image){ // not complete.
 
     int counter = 0;
     string mergeFileName;
-    cout << "Please enter the name of the image you want to merge:";
-    cin >> mergeFileName;
-
-    Image mergeImage(mergeFileName);
+    Image mergeImage;
+    while (true){
+        try{
+            cout << "Enter the name of the image you want to merge:" << endl;
+            cout << "->";
+            cin >> mergeFileName;
+            mergeImage.loadNewImage(mergeFileName);
+            break;
+        }
+        catch(...){}
+    }
 
     if ((image.width == mergeImage.width) and (image.height == mergeImage.height)){
         Image mergedImage(image.width, image.height);
@@ -225,10 +232,20 @@ void resize_merge(Image image){ // not complete.
 
     int counter = 0;
     string mergeFileName;
-    cout << "Please enter the name of the image you want to merge:";
-    cin >> mergeFileName;
+    Image mergeImage;
+    while (true){
+        try{
+            cout << "Enter the name of the image you want to merge:" << endl;
+            cout << "->";
+            cin >> mergeFileName;
+            mergeImage.loadNewImage(mergeFileName);
+            break;
+        }
 
-    Image mergeImage(mergeFileName);
+        catch(...){}
+    }
+
+
 
     if ((image.width == mergeImage.width) and (image.height == mergeImage.height)){
         Image mergedImage(image.width, image.height);
@@ -482,12 +499,18 @@ void darken_lighten(Image image) {
 void crop(Image image){
 
     int x, y, h, w;
-    cout << "enter the index of the starting point(x, y): ";
+    cout << "enter the index of the starting point(ex: 600 500): ";
     cin >> x >> y;
     while (true) {
-        if ((x > image.width) or (y > image.height)){
-            cout << "please enter a valid index!" << endl;
-            cout << "enter the index of the starting point(x, y): ";
+        if (cin.fail()) {
+            cout << "please use a valid index!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> x >> y;
+        }
+        else if ((x > image.width) or (y > image.height)){
+            cout << "this index seems too big for the image!" << endl;
+            cout << "enter the index of the starting point(ex: 600 500): ";
             cin >> x >> y;
         }
         else {
@@ -497,7 +520,13 @@ void crop(Image image){
     cout << "enter the size of the cropped image(ex: 600 900): ";
     cin >> w >> h;
     while (true) {
-        if ((w + x > image.width) or (h + y > image.height)) {
+        if (cin.fail()) {
+            cout << "please use a valid size!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> x >> y;
+        }
+        else if ((w + x > image.width) or (h + y > image.height)) {
             cout << "this size seems too high for the image you are trying to crop!" << endl;
             cout << "enter the size of the cropped image(ex: 600 900): ";
             cin >> w >> h;
