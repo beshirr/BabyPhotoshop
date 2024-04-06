@@ -135,7 +135,7 @@ void invert(Image image){
 }
 
 
-void crop_merge(Image image){ // not complete.
+void crop_merge(Image image){
 
     int counter = 0; // the counter will help in the merging part.
     // getting the  image that the user want to merge and checking the validity.
@@ -226,7 +226,6 @@ void crop_merge(Image image){ // not complete.
                 cout << "Please enter the new image name:";
                 cin >> newFileName;
                 mergedImage.saveImage(newFileName);
-                counter = 0;
                 cout << "Done!" << endl << endl;
                 break;
             }
@@ -238,7 +237,7 @@ void crop_merge(Image image){ // not complete.
 }
 
 
-void resize_merge(Image image){ // not complete.
+void resize_merge(Image image){
 
     int counter = 0; // the counter will help in the merging part.
     // getting the  image that the user want to merge and checking the validity.
@@ -778,6 +777,46 @@ void resize(Image image){
 void blur(){}
 
 
+void purple(Image image){ // not complete
+
+    int counter = 0;
+    Image purpleImage(image.width, image.height);
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+
+            if (counter % 2 == 0){
+                purpleImage(i, j, 0) = image(i, j, 0);
+                purpleImage(i, j, 1) = image(i, j, 1);
+                purpleImage(i, j, 2) = image(i, j, 2);
+                counter++;
+            }
+
+            else{
+                purpleImage(i, j, 0) = 138;
+                purpleImage(i, j, 1) = 40;
+                purpleImage(i, j, 2) = 138;
+                counter++;
+            }
+        }
+    }
+
+    // then we save the merged image and check the validity.
+    string newFileName;
+    while(true){
+
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            purpleImage.saveImage(newFileName);
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        catch(...){}
+    }
+}
+
+
 
 int main(){
 
@@ -829,7 +868,7 @@ int main(){
             cout << "5- Flip" << endl;
             cout << "6- Merge" << endl;
             cout << "7- Crop" << endl;
-            cout << "8- Rotate" << endl;
+            cout << "8- Purple" << endl;
 
             char filter;
             cin >> filter;
@@ -882,7 +921,10 @@ int main(){
                     crop(image);
                     break;
 
-                
+                case '8':
+                    purple(image);
+                    break;
+
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
             }
