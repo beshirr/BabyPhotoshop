@@ -703,7 +703,29 @@ void crop(Image image){
 }
 
 
-void frame(){}
+void frame(Image image){
+    while (true){
+        string option;
+        cout << "Simple (S/s) or Fancy (F/f) frame?";
+        cin >> option;
+
+        if (toupper(option == "S")){
+
+            break;
+        }
+
+        else if (toupper(option == "F")){
+
+            break;
+        }
+
+        else
+            cout << "Invalid option, try again" << endl;
+    }
+
+
+
+}
 
 
 void detect_edges(){}
@@ -860,11 +882,7 @@ int main(){
                     crop(image);
                     break;
 
-                case '8':
-                    rotate(image);
-                    break;
-
-
+                
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
             }
