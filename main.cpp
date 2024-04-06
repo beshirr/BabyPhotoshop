@@ -869,6 +869,8 @@ int main(){
             cout << "6- Merge" << endl;
             cout << "7- Crop" << endl;
             cout << "8- Purple" << endl;
+            cout << "9- Rotate" << endl;
+            cout << "10- Frame" << endl;
 
             char filter;
             cin >> filter;
