@@ -872,73 +872,33 @@ int main(){
             cout << "9- Rotate" << endl;
             cout << "10- Frame" << endl;
 
-            char filter;
+            string filter;
             cin >> filter;
 
-            switch(filter){
+            if (filter == "1")
+                invert(image);
+            else if (filter == "2")
+                resize(image);
+            else if (filter == "3")
+                grey_scale(image);
+            else if (filter == "4")
+                black_and_white(image);
+            else if (filter == "5")
+                flip(image);
+            else if (filter == "6")
+                merge(image);
+            else if (filter == "7")
+                crop(image);
+            else if (filter == "8")
+                purple(image);
+            else if (filter == "9")
+                rotate(image);
+            else if (filter == "10")
+                frame(image);
+            else
+                cout << "Invalid choice, try again" << endl << endl;
 
-                case '1':
-                    invert(image);
-                    break;
-
-                case '2':
-                    resize(image);
-                    break;
-
-                case '3':
-                    grey_scale(image);
-                    break;
-
-                case '4':
-                    black_and_white(image);
-                    break;
-
-                case '5':
-                    flip(image);
-                    break;
-
-                case '6':
-                    cout << "choose the type of merging:" << endl;
-                    cout << "1- merge by resize" << endl;
-                    cout << "2- merge by crop" << endl;
-                    cout << "->";
-                    cin >> mergeType;
-                    while (true) {
-                        if (mergeType == "1") {
-                            resize_merge(image);
-                            break;
-                        }
-                        else if (mergeType == "2") {
-                            crop_merge(image);
-                            break;
-                        }
-                        else {
-                            cout << "please choose a valid option" << endl;
-                            cin >> mergeType;
-                        }
-                    }
-                    break;
-
-                case '7':
-                    crop(image);
-                    break;
-
-                case '8':
-                    purple(image);
-                    break;
-
-
-                case '9':
-                    rotate(image);
-                    break;
-
-                case '10':
-                    frame;
-                    break;
-
-                default:
-                    cout << "Invalid choice, try again." << endl << endl;
-            }
+            
 
         }
 
