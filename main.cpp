@@ -438,7 +438,125 @@ void flip(Image image){
 }
 
 
-void rotate(){}
+void rotate(Image image){
+    int newHeight, newWidth;
+
+    string degree;
+
+    while (true){
+        cout << "(90, 180, 270)?" << endl;
+        cout << "->";
+        cin >> degree;
+
+        if (degree == "90"){
+
+            // New image dimensions
+            newHeight = image.width;
+            newWidth = image.height;
+
+            Image newImage(newWidth, newHeight);
+
+            // Transposing the image matrix 90 degrees
+            for (int i = 0 ; i < newWidth ; ++i){
+                for (int j = 0 ; j < newHeight ; ++j){
+
+                    for (int k = 0; k < 3 ; ++k){
+                        newImage(i, j, k) = image(j, newWidth - i - 1, k);
+                    }
+
+                }
+            }
+
+            // Saving the image
+            while(true){
+                string newFileName;
+
+                try{
+                    cout << "Please enter the new image name:";
+                    cin >> newFileName;
+                    newImage.saveImage(newFileName);
+                    break;
+                }
+
+                catch(...){}
+            }
+
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        else if (degree == "180"){
+
+            Image newImage(image.width, image.height);
+
+            // Transpoding the image matrix 180 degree
+            for (int i = 0; i < image.width; ++i){
+                for (int j = 0; j < image.height; ++j){
+
+                    for (int k = 0; k < 3; ++k){
+                        newImage(i, j, k) = image(i, (image.height) - j - 1, k);
+                    }
+                }
+            }
+
+            // Saving the image
+            while(true){
+
+                string newFileName;
+                try{
+                    cout << "Please enter the new image name:";
+                    cin >> newFileName;
+                    newImage.saveImage(newFileName);
+                    break;
+                }
+
+                catch(...){}
+            }
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        else if (degree == "270"){
+
+            // New image dimensions
+            newHeight = image.width;
+            newWidth = image.height;
+
+            Image newImage(newWidth, newHeight);
+
+            // Transposig the image matrix 270 degree
+            for (int i = 0 ; i < newWidth ; ++i){
+                for (int j = 0 ; j < newHeight ; ++j){
+
+                    for (int k = 0; k < 3 ; ++k){
+                        newImage(i, j , k) = image(j, i , k);
+                    }
+
+                }
+            }
+
+            // Saving the image
+            while(true){
+                string newFileName;
+                try{
+                    cout << "Please enter the new image name:";
+                    cin >> newFileName;
+                    newImage.saveImage(newFileName);
+                    break;
+                }
+
+                catch(...){}
+            }
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        else cout << "Invalid degree." << endl;
+    }
+
+
+
+}
 
 
 void darken_lighten(Image image) {
@@ -689,6 +807,7 @@ int main(){
             cout << "5- Flip" << endl;
             cout << "6- Merge" << endl;
             cout << "7- Crop" << endl;
+            cout << "8- Rotate" << endl;
 
             char filter;
             cin >> filter;
@@ -741,7 +860,11 @@ int main(){
                     crop(image);
                     break;
 
-                    
+                case '8':
+                    rotate(image);
+                    break;
+
+
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
             }
