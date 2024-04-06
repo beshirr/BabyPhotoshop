@@ -703,17 +703,21 @@ void crop(Image image){
 
 
 void frame(Image image){
+
     while (true){
+
+        Image img;
+
         string option;
         cout << "Simple (S/s) or Fancy (F/f) frame?";
         cin >> option;
 
-        if (toupper(option == "S")){
+        if (option == "S" || option == "s"){
 
             break;
         }
 
-        else if (toupper(option == "F")){
+        else if (option == "F" || option == "f"){
 
             break;
         }
@@ -886,7 +890,7 @@ int main(){
             else if (filter == "5")
                 flip(image);
             else if (filter == "6")
-                merge(image);
+                resize_merge(image);
             else if (filter == "7")
                 crop(image);
             else if (filter == "8")
@@ -897,9 +901,6 @@ int main(){
                 frame(image);
             else
                 cout << "Invalid choice, try again" << endl << endl;
-
-            
-
         }
 
         else
