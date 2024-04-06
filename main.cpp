@@ -29,6 +29,9 @@ Youssef Ahmed Beshir:
 using namespace std;
 
 
+void save(){}
+
+
 void grey_scale(Image image){
 
     // iterate through the image matrix
@@ -134,7 +137,8 @@ void invert(Image image){
 
 void crop_merge(Image image){ // not complete.
 
-    int counter = 0;
+    int counter = 0; // the counter will help in the merging part.
+    // getting the  image that the user want to merge and checking the validity.
     string mergeFileName;
     Image mergeImage;
     while (true){
@@ -148,9 +152,11 @@ void crop_merge(Image image){ // not complete.
         catch(...){}
     }
 
+    // if the two images have the same width and height we start merging them directly.
     if ((image.width == mergeImage.width) and (image.height == mergeImage.height)){
         Image mergedImage(image.width, image.height);
 
+        // the merging is done by taking a pixel of each image (one pixel from image 1then one pixel from image2)
         for (int i = 0; i < mergedImage.width; ++i) {
             for (int j = 0; j < mergedImage.height; ++j) {
 
@@ -170,6 +176,7 @@ void crop_merge(Image image){ // not complete.
             }
         }
 
+        // then save the merged image and check the validity.
         string newFileName;
         while(true){
 
@@ -187,9 +194,11 @@ void crop_merge(Image image){ // not complete.
 
     }
 
+    // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
     else{
         Image mergedImage(min(image.width , mergeImage.width), min(image.height , mergeImage.height));
 
+        // same algorithm for merging.
         for (int i = 0; i < mergedImage.width; ++i) {
             for (int j = 0; j < mergedImage.height; ++j) {
 
@@ -209,6 +218,7 @@ void crop_merge(Image image){ // not complete.
             }
         }
 
+        // then we save the merged image and check the validity.
         string newFileName;
         while(true){
 
@@ -230,7 +240,8 @@ void crop_merge(Image image){ // not complete.
 
 void resize_merge(Image image){ // not complete.
 
-    int counter = 0;
+    int counter = 0; // the counter will help in the merging part.
+    // getting the  image that the user want to merge and checking the validity.
     string mergeFileName;
     Image mergeImage;
     while (true){
@@ -246,10 +257,12 @@ void resize_merge(Image image){ // not complete.
     }
 
 
-
+    // if the two images have the same width and height we start merging without resizing them.
     if ((image.width == mergeImage.width) and (image.height == mergeImage.height)){
         Image mergedImage(image.width, image.height);
 
+        // the merging is done by taking a pixel of each image (one pixel from image 1then one pixel from image2)
+        // this is done with the help of the counter.
         for (int i = 0; i < mergedImage.width; ++i) {
             for (int j = 0; j < mergedImage.height; ++j) {
 
@@ -269,6 +282,7 @@ void resize_merge(Image image){ // not complete.
             }
         }
 
+        // then we save the merged image and check the validity.
         string newFileName;
         while(true){
 
@@ -286,8 +300,12 @@ void resize_merge(Image image){ // not complete.
 
     }
 
+    // if both images don't have the same width or height, then we resize them first before merging.
     else{
         Image mergedImage(max(image.width , mergeImage.width), max(image.height , mergeImage.height));
+
+        // resizing the first image.
+        // we will use the same algorithm as in the resizing function.
         Image resizedImage_1(max(image.width, mergeImage.width), max(image.height , mergeImage.height));
         double widthRatio = static_cast<double>(image.width) / max(image.width , mergeImage.width);
         double heightRatio = static_cast<double>(image.height) / max(image.height , mergeImage.height);
@@ -299,6 +317,7 @@ void resize_merge(Image image){ // not complete.
             }
         }
 
+        // resizing the second image.
         Image resizedImage_2(max(image.width, mergeImage.width), max(image.height , mergeImage.height));
         widthRatio = static_cast<double>(mergeImage.width) / max(image.width , mergeImage.width);
         heightRatio = static_cast<double>(mergeImage.height) / max(image.height , mergeImage.height);
@@ -310,6 +329,7 @@ void resize_merge(Image image){ // not complete.
             }
         }
 
+        // then after resizing both images we do the merging.
         for (int i = 0; i < mergedImage.width; ++i) {
             for (int j = 0; j < mergedImage.height; ++j) {
 
@@ -329,6 +349,7 @@ void resize_merge(Image image){ // not complete.
             }
         }
 
+        // saving the merged image and checking the validity.
         string newFileName;
         while(true){
 
@@ -500,6 +521,7 @@ void crop(Image image){
 
     int x, y, h, w;
     cout << "enter the index of the starting point(ex: 600 500): ";
+    // getting the index of the starting point and checking the validity.
     cin >> x >> y;
     while (true) {
         if (cin.fail()) {
@@ -518,6 +540,7 @@ void crop(Image image){
         }
     }
     cout << "enter the size of the cropped image(ex: 600 900): ";
+    // getting the width and height (size) of the cropped image and checking the validity.
     cin >> w >> h;
     while (true) {
         if (cin.fail()) {
@@ -535,14 +558,17 @@ void crop(Image image){
             break;
         }
     }
+    // create empty image for the cropped part.
     Image croppedImage(w, h);
     for (int i = 0; i < w; ++i) {
         for (int j = 0; j < h; ++j) {
+            // fill each pixel in the cropped image with the colors from the original one to show the cropped part.
             croppedImage(i, j, 0) = image(i+x, j+y, 0);
             croppedImage(i, j, 1) = image(i+x, j+y, 1);
             croppedImage(i, j, 2) = image(i+x, j+y, 2);
         }
     }
+    // saving the cropped image.
     string newFileName;
     while (true){
         // File existence and valid extension handling
