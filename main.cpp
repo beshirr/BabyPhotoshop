@@ -925,6 +925,15 @@ int main(){
                     purple(image);
                     break;
 
+
+                case '9':
+                    rotate(image);
+                    break;
+
+                case '10':
+                    frame;
+                    break;
+
                 default:
                     cout << "Invalid choice, try again." << endl << endl;
             }
