@@ -29,9 +29,6 @@ Youssef Ahmed Beshir:
 using namespace std;
 
 
-void save(){}
-
-
 void grey_scale(Image image){
 
     // iterate through the image matrix
@@ -488,7 +485,7 @@ void rotate(Image image){
 
             Image newImage(image.width, image.height);
 
-            // Transpoding the image matrix 180 degree
+            // Transposing the image matrix 180 degree
             for (int i = 0; i < image.width; ++i){
                 for (int j = 0; j < image.height; ++j){
 
@@ -523,7 +520,7 @@ void rotate(Image image){
 
             Image newImage(newWidth, newHeight);
 
-            // Transposig the image matrix 270 degree
+            // Transposing the image matrix 270 degree
             for (int i = 0 ; i < newWidth ; ++i){
                 for (int j = 0 ; j < newHeight ; ++j){
 
@@ -731,7 +728,7 @@ void frame(Image image){
 }
 
 
-void detect_edges(){}
+void detect_edges(Image image){}
 
 
 void resize(Image image){
@@ -778,7 +775,7 @@ void resize(Image image){
 }
 
 
-void blur(){}
+void blur(Image image){}
 
 
 void purple(Image image){ // not complete
@@ -875,6 +872,7 @@ int main(){
             cout << "8- Purple" << endl;
             cout << "9- Rotate" << endl;
             cout << "10- Frame" << endl;
+            cout << "11- Darken / Lighten" << endl;
 
             string filter;
             cin >> filter;
@@ -899,6 +897,12 @@ int main(){
                 rotate(image);
             else if (filter == "10")
                 frame(image);
+            else if (filter == "11")
+                darken_lighten(image);
+            else if (filter == "12")
+                blur(image);
+            else if (filter == "13")
+                detect_edges(image);
             else
                 cout << "Invalid choice, try again" << endl << endl;
         }
