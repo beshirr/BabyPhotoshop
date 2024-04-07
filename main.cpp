@@ -873,6 +873,8 @@ int main(){
             cout << "9- Rotate" << endl;
             cout << "10- Frame" << endl;
             cout << "11- Darken / Lighten" << endl;
+            cout << "12- Blur" << endl;
+            cout << "13- Detect edges" << endl;
 
             string filter;
             cin >> filter;
