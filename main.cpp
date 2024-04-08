@@ -637,26 +637,18 @@ void resize(Image image){
 void blur(){}
 
 
-void purple(Image image){ // not complete
+void purple(Image image) {
 
-    int counter = 0;
     Image purpleImage(image.width, image.height);
+    double redRatio, greenRatio, blueRatio;
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
-
-            if (counter % 2 == 0){
-                purpleImage(i, j, 0) = image(i, j, 0);
-                purpleImage(i, j, 1) = image(i, j, 1);
-                purpleImage(i, j, 2) = image(i, j, 2);
-                counter++;
-            }
-
-            else{
-                purpleImage(i, j, 0) = 138;
-                purpleImage(i, j, 1) = 40;
-                purpleImage(i, j, 2) = 138;
-                counter++;
-            }
+            redRatio = image(i, j, 0) / 255.0;
+            purpleImage(i, j, 0) = min((int)(128  * redRatio * 1.5), 255);
+            greenRatio = image(i, j, 1) / 255.0;
+            purpleImage(i, j, 1) = min((int)(50 * greenRatio * 1.5), 255);
+            blueRatio = image(i, j, 2) / 255.0;
+            purpleImage(i, j, 2) = min((int)(128 * blueRatio * 1.5), 255);
         }
     }
 
