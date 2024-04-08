@@ -191,7 +191,7 @@ void crop_merge(Image image){
 
     }
 
-    // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
+        // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
     else{
         Image mergedImage(min(image.width , mergeImage.width), min(image.height , mergeImage.height));
 
@@ -296,7 +296,7 @@ void resize_merge(Image image){
 
     }
 
-    // if both images don't have the same width or height, then we resize them first before merging.
+        // if both images don't have the same width or height, then we resize them first before merging.
     else{
         Image mergedImage(max(image.width , mergeImage.width), max(image.height , mergeImage.height));
 
@@ -404,7 +404,7 @@ void flip(Image image){
         }
     }
 
-    // Vertical flip
+        // Vertical flip
     else if (choice == "2") {
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height / 2; ++j) {
@@ -598,7 +598,7 @@ void darken_lighten(Image image) {
 
     }
 
-    //Apply darker filter
+        //Apply darker filter
     else if (choice== "2" ){
         // Iterate through each pixel of the image
         for (int i = 0; i < image.width; ++i) {
@@ -758,12 +758,79 @@ void frame(Image image){
             cout << "Invalid option, try again" << endl;
     }
 
-
-
 }
 
 
-void detect_edges(Image image){}
+
+// Function to detect edges in the image using Sobel operator
+void detect_edges(Image image) {
+    for (int i = 0; i < image.width; i++){
+        for (int j = 0; j < image.height; j++){
+
+            // calculating the average of all the colors(Green, Red, Blue) in each pixel.
+            int avg = (image(i, j, 0) + image(i, j, 1) +
+                       image(i, j, 2)) / 3;
+            // assigning the average to all the colors in each pixel to get a gray scale.
+            image(i, j, 0) = avg;
+            image(i, j, 1) = avg;
+            image(i, j, 2) = avg;
+        }
+
+    }
+    // Create an image to store the result
+    Image resultImage(image.width, image.height);
+
+    // Iterate over each pixel of the image, excluding the border
+    for (int i = 1; i < image.height - 1; i++) {
+        for (int j = 1; j < image.width - 1; j++) {
+            for (int k = 0; k < image.channels; ++k) {
+                int valuex = 0, valuey = 0; // Reset valuex and valuey for each pixel
+
+                // Compute valuex
+                valuex += image(i - 1, j - 1, k) * -1;
+                valuex += image(i - 1, j, k) * 0;
+                valuex += image(i - 1, j + 1, k) * 1;
+                valuex += image(i, j - 1, k) * -2;
+                valuex += image(i, j, k) * 0;
+                valuex += image(i, j + 1, k) * 2;
+                valuex += image(i + 1, j - 1, k) * -1;
+                valuex += image(i + 1, j, k) * 0;
+                valuex += image(i + 1, j + 1, k) * 1;
+
+                // Compute valuey
+                valuey += image(i - 1, j - 1, k) * 1;
+                valuey += image(i - 1, j, k) * 2;
+                valuey += image(i - 1, j + 1, k) * 1;
+                valuey += image(i, j - 1, k) * 0;
+                valuey += image(i, j, k) * 0;
+                valuey += image(i, j + 1, k) * 0;
+                valuey += image(i + 1, j - 1, k) * -1;
+                valuey += image(i + 1, j, k) * -2;
+                valuey += image(i + 1, j + 1, k) * -1;
+
+                // Compute edge magnitude
+                double edgeMagnitude = sqrt(valuex * valuex + valuey * valuey);
+
+                // Assign the edge magnitude to the corresponding pixel of the result image
+                resultImage(i, j, k) = (edgeMagnitude > 100 ? 0 : 255);
+            }
+        }
+    }
+
+    // Saving the resulting image
+    string newFileName;
+    while (true) {
+        try {
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            resultImage.saveImage(newFileName);
+            cout << "Done!" << endl << endl;
+            break;
+        } catch (...) {
+        }
+    }
+}
+
 
 
 void resize(Image image){
@@ -813,26 +880,18 @@ void resize(Image image){
 void blur(Image image){}
 
 
-void purple(Image image){ // not complete
+void purple(Image image) {
 
-    int counter = 0;
     Image purpleImage(image.width, image.height);
+    double redRatio, greenRatio, blueRatio;
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
-
-            if (counter % 2 == 0){
-                purpleImage(i, j, 0) = image(i, j, 0);
-                purpleImage(i, j, 1) = image(i, j, 1);
-                purpleImage(i, j, 2) = image(i, j, 2);
-                counter++;
-            }
-
-            else{
-                purpleImage(i, j, 0) = 138;
-                purpleImage(i, j, 1) = 40;
-                purpleImage(i, j, 2) = 138;
-                counter++;
-            }
+            redRatio = image(i, j, 0) / 255.0;
+            purpleImage(i, j, 0) = min((int)(128  * redRatio * 1.5), 255);
+            greenRatio = image(i, j, 1) / 255.0;
+            purpleImage(i, j, 1) = min((int)(50 * greenRatio * 1.5), 255);
+            blueRatio = image(i, j, 2) / 255.0;
+            purpleImage(i, j, 2) = min((int)(128 * blueRatio * 1.5), 255);
         }
     }
 
@@ -924,8 +983,27 @@ int main(){
                 black_and_white(image);
             else if (filter == "5")
                 flip(image);
-            else if (filter == "6")
-                resize_merge(image);
+            else if (filter == "6"){
+                cout << "choose the type of merging:" << endl;
+                cout << "1- merge by resize" << endl;
+                cout << "2- merge by crop" << endl;
+                cout << "->";
+                cin >> mergeType;
+                while (true) {
+                    if (mergeType == "1") {
+                        resize_merge(image);
+                        break;
+                    }
+                    else if (mergeType == "2") {
+                        crop_merge(image);
+                        break;
+                    }
+                    else {
+                        cout << "please choose a valid option" << endl;
+                        cin >> mergeType;
+                    }
+                }
+            }
             else if (filter == "7")
                 crop(image);
             else if (filter == "8")
