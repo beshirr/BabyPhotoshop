@@ -985,6 +985,31 @@ void purple(Image image) {
     }
 }
 
+void infrared(Image image){
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            image(i,j,0) = 255;
+            image(i,j,1) = 255 - image(i,j,1) ;
+            image(i,j,2) = 255 - image(i,j,2) ;
+
+            }
+
+        }
+    string newFileName;
+    while(true){
+    try{
+    cout << "Please enter the new image name:";
+    cin >> newFileName;
+    image.saveImage(newFileName);
+    cout << "Done!" << endl << endl;
+    break;
+    }
+
+    catch(...){}
+    }
+
+}
+
 
 
 int main(){
@@ -1043,6 +1068,7 @@ int main(){
             cout << "11- Darken / Lighten" << endl;
             cout << "12- Blur" << endl;
             cout << "13- Detect edges" << endl;
+            cout << "14- infrared" << endl;
 
             string filter;
             cin >> filter;
@@ -1092,6 +1118,8 @@ int main(){
                 blur(image);
             else if (filter == "13")
                 detect_edges(image);
+            else if (filter== "14")
+                infrared(image);
             else
                 cout << "Invalid choice, try again" << endl << endl;
         }
