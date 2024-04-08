@@ -702,8 +702,59 @@ void crop(Image image){
 void frame(Image image){
 
     while (true){
+        // Setting the RGB for each color
+        int red, green, blue;
 
-        Image img;
+        string color;
+        while(1){
+            cout << "Choose a color:" << endl;
+            cout << "1- Black" << endl;
+            cout << "2- White" << endl;
+            cout << "3- Red" << endl;
+            cout << "4- Green" << endl;
+            cout << "5- Blue" << endl;
+            cin >> color;
+
+            if (color == "1"){
+                red = 0;
+                green = 0;
+                blue = 0;
+                break;
+            }
+
+            else if (color == "2"){
+                red = 255;
+                green = 255;
+                blue = 255;
+                break;
+            }
+
+            else if (color == "3"){
+                red = 176;
+                green = 91;
+                blue = 71;
+                break;
+            }
+
+            else if (color == "4"){
+                red = 102;
+                green = 179;
+                blue = 80;
+                break;
+            }
+
+            else if (color == "5"){
+                red = 65;
+                green = 105;
+                blue = 225;
+                break;
+            }
+
+            else
+                cout << "Invalid option, try again" << endl << endl;
+        }
+
+
 
         string option;
         cout << "Simple (S/s) or Fancy (F/f) frame?";
@@ -711,26 +762,49 @@ void frame(Image image){
 
         if (option == "S" || option == "s"){
 
-            unsigned int frameSize = 0;
-            frameSize = ((image.width * image.height) / (image.width + image.height)) * 0.05;
-            cout << frameSize << endl;
+            // Frame size
+            unsigned int frameSize = ((image.width * image.height)
+            / (image.width + image.height)) * 0.05;
 
-            while(frameSize --){
-                for (int i = 0 ; i < image.width ; ++i){
-                    for(int j = 0; j < image.height; ++j){
-                        for (int k = 0; k < 3; ++k){
+            // Frame boundries
+            int x = image.width - 1;
+            int y = image.height - 1;
 
-                            image(i, frameSize, k) = 0;
-                            image(frameSize, j, k) = 0;
-                            image(i, (image.height - 1) - frameSize, k) = 0;
-                            image((image.width - 1) - frameSize, j, k) = 0;
+            // Up and Down frame
+            while(frameSize--){
+                for(int i = 0; i < image.width; ++i){
+                    // Up
+                    image(i, frameSize, 0) = red;
+                    image(i, frameSize, 1) = green;
+                    image(i, frameSize, 2) = blue;
 
-                        }
-                    }
-
+                    // Down
+                    image(i, y - frameSize, 0) = red;
+                    image(i, y - frameSize, 1) = green;
+                    image(i, y - frameSize, 2) = blue;
                 }
             }
-            
+
+            // Updating the value since it became zero due to the while loop
+            frameSize = ((image.width * image.height)
+            / (image.width + image.height)) * 0.05;
+
+            // Right and left frame
+            while(frameSize--){
+                for (int i = 0; i < image.height; ++i){
+                    // Right
+                    image(frameSize, i, 0) = red;
+                    image(frameSize, i, 1) = green;
+                    image(frameSize, i, 2) = blue;
+
+                    // Left
+                    image(x - frameSize, i, 0) = red;
+                    image(x - frameSize, i, 1) = green;
+                    image(x - frameSize, i, 2) = blue;
+                }
+            }
+
+
             while(true){
 
                 string newFileName;
