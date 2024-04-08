@@ -729,6 +729,19 @@ void frame(Image image){
 
 // Function to detect edges in the image using Sobel operator
 void detect_edges(Image image) {
+    for (int i = 0; i < image.width; i++){
+        for (int j = 0; j < image.height; j++){
+
+            // calculating the average of all the colors(Green, Red, Blue) in each pixel.
+            int avg = (image(i, j, 0) + image(i, j, 1) +
+                       image(i, j, 2)) / 3;
+            // assigning the average to all the colors in each pixel to get a gray scale.
+            image(i, j, 0) = avg;
+            image(i, j, 1) = avg;
+            image(i, j, 2) = avg;
+        }
+
+    }
     // Create an image to store the result
     Image resultImage(image.width, image.height);
 
@@ -764,7 +777,7 @@ void detect_edges(Image image) {
                 double edgeMagnitude = sqrt(valuex * valuex + valuey * valuey);
 
                 // Assign the edge magnitude to the corresponding pixel of the result image
-                resultImage(i, j, k) = (edgeMagnitude > 255 ? 0 : 255);
+                resultImage(i, j, k) = (edgeMagnitude > 100 ? 0 : 255);
             }
         }
     }
