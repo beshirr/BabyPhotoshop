@@ -29,9 +29,6 @@ Youssef Ahmed Beshir:
 using namespace std;
 
 
-void save(){}
-
-
 void grey_scale(Image image){
 
     // iterate through the image matrix
@@ -194,7 +191,7 @@ void crop_merge(Image image){
 
     }
 
-    // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
+        // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
     else{
         Image mergedImage(min(image.width , mergeImage.width), min(image.height , mergeImage.height));
 
@@ -299,7 +296,7 @@ void resize_merge(Image image){
 
     }
 
-    // if both images don't have the same width or height, then we resize them first before merging.
+        // if both images don't have the same width or height, then we resize them first before merging.
     else{
         Image mergedImage(max(image.width , mergeImage.width), max(image.height , mergeImage.height));
 
@@ -407,7 +404,7 @@ void flip(Image image){
         }
     }
 
-    // Vertical flip
+        // Vertical flip
     else if (choice == "2") {
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height / 2; ++j) {
@@ -437,7 +434,125 @@ void flip(Image image){
 }
 
 
-void rotate(){}
+void rotate(Image image){
+    int newHeight, newWidth;
+
+    string degree;
+
+    while (true){
+        cout << "(90, 180, 270)?" << endl;
+        cout << "->";
+        cin >> degree;
+
+        if (degree == "90"){
+
+            // New image dimensions
+            newHeight = image.width;
+            newWidth = image.height;
+
+            Image newImage(newWidth, newHeight);
+
+            // Transposing the image matrix 90 degrees
+            for (int i = 0 ; i < newWidth ; ++i){
+                for (int j = 0 ; j < newHeight ; ++j){
+
+                    for (int k = 0; k < 3 ; ++k){
+                        newImage(i, j, k) = image(j, newWidth - i - 1, k);
+                    }
+
+                }
+            }
+
+            // Saving the image
+            while(true){
+                string newFileName;
+
+                try{
+                    cout << "Please enter the new image name:";
+                    cin >> newFileName;
+                    newImage.saveImage(newFileName);
+                    break;
+                }
+
+                catch(...){}
+            }
+
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        else if (degree == "180"){
+
+            Image newImage(image.width, image.height);
+
+            // Transposing the image matrix 180 degree
+            for (int i = 0; i < image.width; ++i){
+                for (int j = 0; j < image.height; ++j){
+
+                    for (int k = 0; k < 3; ++k){
+                        newImage(i, j, k) = image(i, (image.height) - j - 1, k);
+                    }
+                }
+            }
+
+            // Saving the image
+            while(true){
+
+                string newFileName;
+                try{
+                    cout << "Please enter the new image name:";
+                    cin >> newFileName;
+                    newImage.saveImage(newFileName);
+                    break;
+                }
+
+                catch(...){}
+            }
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        else if (degree == "270"){
+
+            // New image dimensions
+            newHeight = image.width;
+            newWidth = image.height;
+
+            Image newImage(newWidth, newHeight);
+
+            // Transposing the image matrix 270 degree
+            for (int i = 0 ; i < newWidth ; ++i){
+                for (int j = 0 ; j < newHeight ; ++j){
+
+                    for (int k = 0; k < 3 ; ++k){
+                        newImage(i, j , k) = image(j, i , k);
+                    }
+
+                }
+            }
+
+            // Saving the image
+            while(true){
+                string newFileName;
+                try{
+                    cout << "Please enter the new image name:";
+                    cin >> newFileName;
+                    newImage.saveImage(newFileName);
+                    break;
+                }
+
+                catch(...){}
+            }
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        else cout << "Invalid degree." << endl;
+    }
+
+
+
+}
 
 
 void darken_lighten(Image image) {
@@ -483,7 +598,7 @@ void darken_lighten(Image image) {
 
     }
 
-    //Apply darker filter
+        //Apply darker filter
     else if (choice== "2" ){
         // Iterate through each pixel of the image
         for (int i = 0; i < image.width; ++i) {
@@ -584,10 +699,103 @@ void crop(Image image){
 }
 
 
-void frame(){}
+void frame(Image image){
+
+    while (true){
+
+        Image img;
+
+        string option;
+        cout << "Simple (S/s) or Fancy (F/f) frame?";
+        cin >> option;
+
+        if (option == "S" || option == "s"){
+
+            break;
+        }
+
+        else if (option == "F" || option == "f"){
+
+            break;
+        }
+
+        else
+            cout << "Invalid option, try again" << endl;
+    }
+
+}
 
 
-void detect_edges(){}
+
+// Function to detect edges in the image using Sobel operator
+void detect_edges(Image image) {
+    for (int i = 0; i < image.width; i++){
+        for (int j = 0; j < image.height; j++){
+
+            // calculating the average of all the colors(Green, Red, Blue) in each pixel.
+            int avg = (image(i, j, 0) + image(i, j, 1) +
+                       image(i, j, 2)) / 3;
+            // assigning the average to all the colors in each pixel to get a gray scale.
+            image(i, j, 0) = avg;
+            image(i, j, 1) = avg;
+            image(i, j, 2) = avg;
+        }
+
+    }
+    // Create an image to store the result
+    Image resultImage(image.width, image.height);
+
+    // Iterate over each pixel of the image, excluding the border
+    for (int i = 1; i < image.height - 1; i++) {
+        for (int j = 1; j < image.width - 1; j++) {
+            for (int k = 0; k < image.channels; ++k) {
+                int valuex = 0, valuey = 0; // Reset valuex and valuey for each pixel
+
+                // Compute valuex
+                valuex += image(i - 1, j - 1, k) * -1;
+                valuex += image(i - 1, j, k) * 0;
+                valuex += image(i - 1, j + 1, k) * 1;
+                valuex += image(i, j - 1, k) * -2;
+                valuex += image(i, j, k) * 0;
+                valuex += image(i, j + 1, k) * 2;
+                valuex += image(i + 1, j - 1, k) * -1;
+                valuex += image(i + 1, j, k) * 0;
+                valuex += image(i + 1, j + 1, k) * 1;
+
+                // Compute valuey
+                valuey += image(i - 1, j - 1, k) * 1;
+                valuey += image(i - 1, j, k) * 2;
+                valuey += image(i - 1, j + 1, k) * 1;
+                valuey += image(i, j - 1, k) * 0;
+                valuey += image(i, j, k) * 0;
+                valuey += image(i, j + 1, k) * 0;
+                valuey += image(i + 1, j - 1, k) * -1;
+                valuey += image(i + 1, j, k) * -2;
+                valuey += image(i + 1, j + 1, k) * -1;
+
+                // Compute edge magnitude
+                double edgeMagnitude = sqrt(valuex * valuex + valuey * valuey);
+
+                // Assign the edge magnitude to the corresponding pixel of the result image
+                resultImage(i, j, k) = (edgeMagnitude > 100 ? 0 : 255);
+            }
+        }
+    }
+
+    // Saving the resulting image
+    string newFileName;
+    while (true) {
+        try {
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            resultImage.saveImage(newFileName);
+            cout << "Done!" << endl << endl;
+            break;
+        } catch (...) {
+        }
+    }
+}
+
 
 
 void resize(Image image){
@@ -634,7 +842,7 @@ void resize(Image image){
 }
 
 
-void blur(){}
+void blur(Image image){}
 
 
 void purple(Image image) {
@@ -721,66 +929,62 @@ int main(){
             cout << "6- Merge" << endl;
             cout << "7- Crop" << endl;
             cout << "8- Purple" << endl;
+            cout << "9- Rotate" << endl;
+            cout << "10- Frame" << endl;
+            cout << "11- Darken / Lighten" << endl;
+            cout << "12- Blur" << endl;
+            cout << "13- Detect edges" << endl;
 
-            char filter;
+            string filter;
             cin >> filter;
 
-            switch(filter){
-
-                case '1':
-                    invert(image);
-                    break;
-
-                case '2':
-                    resize(image);
-                    break;
-
-                case '3':
-                    grey_scale(image);
-                    break;
-
-                case '4':
-                    black_and_white(image);
-                    break;
-
-                case '5':
-                    flip(image);
-                    break;
-
-                case '6':
-                    cout << "choose the type of merging:" << endl;
-                    cout << "1- merge by resize" << endl;
-                    cout << "2- merge by crop" << endl;
-                    cout << "->";
-                    cin >> mergeType;
-                    while (true) {
-                        if (mergeType == "1") {
-                            resize_merge(image);
-                            break;
-                        }
-                        else if (mergeType == "2") {
-                            crop_merge(image);
-                            break;
-                        }
-                        else {
-                            cout << "please choose a valid option" << endl;
-                            cin >> mergeType;
-                        }
+            if (filter == "1")
+                invert(image);
+            else if (filter == "2")
+                resize(image);
+            else if (filter == "3")
+                grey_scale(image);
+            else if (filter == "4")
+                black_and_white(image);
+            else if (filter == "5")
+                flip(image);
+            else if (filter == "6"){
+                cout << "choose the type of merging:" << endl;
+                cout << "1- merge by resize" << endl;
+                cout << "2- merge by crop" << endl;
+                cout << "->";
+                cin >> mergeType;
+                while (true) {
+                    if (mergeType == "1") {
+                        resize_merge(image);
+                        break;
                     }
-                    break;
-
-                case '7':
-                    crop(image);
-                    break;
-
-                case '8':
-                    purple(image);
-                    break;
-                    
-                default:
-                    cout << "Invalid choice, try again." << endl << endl;
+                    else if (mergeType == "2") {
+                        crop_merge(image);
+                        break;
+                    }
+                    else {
+                        cout << "please choose a valid option" << endl;
+                        cin >> mergeType;
+                    }
+                }
             }
-
+            else if (filter == "7")
+                crop(image);
+            else if (filter == "8")
+                purple(image);
+            else if (filter == "9")
+                rotate(image);
+            else if (filter == "10")
+                frame(image);
+            else if (filter == "11")
+                darken_lighten(image);
+            else if (filter == "12")
+                blur(image);
+            else if (filter == "13")
+                detect_edges(image);
+            else
+                cout << "Invalid choice, try again" << endl << endl;
         }
 
         else
