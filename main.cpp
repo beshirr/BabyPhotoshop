@@ -711,6 +711,41 @@ void frame(Image image){
 
         if (option == "S" || option == "s"){
 
+            unsigned int frameSize = 0;
+            frameSize = ((image.width * image.height) / (image.width + image.height)) * 0.05;
+            cout << frameSize << endl;
+
+            while(frameSize --){
+                for (int i = 0 ; i < image.width ; ++i){
+                    for(int j = 0; j < image.height; ++j){
+                        for (int k = 0; k < 3; ++k){
+
+                            image(i, frameSize, k) = 0;
+                            image(frameSize, j, k) = 0;
+                            image(i, (image.height - 1) - frameSize, k) = 0;
+                            image((image.width - 1) - frameSize, j, k) = 0;
+
+                        }
+                    }
+
+                }
+            }
+            
+            while(true){
+
+                string newFileName;
+
+                try{
+                    cout << "Please enter the new image name:";
+                    cin >> newFileName;
+                    image.saveImage(newFileName);
+                    break;
+                }
+
+                catch(...){}
+            }
+
+            cout << "Done!" << endl << endl;
             break;
         }
 
