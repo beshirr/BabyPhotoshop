@@ -28,6 +28,8 @@ Youssef Ahmed Beshir:
 
 using namespace std;
 
+string newFileName;
+
 
 void grey_scale(Image image){
 
@@ -46,7 +48,6 @@ void grey_scale(Image image){
 
     }
     // saving the image.
-    string newFileName;
     while(true){
 
         try{
@@ -86,7 +87,6 @@ void black_and_white(Image pic) {
         }
     }
 
-    string newFileName;
     while(true){
 
         try{
@@ -116,7 +116,6 @@ void invert(Image image){
         }
     }
 
-    string newFileName;
     while (true){
         // File existence and valid extension handling
         try{
@@ -174,7 +173,6 @@ void crop_merge(Image image){
         }
 
         // then save the merged image and check the validity.
-        string newFileName;
         while(true){
 
             try{
@@ -216,7 +214,6 @@ void crop_merge(Image image){
         }
 
         // then we save the merged image and check the validity.
-        string newFileName;
         while(true){
 
             try{
@@ -279,7 +276,6 @@ void resize_merge(Image image){
         }
 
         // then we save the merged image and check the validity.
-        string newFileName;
         while(true){
 
             try{
@@ -346,7 +342,6 @@ void resize_merge(Image image){
         }
 
         // saving the merged image and checking the validity.
-        string newFileName;
         while(true){
 
             try{
@@ -417,7 +412,6 @@ void flip(Image image){
     }
 
     // make user select name to photo and save it
-    string newFileName;
     while(true){
 
         try{
@@ -465,8 +459,6 @@ void rotate(Image image){
 
             // Saving the image
             while(true){
-                string newFileName;
-
                 try{
                     cout << "Please enter the new image name:";
                     cin >> newFileName;
@@ -497,8 +489,6 @@ void rotate(Image image){
 
             // Saving the image
             while(true){
-
-                string newFileName;
                 try{
                     cout << "Please enter the new image name:";
                     cin >> newFileName;
@@ -533,7 +523,6 @@ void rotate(Image image){
 
             // Saving the image
             while(true){
-                string newFileName;
                 try{
                     cout << "Please enter the new image name:";
                     cin >> newFileName;
@@ -615,7 +604,6 @@ void darken_lighten(Image image) {
     }
 
     // make user select name to photo and save it
-    string newFileName;
     while(true){
 
         try{
@@ -683,7 +671,6 @@ void crop(Image image){
         }
     }
     // saving the cropped image.
-    string newFileName;
     while (true){
         // File existence and valid extension handling
         try{
@@ -699,14 +686,110 @@ void crop(Image image){
 }
 
 
-void frame(Image image){
+int frameSize;
 
-    while (true){
+
+void simple_frame(Image image, int red, int green, int blue) {
+
+    // Frame size
+    frameSize = ((image.width * image.height)
+                     / (image.width + image.height)) * 0.05;
+
+    // Frame boundaries
+    int x = image.width - 1;
+    int y = image.height - 1;
+
+    // Up and Down frame
+    while (frameSize--) {
+        for (int i = 0; i < image.width; ++i) {
+            // Up
+            image(i, frameSize, 0) = red;
+            image(i, frameSize, 1) = green;
+            image(i, frameSize, 2) = blue;
+
+            // Down
+            image(i, y - frameSize, 0) = red;
+            image(i, y - frameSize, 1) = green;
+            image(i, y - frameSize, 2) = blue;
+        }
+    }
+
+    // Updating the value since it became zero due to the while loop
+    frameSize = ((image.width * image.height)
+                 / (image.width + image.height)) * 0.05;
+
+    // Right and left frame
+    while (frameSize--) {
+        for (int i = 0; i < image.height; ++i) {
+            // Right
+            image(frameSize, i, 0) = red;
+            image(frameSize, i, 1) = green;
+            image(frameSize, i, 2) = blue;
+
+            // Left
+            image(x - frameSize, i, 0) = red;
+            image(x - frameSize, i, 1) = green;
+            image(x - frameSize, i, 2) = blue;
+        }
+    }
+
+    while(true){
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            break;
+        }
+
+        catch(...){}
+    }
+}
+
+
+void fancy_frame (Image image, int red, int green, int blue){
+
+    simple_frame(image, red, green, blue);
+
+    // Updating the value since it became zero due to the while loop
+    frameSize = ((image.width * image.height)
+                / (image.width + image.height)) * 0.05;
+
+
+    cout << ">>" << frameSize << endl;
+
+    int x = image.width - frameSize - 1;
+    int y = image.height - frameSize - 1;
+
+    cout << x << " " << y << endl;
+
+    // Up and Down
+    for (int i = 0; i < image.width; ++i){
+        for(int k = 0; k < 3; ++k){
+            image(frameSize, i, k) = 255;
+            image(x, i, k) = 255;
+        }
+    }
+
+    // Right and left
+    for (int i = 0; i < image.height; ++i) {
+        for (int k = 0; k < 3; ++k) {
+            image(i, frameSize, k) = 255;
+            image(i, y, k) = 255;
+        }
+    }
+
+    image.saveImage(newFileName);
+}
+
+
+void frame(Image image) {
+
+    while (true) {
         // Setting the RGB for each color
         int red, green, blue;
 
         string color;
-        while(1){
+        while (true) {
             cout << "Choose a color:" << endl;
             cout << "1- Black" << endl;
             cout << "2- White" << endl;
@@ -715,125 +798,54 @@ void frame(Image image){
             cout << "5- Blue" << endl;
             cin >> color;
 
-            if (color == "1"){
+            if (color == "1") {
                 red = 0;
                 green = 0;
                 blue = 0;
                 break;
-            }
-
-            else if (color == "2"){
+            } else if (color == "2") {
                 red = 255;
                 green = 255;
                 blue = 255;
                 break;
-            }
-
-            else if (color == "3"){
+            } else if (color == "3") {
                 red = 176;
                 green = 91;
                 blue = 71;
                 break;
-            }
-
-            else if (color == "4"){
+            } else if (color == "4") {
                 red = 102;
                 green = 179;
                 blue = 80;
                 break;
-            }
-
-            else if (color == "5"){
+            } else if (color == "5") {
                 red = 65;
                 green = 105;
                 blue = 225;
                 break;
-            }
-
-            else
+            } else
                 cout << "Invalid option, try again" << endl << endl;
         }
-
-
 
         string option;
         cout << "Simple (S/s) or Fancy (F/f) frame?";
         cin >> option;
 
-        if (option == "S" || option == "s"){
-
-            // Frame size
-            unsigned int frameSize = ((image.width * image.height)
-            / (image.width + image.height)) * 0.05;
-
-            // Frame boundries
-            int x = image.width - 1;
-            int y = image.height - 1;
-
-            // Up and Down frame
-            while(frameSize--){
-                for(int i = 0; i < image.width; ++i){
-                    // Up
-                    image(i, frameSize, 0) = red;
-                    image(i, frameSize, 1) = green;
-                    image(i, frameSize, 2) = blue;
-
-                    // Down
-                    image(i, y - frameSize, 0) = red;
-                    image(i, y - frameSize, 1) = green;
-                    image(i, y - frameSize, 2) = blue;
-                }
-            }
-
-            // Updating the value since it became zero due to the while loop
-            frameSize = ((image.width * image.height)
-            / (image.width + image.height)) * 0.05;
-
-            // Right and left frame
-            while(frameSize--){
-                for (int i = 0; i < image.height; ++i){
-                    // Right
-                    image(frameSize, i, 0) = red;
-                    image(frameSize, i, 1) = green;
-                    image(frameSize, i, 2) = blue;
-
-                    // Left
-                    image(x - frameSize, i, 0) = red;
-                    image(x - frameSize, i, 1) = green;
-                    image(x - frameSize, i, 2) = blue;
-                }
-            }
-
-
-            while(true){
-
-                string newFileName;
-
-                try{
-                    cout << "Please enter the new image name:";
-                    cin >> newFileName;
-                    image.saveImage(newFileName);
-                    break;
-                }
-
-                catch(...){}
-            }
-
-            cout << "Done!" << endl << endl;
+        if (option == "S" || option == "s") {
+            simple_frame(image, red, green, blue);
             break;
         }
 
-        else if (option == "F" || option == "f"){
-
+        else if (option == "F" || option == "f") {
+            fancy_frame(image, red, green, blue);
             break;
         }
 
         else
             cout << "Invalid option, try again" << endl;
     }
-
+    cout << "Done!" << endl << endl;
 }
-
 
 
 // Function to detect edges in the image using Sobel operator
@@ -892,7 +904,6 @@ void detect_edges(Image image) {
     }
 
     // Saving the resulting image
-    string newFileName;
     while (true) {
         try {
             cout << "Please enter the new image name:";
@@ -904,7 +915,6 @@ void detect_edges(Image image) {
         }
     }
 }
-
 
 
 void resize(Image image){
@@ -934,7 +944,6 @@ void resize(Image image){
     }
 
     // saving the image.
-    string newFileName;
     while(true){
 
         try{
@@ -951,7 +960,18 @@ void resize(Image image){
 }
 
 
-void blur(Image image){}
+void blur(Image image){
+    Image temp;
+
+    // Horizontal
+    for(int i = 1; i < image.width - 1; ++i){
+
+        for(int k = 0; k < 3; ++k){
+//            image(i, , k) = (image(i-1, ,k) + image(i+1, ,k)) / 2;
+        }
+
+    }
+}
 
 
 void purple(Image image) {
@@ -970,7 +990,6 @@ void purple(Image image) {
     }
 
     // then we save the merged image and check the validity.
-    string newFileName;
     while(true){
 
         try{
@@ -984,7 +1003,6 @@ void purple(Image image) {
         catch(...){}
     }
 }
-
 
 
 int main(){
