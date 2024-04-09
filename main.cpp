@@ -686,14 +686,9 @@ void crop(Image image){
 }
 
 
-int frameSize;
+void simple_frame(Image &image, int red, int green, int blue, int frameSize) {
 
-
-void simple_frame(Image image, int red, int green, int blue) {
-
-    // Frame size
-    frameSize = ((image.width * image.height)
-                     / (image.width + image.height)) * 0.05;
+    int currentFrameSize = frameSize;
 
     // Frame boundaries
     int x = image.width - 1;
@@ -714,75 +709,58 @@ void simple_frame(Image image, int red, int green, int blue) {
         }
     }
 
-    // Updating the value since it became zero due to the while loop
-    frameSize = ((image.width * image.height)
-                 / (image.width + image.height)) * 0.05;
 
     // Right and left frame
-    while (frameSize--) {
+    while (currentFrameSize--) {
         for (int i = 0; i < image.height; ++i) {
             // Right
-            image(frameSize, i, 0) = red;
-            image(frameSize, i, 1) = green;
-            image(frameSize, i, 2) = blue;
+            image(currentFrameSize, i, 0) = red;
+            image(currentFrameSize, i, 1) = green;
+            image(currentFrameSize, i, 2) = blue;
 
             // Left
-            image(x - frameSize, i, 0) = red;
-            image(x - frameSize, i, 1) = green;
-            image(x - frameSize, i, 2) = blue;
+            image(x - currentFrameSize, i, 0) = red;
+            image(x - currentFrameSize, i, 1) = green;
+            image(x - currentFrameSize, i, 2) = blue;
         }
     }
 
-    while(true){
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
-            break;
-        }
-
-        catch(...){}
-    }
 }
 
 
-void fancy_frame (Image image, int red, int green, int blue){
-
-    simple_frame(image, red, green, blue);
-
-    // Updating the value since it became zero due to the while loop
-    frameSize = ((image.width * image.height)
-                / (image.width + image.height)) * 0.05;
-
-
-    cout << ">>" << frameSize << endl;
-
-    int x = image.width - frameSize - 1;
-    int y = image.height - frameSize - 1;
-
-    cout << x << " " << y << endl;
-
-    // Up and Down
-    for (int i = 0; i < image.width; ++i){
-        for(int k = 0; k < 3; ++k){
-            image(frameSize, i, k) = 255;
-            image(x, i, k) = 255;
-        }
+void fancy_frame (Image &image, int red, int green, int blue, int frameSize, bool isWhite){
+    int color;
+    if (isWhite){
+        color = 0;
     }
+    else
+        color = 255;
 
-    // Right and left
-    for (int i = 0; i < image.height; ++i) {
-        for (int k = 0; k < 3; ++k) {
-            image(i, frameSize, k) = 255;
-            image(i, y, k) = 255;
-        }
-    }
+    frameSize = (((image.width * image.height) /
+                        (image.width + image.height)) * 0.07);
 
-    image.saveImage(newFileName);
+    simple_frame(image, color, color, color, frameSize);
+
+    frameSize = (((image.width * image.height) /
+                        (image.width + image.height)) * 0.06);
+
+    simple_frame(image, red, green, blue, frameSize);
+
+    frameSize = (((image.width * image.height) /
+                  (image.width + image.height)) * 0.04);
+
+    simple_frame(image, color, color, color, frameSize);
+
+    frameSize = (((image.width * image.height) /
+                  (image.width + image.height)) * 0.03);
+
+    simple_frame(image, red, green, blue, frameSize);
 }
 
 
 void frame(Image image) {
+
+    bool isWhite = false;
 
     while (true) {
         // Setting the RGB for each color
@@ -803,27 +781,33 @@ void frame(Image image) {
                 green = 0;
                 blue = 0;
                 break;
-            } else if (color == "2") {
+            }
+            else if (color == "2") {
                 red = 255;
                 green = 255;
                 blue = 255;
+                isWhite = true;
                 break;
-            } else if (color == "3") {
+            }
+            else if (color == "3") {
                 red = 176;
                 green = 91;
                 blue = 71;
                 break;
-            } else if (color == "4") {
+            }
+            else if (color == "4") {
                 red = 102;
                 green = 179;
                 blue = 80;
                 break;
-            } else if (color == "5") {
+            }
+            else if (color == "5") {
                 red = 65;
                 green = 105;
                 blue = 225;
                 break;
-            } else
+            }
+            else
                 cout << "Invalid option, try again" << endl << endl;
         }
 
@@ -831,18 +815,32 @@ void frame(Image image) {
         cout << "Simple (S/s) or Fancy (F/f) frame?";
         cin >> option;
 
+        int frameSize = ((image.width * image.height)
+                         / (image.width + image.height)) * 0.05;
+
         if (option == "S" || option == "s") {
-            simple_frame(image, red, green, blue);
+            simple_frame(image, red, green, blue, frameSize);
             break;
         }
 
         else if (option == "F" || option == "f") {
-            fancy_frame(image, red, green, blue);
+            fancy_frame(image, red, green, blue, frameSize, isWhite);
             break;
         }
 
         else
             cout << "Invalid option, try again" << endl;
+    }
+
+    while(true){
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            break;
+        }
+
+        catch(...){}
     }
     cout << "Done!" << endl << endl;
 }
@@ -1004,6 +1002,7 @@ void purple(Image image) {
     }
 }
 
+
 void infrared(Image image){
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
@@ -1014,7 +1013,6 @@ void infrared(Image image){
             }
 
         }
-    string newFileName;
     while(true){
     try{
     cout << "Please enter the new image name:";

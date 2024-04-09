@@ -1,3 +1,0 @@
-D:/MY projects/MY-github/BabyPhotoshop/cmake-build-debug/CMakeFiles/BabyPhotoshop.dir
-D:/MY projects/MY-github/BabyPhotoshop/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/MY projects/MY-github/BabyPhotoshop/cmake-build-debug/CMakeFiles/rebuild_cache.dir
