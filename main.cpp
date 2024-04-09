@@ -1028,6 +1028,27 @@ void infrared(Image image){
 }
 
 
+void sunlight(Image image){
+
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+
+        }
+    }
+
+    while(true){
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            break;
+        }
+
+        catch(...){}
+    }
+    cout << "Done!" << endl << endl;
+}
+
 int main(){
 
     cout << "Welcome to BabyPhotoshop" << endl << endl;
@@ -1085,6 +1106,7 @@ int main(){
             cout << "12- Blur" << endl;
             cout << "13- Detect edges" << endl;
             cout << "14- infrared" << endl;
+            cout << "15- Sunlight" << endl;
 
             string filter;
             cin >> filter;
@@ -1136,6 +1158,8 @@ int main(){
                 detect_edges(image);
             else if (filter== "14")
                 infrared(image);
+            else if (filter == "15")
+                sunlight(image);
             else
                 cout << "Invalid choice, try again" << endl << endl;
         }
