@@ -1269,10 +1269,23 @@ void infrared(Image image){
 
 void sunlight(Image image){
 
-//    for (int i = 0; i < image.width; ++i) {
-//        for (int j = 0; j < image.height; ++j) {
-//        }
-//    }
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            int redTent = 40, greenTent = 30, blueTent = 30;
+
+            while (image(i, j, 0) + redTent > 255) redTent --;
+            image(i, j, 0) += redTent;
+            redTent = 40;
+
+            while (image(i, j, 1) + greenTent > 255) greenTent --;
+            image(i, j, 1) += greenTent;
+            greenTent = 30;
+
+            while (image(i, j, 2) - blueTent < 0) blueTent --;
+            image(i, j, 2) -= blueTent;
+            blueTent = 30;
+        }
+    }
 
     while(true){
         try{
