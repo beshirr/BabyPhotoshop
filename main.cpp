@@ -35,11 +35,9 @@ Youssef Ahmed Beshir:
 
 using namespace std;
 
+string fileName;
 
-string newFileName;
-
-
-void grey_scale(Image image){
+void grayscale(Image& image){
 
     // iterate through the image matrix
     for (int i = 0; i < image.width; i++){
@@ -55,7 +53,32 @@ void grey_scale(Image image){
         }
 
     }
-    // saving the image.
+}
+
+
+void black_and_white(Image& image) {
+
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+
+            unsigned int avg = 0;
+            for (int k = 0; k < 3; ++k) {
+                avg += image(i, j, k);
+            }
+            avg /= 3;
+            int y;
+
+            if (avg < 127)
+                y = 0;
+            else
+                y = 255;
+
+            for (int k = 0; k < 3; ++k) {
+                image(i, j, k) = y;
+            }
+        }
+    }
+
     while(true){
 
         try{
@@ -72,46 +95,7 @@ void grey_scale(Image image){
 }
 
 
-void black_and_white(Image pic) {
-
-    for (int i = 0; i < pic.width; ++i) {
-        for (int j = 0; j < pic.height; ++j) {
-
-            unsigned int avg = 0;
-            for (int k = 0; k < 3; ++k) {
-                avg += pic(i, j, k);
-            }
-            avg /= 3;
-            int y;
-
-            if (avg < 127)
-                y = 0;
-            else
-                y = 255;
-
-            for (int k = 0; k < 3; ++k) {
-                pic(i, j, k) = y;
-            }
-        }
-    }
-
-    while(true){
-
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            pic.saveImage(newFileName);
-            cout << "Done!" << endl << endl;
-            break;
-        }
-
-        catch(...){}
-    }
-
-}
-
-
-void invert(Image image){
+void invert(Image& image){
 
     // Iterate through the image
     for (int i = 0; i < image.width; ++i) {
@@ -139,7 +123,7 @@ void invert(Image image){
 }
 
 
-void crop_merge(Image image){
+void crop_merge(Image& image){
 
     int counter = 0; // the counter will help in the merging part.
     // getting the  image that the user want to merge and checking the validity.
@@ -239,7 +223,7 @@ void crop_merge(Image image){
 }
 
 
-void resize_merge(Image image){
+void resize_merge(Image& image){
 
     int counter = 0; // the counter will help in the merging part.
     // getting the  image that the user want to merge and checking the validity.
@@ -368,7 +352,7 @@ void resize_merge(Image image){
 }
 
 
-void flip(Image image){
+void flip(Image& image){
 
     // make user select any flip
     string choice;
@@ -436,7 +420,7 @@ void flip(Image image){
 }
 
 
-void rotate(Image image){
+void rotate(Image& image){
     int newHeight, newWidth;
 
     string degree;
@@ -552,7 +536,7 @@ void rotate(Image image){
 }
 
 
-void darken_lighten(Image image) {
+void darken_lighten(Image& image) {
 
     // make user select darken or lighten
     string choice;
@@ -627,7 +611,7 @@ void darken_lighten(Image image) {
 }
 
 
-void crop(Image image){
+void crop(Image& image){
 
     int x, y, h, w;
     cout << "enter the index of the starting point(ex: 600 500): ";
@@ -766,7 +750,7 @@ void fancy_frame (Image &image, int red, int green, int blue, int frameSize, boo
 }
 
 
-void frame(Image image) {
+void frame(Image &image) {
 
     bool isWhite = false;
 
@@ -855,7 +839,7 @@ void frame(Image image) {
 
 
 // Function to detect edges in the image using Sobel operator
-void detect_edges(Image image) {
+void detect_edges(Image &image) {
     for (int i = 0; i < image.width; i++){
         for (int j = 0; j < image.height; j++){
 
@@ -923,7 +907,7 @@ void detect_edges(Image image) {
 }
 
 
-void resize(Image image){
+void resize(Image& image){
 
     // getting the dimensions of the resized image from the user.
     int width_, height_;
@@ -966,7 +950,7 @@ void resize(Image image){
 }
 
 
-void blur(Image image){
+void blur(Image& image){
 
     int rad  = 6;
     int width = image.width;
@@ -1038,7 +1022,7 @@ void blur(Image image){
 }
 
 
-void purple(Image image) {
+void purple(Image& image) {
 
     // the purple shade we are using in this filter is (R:200, G:160, B:255).
     for (int i = 0; i < image.width; i++){
@@ -1073,7 +1057,7 @@ void purple(Image image) {
 }
 
 
-void infrared(Image image){
+void infrared(Image& image){
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
             // set the red 255 and invert green and blue
@@ -1100,7 +1084,7 @@ void infrared(Image image){
 }
 
 
-void sunlight(Image image){
+void sunlight(Image& image){
 
 //    for (int i = 0; i < image.width; ++i) {
 //        for (int j = 0; j < image.height; ++j) {
@@ -1121,151 +1105,188 @@ void sunlight(Image image){
 }
 
 
-void oil_painting (Image image) {
-
-//    for (int i = 0; i < image.width; i++){
-    //      for (int j = 0; j < image.height; j++){
-    //
-    //  }
-    //
-    // }
-
-
-    while(true){
+void save(Image& image){
+    while (true){
         try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
+            string choice;
+            string newFileName;
+            cout << "Do you want to save the same file (1) or change the file name (2)?";
+            cin >> choice;
+
+            if (choice == "1"){
+                image.saveImage(fileName);
+                break;
+            }
+
+            else if (choice == "2"){
+                image.saveImage(newFileName);
+                break;
+            }
+
+            else
+                cout << "Invalid choice, try again." << endl << endl;
+
+
+        }
+
+        catch (...){}
+    }
+
+    cout << "Image save successfully!" << endl << endl;
+}
+
+
+void load(Image& image){
+
+    while (true){
+        cout << "Enter the image name:";
+        try{
+            getline(cin, fileName);
+            image.loadNewImage(fileName);
             break;
         }
 
-        catch(...){}
+        catch (...){}
     }
-    cout << "Done!" << endl << endl;
+
+    cout << "New image loaded successfully!" << endl << endl;
+
 }
 
 
 int main(){
-
-    cout << "Welcome to BabyPhotoshop" << endl << endl;
-    string menu;
-    string mergeType;
+    cout << "Welcome to babyPhotoshop" << endl << endl;
 
     Image image;
+    load(image);
 
     while (true){
-
-        // Program Menu
-        cout << "1- Load an image (1)" << endl;
-        cout << "2- exit (-1)" << endl;
+        string menu;
+        cout << "1- Load new image" << endl;
+        cout << "2- Save current image" << endl;
+        cout << "3- Grayscale Conversion" << endl;
+        cout << "4- Black and White" << endl;
+        cout << "5- Invert image" << endl;
+        cout << "6- Merge images" << endl;
+        cout << "7- Flip image" << endl;
+        cout << "8- Rotate image" << endl;
+        cout << "9- Darken and Lighten image" << endl;
+        cout << "10- Crop image" << endl;
+        cout << "11- Frame" << endl;
+        cout << "12- Detect image Edges" << endl;
+        cout << "13- Resizing image" << endl;
+        cout << "14- Blur image" << endl;
+        cout << "15- Sunlight" << endl;
+        cout << "16- Purple filter" << endl;
+        cout << "17- Infrared filter" << endl;
+        cout << "18- Exit" << endl;
         cout << "->";
-
+        
         cin >> menu;
-        cout << endl;
-
-        if (menu == "-1"){
-            cout << "Goodbye!" << endl;
+        
+        if (menu == "18"){
+            cout << "GoodBye!" << endl; 
             break;
         }
-
+        
         else if (menu == "1"){
-            string fileName;
 
             while (true){
-                try{
-                    cout << "Enter the image name:" << endl;
-                    cout << "->";
-                    cin >> fileName;
-
-                    image.loadNewImage(fileName);
-
+                cout << "You have unsaved changes if you loaded a new image you are going to lose progress \n"
+                        "make sure you save changes before loading a new image \n"
+                        "(1) Load new image and discard changes\n"
+                        "(2) Save current then load new image \n"
+                        "(3) cancel";
+                string option;
+                cin >> option;
+                if (option == "1") {
+                    load(image);
                     break;
                 }
-
-                catch(...){}
-
+                else if (option == "2"){
+                    save(image);
+                    load(image);
+                    break;
+                }
+                else if (option == "3")
+                    break;
+                else
+                    cout << "Invalid choice, try again" << endl << endl;
             }
 
-            cout << endl;
-            cout << "Choose a filter: " << endl;
-            cout << "1- Invert" << endl;
-            cout << "2- Resize" << endl;
-            cout << "3- Gray Scale" << endl;
-            cout << "4- Black and white" << endl;
-            cout << "5- Flip" << endl;
-            cout << "6- Merge" << endl;
-            cout << "7- Crop" << endl;
-            cout << "8- Purple" << endl;
-            cout << "9- Rotate" << endl;
-            cout << "10- Frame" << endl;
-            cout << "11- Darken / Lighten" << endl;
-            cout << "12- Blur" << endl;
-            cout << "13- Detect edges" << endl;
-            cout << "14- infrared" << endl;
-            cout << "15- Sunlight" << endl;
-            cout << "16- oil painting" << endl;
+        }
+        
+        else if (menu == "2"){
+            save(image);
+        }
+
+        else if (menu == "3"){
+            grayscale(image);
+        }
+        else if (menu == "4"){
+            black_and_white(image);
+        }
+        else if (menu == "5"){
+            invert(image);
+        }
+        else if (menu == "6"){
+            string mergeType;
+            cout << "Choose the type of merging:" << endl;
+            cout << "1- merge by resize" << endl;
+            cout << "2- merge by crop" << endl;
             cout << "->";
-
-            string filter;
-            cin >> filter;
-
-            if (filter == "1")
-                invert(image);
-            else if (filter == "2")
-                resize(image);
-            else if (filter == "3")
-                grey_scale(image);
-            else if (filter == "4")
-                black_and_white(image);
-            else if (filter == "5")
-                flip(image);
-            else if (filter == "6"){
-                cout << "choose the type of merging:" << endl;
-                cout << "1- merge by resize" << endl;
-                cout << "2- merge by crop" << endl;
-                cout << "->";
-                cin >> mergeType;
-                while (true) {
-                    if (mergeType == "1") {
-                        resize_merge(image);
-                        break;
-                    }
-                    else if (mergeType == "2") {
-                        crop_merge(image);
-                        break;
-                    }
-                    else {
-                        cout << "please choose a valid option" << endl;
-                        cin >> mergeType;
-                    }
+            cin >> mergeType;
+            while (true) {
+                if (mergeType == "1") {
+                    resize_merge(image);
+                    break;
+                }
+                else if (mergeType == "2") {
+                    crop_merge(image);
+                    break;
+                }
+                else {
+                    cout << "Please choose a valid option" << endl;
+                    cin >> mergeType;
                 }
             }
-            else if (filter == "7")
-                crop(image);
-            else if (filter == "8")
-                purple(image);
-            else if (filter == "9")
-                rotate(image);
-            else if (filter == "10")
-                frame(image);
-            else if (filter == "11")
-                darken_lighten(image);
-            else if (filter == "12")
-                blur(image);
-            else if (filter == "13")
-                detect_edges(image);
-            else if (filter== "14")
-                infrared(image);
-            else if (filter == "15")
-                sunlight(image);
-            else if (filter == "16")
-                oil_painting(image);
-            else
-                cout << "Invalid choice, try again" << endl << endl;
+        }
+        else if (menu == "7"){
+            flip(image);
+        }
+        else if (menu == "8"){
+            rotate(image);
+        }
+        else if (menu == "9"){
+            darken_lighten(image);
+        }
+        else if (menu == "10"){
+            crop(image);
+        }
+        else if (menu == "11"){
+            frame(image);
+        }
+        else if (menu == "12"){
+            detect_edges(image);
+        }
+        else if (menu == "13"){
+            resize(image);
+        }
+        else if (menu == "14"){
+            blur(image);
+        }
+        else if (menu == "15"){
+            sunlight(image);
+        }
+        else if (menu == "16"){
+            purple(image);
+        }
+        else if (menu == "17"){
+            infrared(image);
         }
 
         else
-            cout << "Invalid Choice." << endl << endl;
+            cout << "Invalid choice, Try again." << endl << endl;
     }
     return 0;
 }
