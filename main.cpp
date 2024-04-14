@@ -1159,6 +1159,7 @@ int main(){
 
     Image image;
     load(image);
+    bool saved = false;
 
     while (true){
         string menu;
@@ -1185,39 +1186,71 @@ int main(){
         cin >> menu;
         
         if (menu == "18"){
-            cout << "GoodBye!" << endl; 
-            break;
+
+            if (saved){
+                cout << "GoodBye!" << endl;
+                break;
+            }
+
+            else{
+                cout << "You have unsaved changes if you exit you are going to lose progress\n"
+                        "are you sure you want to exit?\n"
+                        "(1) Exit without saving"
+                        "(2) Save then exit"
+                        "->";
+
+                string option;
+                cin >> option;
+
+                if (option == "1"){
+                    cout << "GoodBye!" << endl << endl;
+                    break;
+                }
+
+                else if (option == "2"){
+                    save(image);
+                    cout << "GoodBye!" << endl << endl;
+                    break;
+                }
+
+                else
+                    cout << "Invalid option, try again" << endl << endl;
+            }
         }
         
         else if (menu == "1"){
-
-            while (true){
-                cout << "You have unsaved changes if you loaded a new image you are going to lose progress \n"
-                        "make sure you save changes before loading a new image \n"
-                        "(1) Load new image and discard changes\n"
-                        "(2) Save current then load new image \n"
-                        "(3) cancel";
-                string option;
-                cin >> option;
-                if (option == "1") {
-                    load(image);
-                    break;
-                }
-                else if (option == "2"){
-                    save(image);
-                    load(image);
-                    break;
-                }
-                else if (option == "3")
-                    break;
-                else
-                    cout << "Invalid choice, try again" << endl << endl;
+            if (saved){
+                load(image);
+                saved = false;
             }
-
+            else{
+                while (true){
+                    cout << "You have unsaved changes if you loaded a new image you are going to lose progress \n"
+                            "make sure you save changes before loading a new image \n"
+                            "(1) Load new image and discard changes\n"
+                            "(2) Save current then load new image \n";
+                    string option;
+                    cin >> option;
+                    if (option == "1") {
+                        load(image);
+                        saved = false;
+                        break;
+                    }
+                    else if (option == "2"){
+                        save(image);
+                        load(image);
+                        saved = false;
+                        break;
+                    }
+                    else
+                        cout << "Invalid choice, try again" << endl << endl;
+                }
+            }
         }
         
         else if (menu == "2"){
             save(image);
+            saved = true;
         }
 
         else if (menu == "3"){
