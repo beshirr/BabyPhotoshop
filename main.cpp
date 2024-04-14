@@ -21,6 +21,10 @@ John Ayman Demian:
 Youssef Ahmed Beshir:
     Menu.
     Invert filter.
+    Frame filter.
+    Rotate filter.
+    Blur filter.
+    Sunlight filter.
 */
 // ============================================================================================================================
 
@@ -30,6 +34,7 @@ Youssef Ahmed Beshir:
 
 
 using namespace std;
+
 
 string newFileName;
 
@@ -963,85 +968,60 @@ void resize(Image image){
 
 void blur(Image image){
 
-    Image output(image.width, image.height);
+    int rad  = 6;
+    int width = image.width;
+    int height = image.height;
 
-    int red = 0, green = 0, blue = 0, counter = 0;
+    // Final image
+    Image blurredImage(width, height);
 
-    // Performing the Box Blur algorithm
-    for (int i = 0; i < image.width; ++i) {
-        for (int j = 0; j < image.height; ++j) {
+    // Temporary image for horizontal blur
+    Image temp(width, height);
 
-            // Reset the counter and color values after each iteration
-            red = green = blue = counter = 0;
-
-            // The pixel itself
-            red += image(i, j, 0);
-            green += image(i, j, 1);
-            blue += image(i, j, 2);
-            counter ++;
-
-            // Up right
-            if (i + 1 < image.height && j - 1 >= 0){
-                red += image(i + 1, j - 1, 0);
-                green += image(i + 1, j - 1, 1);
-                blue += image(i + 1, j - 1, 2);
-                counter ++;
-            }
-            // Left
-            if (j + 1 < image.width){
-                red += image(i, j + 1, 0);
-                green += image(i, j + 1, 1);
-                blue += image(i, j + 1, 2);
-                counter ++;
-            }
-            // Up left
-            if (i + 1 < image.height && j + 1 < image.width) {
-                red += image(i + 1, j + 1, 0);
-                green +=  image(i + 1, j + 1, 1);
-                blue += image(i + 1, j + 1, 2);
-                counter ++;
-            }
-            // UP
-            if (i + 1 < image.height){
-                red += image(i + 1, j, 0);
-                green += image(i + 1, j, 1);
-                blue += image(i + 1, j, 2);
-                counter ++;
-            }
-            // Right
-            if (j - 1 >= 0){
-                red += image(i, j - 1, 0);
-                green += image(i, j - 1, 1);
-                blue += image(i, j - 1, 2);
-                counter ++;
-            }
-            // Down
-            if (i - 1 >= 0){
-                red += image(i - 1, j, 0);
-                green += image(i - 1, j, 1);
-                blue += image(i - 1, j, 2);
-                counter ++;
-            }
-            // Down right
-            if (i - 1 >= 0 && j - 1 >= 0){
-                red += image(i - 1, j - 1, 0);
-                green += image(i - 1, j - 1, 1);
-                blue += image(i - 1, j - 1, 2);
-                counter ++;
-            }
-            // Down left
-            if (i - 1 >= 0 && j + 1 < image.width){
-                red += image(i - 1, j + 1, 0);
-                green += image(i - 1, j + 1, 1);
-                blue += image(i - 1, j + 1, 2);
-                counter ++;
-            }
+    // Dividing the box blur operation into two separate operations
+    // (one for the horizontal and the other one for the vertical)
+    // this technique helps to reduce the time needed to perform the box blur algorithm.
 
 
-            output(i, j, 0) = red / counter;
-            output(i, j, 1) = green / counter;
-            output(i, j, 2) = blue / counter;
+    // 1- Horizontal blur
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
 
+            // Reset color values after each iteration
+            int red = 0, green = 0, blue = 0;
+
+            for (int kx = -rad; kx <= rad; ++kx) {
+                int ix = max(0, x + kx);
+                if (ix < width) {
+                    red += image(ix, y, 0);
+                    green += image(ix, y, 1);
+                    blue += image(ix, y, 2);
+                }
+            }
+            int area = rad * 2 + 1;
+            // Calculate the average
+            temp(x, y, 0) = red / area;
+            temp(x, y, 1) = green / area;
+            temp(x, y, 2) = blue / area;
+        }
+    }
+
+    // 2- Vertical blur  using the temporary image
+    for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+            int red = 0, green = 0, blue = 0;
+            for (int ky = -rad; ky <= rad; ++ky) {
+                int iy = std::max(0, y + ky);
+                if (iy < height) {
+                    red += temp(x, iy, 0);
+                    green += temp(x, iy, 1);
+                    blue += temp(x, iy, 2);
+                }
+            }
+            int area = rad * 2 + 1;
+            blurredImage(x, y, 0) = red / area;
+            blurredImage(x, y, 1) = green / area;
+            blurredImage(x, y, 2) = blue / area;
         }
     }
 
@@ -1049,170 +1029,13 @@ void blur(Image image){
         try{
             cout << "Please enter the new image name:";
             cin >> newFileName;
-            output.saveImage(newFileName);
+            blurredImage.saveImage(newFileName);
             break;
         }
-
         catch(...){}
     }
     cout << "Done!" << endl << endl;
 }
-
-
-void blur2(Image image){
-
-    Image output(image.width, image.height);
-
-    int red = 0, green = 0, blue = 0, counter = 0;
-
-    // Performing the Box Blur algorithm
-    for (int i = 0; i < image.width; ++i) {
-        for (int j = 0; j < image.height; ++j) {
-
-            // Reset the counter and color values after each iteration
-            red = green = blue = counter = 0;
-
-            // The pixel itself
-            red += image(i, j, 0);
-            green += image(i, j, 1);
-            blue += image(i, j, 2);
-            counter ++;
-
-            int rad = 3;
-            int radCount = 1;
-
-            // Up right
-            while (i + radCount < image.height && j - radCount >= 0){
-                red += image(i + radCount, j - radCount, 0);
-                green += image(i + radCount, j - radCount, 1);
-                blue += image(i + radCount, j - radCount, 2);
-                counter ++;
-                radCount ++;
-                if (radCount > rad) {
-                    radCount = 1;
-                    break;
-                }
-            }
-
-
-            // Left
-            while (j + radCount < image.width){
-                red += image(i, j + radCount, 0);
-                green += image(i, j + radCount, 1);
-                blue += image(i, j + radCount, 2);
-                counter ++;
-                radCount ++;
-                if (radCount > rad) {
-                    radCount = 1;
-                    break;
-                }
-            }
-
-
-            // Up left
-            while (i + radCount < image.height && j + radCount < image.width) {
-                red += image(i + radCount, j + radCount, 0);
-                green +=  image(i + radCount, j + radCount, 1);
-                blue += image(i + radCount, j + radCount, 2);
-                counter ++;
-                radCount ++;
-                if (radCount > rad) {
-                    radCount = 1;
-                    break;
-                }
-            }
-
-
-            // UP
-            while (i + radCount < image.height){
-                red += image(i + radCount, j, 0);
-                green += image(i + radCount, j, 1);
-                blue += image(i + radCount, j, 2);
-                counter ++;
-                radCount ++;
-                if (radCount > rad) {
-                    radCount = 1;
-                    break;
-                }
-            }
-
-
-            // Right
-            while (j - radCount >= 0){
-                red += image(i, j - radCount, 0);
-                green += image(i, j - radCount, 1);
-                blue += image(i, j - radCount, 2);
-                counter ++;
-                radCount ++;
-                if (radCount > rad) {
-                    radCount = 1;
-                    break;
-                }
-            }
-
-
-            // Down
-            while (i - radCount >= 0){
-                red += image(i - radCount, j, 0);
-                green += image(i - radCount, j, 1);
-                blue += image(i - radCount, j, 2);
-                counter ++;
-                radCount ++;
-                if (radCount > rad) {
-                    radCount = 1;
-                    break;
-                }
-            }
-
-
-            // Down right
-            while (i - radCount >= 0 && j - radCount >= 0){
-                red += image(i - radCount, j - radCount, 0);
-                green += image(i - radCount, j - radCount, 1);
-                blue += image(i - radCount, j - radCount, 2);
-                counter ++;
-                radCount ++;
-                if (radCount > rad) {
-                    radCount = 1;
-                    break;
-                }
-            }
-
-
-            // Down left
-            while (i - radCount >= 0 && j + radCount < image.width){
-                red += image(i - radCount, j + radCount, 0);
-                green += image(i - radCount, j + radCount, 1);
-                blue += image(i - radCount, j + radCount, 2);
-                counter ++;
-                radCount ++;
-                if (radCount > rad) {
-                    radCount = 1;
-                    break;
-                }
-            }
-
-
-            output(i, j, 0) = red / counter;
-            output(i, j, 1) = green / counter;
-            output(i, j, 2) = blue / counter;
-
-        }
-    }
-
-    while(true){
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            output.saveImage(newFileName);
-            break;
-        }
-
-        catch(...){}
-    }
-    cout << "Done!" << endl << endl;
-}
-
 
 
 void purple(Image image) {
@@ -1248,8 +1071,6 @@ void purple(Image image) {
         catch(...){}
     }
 }
-
-
 
 
 void infrared(Image image){
@@ -1322,6 +1143,7 @@ void oil_painting (Image image) {
     }
     cout << "Done!" << endl << endl;
 }
+
 
 int main(){
 
@@ -1429,7 +1251,7 @@ int main(){
             else if (filter == "11")
                 darken_lighten(image);
             else if (filter == "12")
-                blur2(image);
+                blur(image);
             else if (filter == "13")
                 detect_edges(image);
             else if (filter== "14")
