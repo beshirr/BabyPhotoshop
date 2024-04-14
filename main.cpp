@@ -14,6 +14,9 @@ Zeyad Mohamed Arafat:
 John Ayman Demian:
     Black and White filter.
     Flip filter.
+    Darken and Lighten Filter .
+    Detect edges Filter .
+    Infrared Filter .
 
 Youssef Ahmed Beshir:
     Menu.
@@ -737,12 +740,12 @@ void fancy_frame (Image &image, int red, int green, int blue, int frameSize, boo
         color = 255;
 
     frameSize = (((image.width * image.height) /
-                        (image.width + image.height)) * 0.07);
+                  (image.width + image.height)) * 0.07);
 
     simple_frame(image, color, color, color, frameSize);
 
     frameSize = (((image.width * image.height) /
-                        (image.width + image.height)) * 0.06);
+                  (image.width + image.height)) * 0.06);
 
     simple_frame(image, red, green, blue, frameSize);
 
@@ -1252,23 +1255,25 @@ void purple(Image image) {
 void infrared(Image image){
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
+            // set the red 255 and invert green and blue
             image(i,j,0) = 255;
             image(i,j,1) = 255 - image(i,j,1) ;
             image(i,j,2) = 255 - image(i,j,2) ;
 
-            }
-
         }
-    while(true){
-    try{
-    cout << "Please enter the new image name:";
-    cin >> newFileName;
-    image.saveImage(newFileName);
-    cout << "Done!" << endl << endl;
-    break;
-    }
 
-    catch(...){}
+    }
+    // make user select name to photo and save it
+    while(true){
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            cout << "Done!" << endl << endl;
+            break;
+        }
+
+        catch(...){}
     }
 
 }
@@ -1298,10 +1303,10 @@ void sunlight(Image image){
 void oil_painting (Image image) {
 
 //    for (int i = 0; i < image.width; i++){
-  //      for (int j = 0; j < image.height; j++){
+    //      for (int j = 0; j < image.height; j++){
     //
-      //  }
-        //
+    //  }
+    //
     // }
 
 
