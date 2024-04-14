@@ -32,13 +32,12 @@ Youssef Ahmed Beshir:
 # include <bits/stdc++.h>
 # include "Image_Class.h"
 
-
 using namespace std;
+
 
 string fileName;
 
 void grayscale(Image& image){
-
     // iterate through the image matrix
     for (int i = 0; i < image.width; i++){
         for (int j = 0; j < image.height; j++){
@@ -51,8 +50,8 @@ void grayscale(Image& image){
             image(i, j, 1) = avg;
             image(i, j, 2) = avg;
         }
-
     }
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -78,25 +77,11 @@ void black_and_white(Image& image) {
             }
         }
     }
-
-    while(true){
-
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
-            cout << "Done!" << endl << endl;
-            break;
-        }
-
-        catch(...){}
-    }
-
+    cout << "Done!" << endl << endl;
 }
 
 
 void invert(Image& image){
-
     // Iterate through the image
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
@@ -106,18 +91,6 @@ void invert(Image& image){
                 image(i,j,k) = 255 - image(i, j, k);
             }
         }
-    }
-
-    while (true){
-        // File existence and valid extension handling
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
-            break;
-        }
-
-        catch(...){}
     }
     cout << "Done!" << endl << endl;
 }
@@ -163,25 +136,10 @@ void crop_merge(Image& image){
                 }
             }
         }
-
-        // then save the merged image and check the validity.
-        while(true){
-
-            try{
-                cout << "Please enter the new image name:";
-                cin >> newFileName;
-                mergedImage.saveImage(newFileName);
-                counter = 0;
-                cout << "Done!" << endl << endl;
-                break;
-            }
-
-            catch(...){}
-        }
-
+        image = mergedImage;
     }
 
-        // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
+    // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
     else{
         Image mergedImage(min(image.width , mergeImage.width), min(image.height , mergeImage.height));
 
@@ -204,22 +162,9 @@ void crop_merge(Image& image){
                 }
             }
         }
-
-        // then we save the merged image and check the validity.
-        while(true){
-
-            try{
-                cout << "Please enter the new image name:";
-                cin >> newFileName;
-                mergedImage.saveImage(newFileName);
-                cout << "Done!" << endl << endl;
-                break;
-            }
-
-            catch(...){}
-        }
-
+        image = mergedImage;
     }
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -266,22 +211,7 @@ void resize_merge(Image& image){
                 }
             }
         }
-
-        // then we save the merged image and check the validity.
-        while(true){
-
-            try{
-                cout << "Please enter the new image name:";
-                cin >> newFileName;
-                mergedImage.saveImage(newFileName);
-                counter = 0;
-                cout << "Done!" << endl << endl;
-                break;
-            }
-
-            catch(...){}
-        }
-
+        image = mergedImage;
     }
 
         // if both images don't have the same width or height, then we resize them first before merging.
@@ -332,28 +262,13 @@ void resize_merge(Image& image){
                 }
             }
         }
-
-        // saving the merged image and checking the validity.
-        while(true){
-
-            try{
-                cout << "Please enter the new image name:";
-                cin >> newFileName;
-                mergedImage.saveImage(newFileName);
-                counter = 0;
-                cout << "Done!" << endl << endl;
-                break;
-            }
-
-            catch(...){}
-        }
-
+        image = mergedImage;
     }
+    cout << "Done!" << endl << endl;
 }
 
 
 void flip(Image& image){
-
     // make user select any flip
     string choice;
     // check validation of input
@@ -403,20 +318,7 @@ void flip(Image& image){
         }
     }
 
-    // make user select name to photo and save it
-    while(true){
-
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
-            cout << "Done!" << endl << endl;
-            break;
-        }
-
-        catch(...){}
-    }
-
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -448,20 +350,7 @@ void rotate(Image& image){
 
                 }
             }
-
-            // Saving the image
-            while(true){
-                try{
-                    cout << "Please enter the new image name:";
-                    cin >> newFileName;
-                    newImage.saveImage(newFileName);
-                    break;
-                }
-
-                catch(...){}
-            }
-
-            cout << "Done!" << endl << endl;
+            image = newImage;
             break;
         }
 
@@ -478,19 +367,7 @@ void rotate(Image& image){
                     }
                 }
             }
-
-            // Saving the image
-            while(true){
-                try{
-                    cout << "Please enter the new image name:";
-                    cin >> newFileName;
-                    newImage.saveImage(newFileName);
-                    break;
-                }
-
-                catch(...){}
-            }
-            cout << "Done!" << endl << endl;
+            image = newImage;
             break;
         }
 
@@ -512,27 +389,14 @@ void rotate(Image& image){
 
                 }
             }
-
-            // Saving the image
-            while(true){
-                try{
-                    cout << "Please enter the new image name:";
-                    cin >> newFileName;
-                    newImage.saveImage(newFileName);
-                    break;
-                }
-
-                catch(...){}
-            }
-            cout << "Done!" << endl << endl;
+            image = newImage;
             break;
         }
 
-        else cout << "Invalid degree." << endl;
+        else
+            cout << "Invalid degree." << endl;
     }
-
-
-
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -595,19 +459,7 @@ void darken_lighten(Image& image) {
 
     }
 
-    // make user select name to photo and save it
-    while(true){
-
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
-            cout << "Done!" << endl << endl;
-            break;
-        }
-
-        catch(...){}
-    }
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -662,18 +514,7 @@ void crop(Image& image){
             croppedImage(i, j, 2) = image(i+x, j+y, 2);
         }
     }
-    // saving the cropped image.
-    while (true){
-        // File existence and valid extension handling
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            croppedImage.saveImage(newFileName);
-            break;
-        }
-
-        catch(...){}
-    }
+    image = croppedImage;
     cout << "Done!" << endl << endl;
 }
 
@@ -823,23 +664,12 @@ void frame(Image &image) {
         else
             cout << "Invalid option, try again" << endl;
     }
-
-    while(true){
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
-            break;
-        }
-
-        catch(...){}
-    }
     cout << "Done!" << endl << endl;
 }
 
 
-// Function to detect edges in the image using Sobel operator
 void detect_edges(Image &image) {
+    // Function to detect edges in the image using Sobel operator
     for (int i = 0; i < image.width; i++){
         for (int j = 0; j < image.height; j++){
 
@@ -893,17 +723,8 @@ void detect_edges(Image &image) {
         }
     }
 
-    // Saving the resulting image
-    while (true) {
-        try {
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            resultImage.saveImage(newFileName);
-            cout << "Done!" << endl << endl;
-            break;
-        } catch (...) {
-        }
-    }
+    image = resultImage;
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -933,31 +754,19 @@ void resize(Image& image){
         }
     }
 
-    // saving the image.
-    while(true){
-
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            resizedImage.saveImage(newFileName);
-            cout << "Done!" << endl << endl;
-            break;
-        }
-
-        catch(...){}
-    }
-
+    image = resizedImage;
+    cout << "Done!" << endl << endl;
 }
 
 
 void blur(Image& image){
 
-    int rad  = 6;
+    int rad  = 9;
     int width = image.width;
     int height = image.height;
 
     // Final image
-    Image blurredImage(width, height);
+    Image blurred(width, height);
 
     // Temporary image for horizontal blur
     Image temp(width, height);
@@ -968,56 +777,50 @@ void blur(Image& image){
 
 
     // 1- Horizontal blur
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
 
             // Reset color values after each iteration
             int red = 0, green = 0, blue = 0;
 
-            for (int kx = -rad; kx <= rad; ++kx) {
-                int ix = max(0, x + kx);
+            for (int x = -rad; x <= rad; ++x) {
+                int ix = max(0, j + x);
                 if (ix < width) {
-                    red += image(ix, y, 0);
-                    green += image(ix, y, 1);
-                    blue += image(ix, y, 2);
+                    red += image(ix, i, 0);
+                    green += image(ix, i, 1);
+                    blue += image(ix, i, 2);
                 }
             }
-            int area = rad * 2 + 1;
+            int divisor = rad * 2 + 1;
             // Calculate the average
-            temp(x, y, 0) = red / area;
-            temp(x, y, 1) = green / area;
-            temp(x, y, 2) = blue / area;
+            temp(j, i, 0) = red / divisor;
+            temp(j, i, 1) = green / divisor;
+            temp(j, i, 2) = blue / divisor;
         }
     }
 
     // 2- Vertical blur  using the temporary image
-    for (int x = 0; x < width; ++x) {
-        for (int y = 0; y < height; ++y) {
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
+
             int red = 0, green = 0, blue = 0;
-            for (int ky = -rad; ky <= rad; ++ky) {
-                int iy = std::max(0, y + ky);
+
+            for (int y = -rad; y <= rad; ++y) {
+                int iy = max(0, j + y);
                 if (iy < height) {
-                    red += temp(x, iy, 0);
-                    green += temp(x, iy, 1);
-                    blue += temp(x, iy, 2);
+                    red += temp(i, iy, 0);
+                    green += temp(i, iy, 1);
+                    blue += temp(i, iy, 2);
                 }
             }
-            int area = rad * 2 + 1;
-            blurredImage(x, y, 0) = red / area;
-            blurredImage(x, y, 1) = green / area;
-            blurredImage(x, y, 2) = blue / area;
+            int divisor = rad * 2 + 1;
+            blurred(i, j, 0) = red / divisor;
+            blurred(i, j, 1) = green / divisor;
+            blurred(i, j, 2) = blue / divisor;
         }
     }
 
-    while(true){
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            blurredImage.saveImage(newFileName);
-            break;
-        }
-        catch(...){}
-    }
+    image = blurred;
     cout << "Done!" << endl << endl;
 }
 
@@ -1040,20 +843,7 @@ void purple(Image& image) {
         }
 
     }
-
-    // then we save the image and check the validity.
-    while(true){
-
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
-            cout << "Done!" << endl << endl;
-            break;
-        }
-
-        catch(...){}
-    }
+    cout << "Done!" << endl << endl;
 }
 
 
@@ -1068,38 +858,27 @@ void infrared(Image& image){
         }
 
     }
-    // make user select name to photo and save it
-    while(true){
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
-            cout << "Done!" << endl << endl;
-            break;
-        }
-
-        catch(...){}
-    }
-
+    cout << "Done!" << endl << endl;
 }
 
 
 void sunlight(Image& image){
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            int redTent = 40, greenTent = 30, blueTent = 30;
 
-//    for (int i = 0; i < image.width; ++i) {
-//        for (int j = 0; j < image.height; ++j) {
-//        }
-//    }
+            while (image(i, j, 0) + redTent > 255) redTent --;
+            image(i, j, 0) += redTent;
+            redTent = 40;
 
-    while(true){
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            image.saveImage(newFileName);
-            break;
+            while (image(i, j, 1) + greenTent > 255) greenTent --;
+            image(i, j, 1) += greenTent;
+            greenTent = 30;
+
+            while (image(i, j, 2) - blueTent < 0) blueTent --;
+            image(i, j, 2) -= blueTent;
+            blueTent = 30;
         }
-
-        catch(...){}
     }
     cout << "Done!" << endl << endl;
 }
@@ -1119,6 +898,10 @@ void save(Image& image){
             }
 
             else if (choice == "2"){
+                cout << "Enter the new image name:" << endl;
+//                cin.ignore();
+//                getline(cin, newFileName);
+                cin >> newFileName;
                 image.saveImage(newFileName);
                 break;
             }
@@ -1141,7 +924,9 @@ void load(Image& image){
     while (true){
         cout << "Enter the image name:";
         try{
-            getline(cin, fileName);
+//            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//            getline(cin, fileName);
+            cin >> fileName;
             image.loadNewImage(fileName);
             break;
         }
