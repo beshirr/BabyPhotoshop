@@ -736,8 +736,8 @@ void fancy_frame (Image &image, int red, int green, int blue, int frameSize, boo
     else
         color = 255;
 
-    frameSize = ((image.width * image.height) /
-                        (image.width + image.height)) * 0.07;
+    frameSize = (((image.width * image.height) /
+                        (image.width + image.height)) * 0.07);
 
     simple_frame(image, color, color, color, frameSize);
 
@@ -922,7 +922,7 @@ void resize(Image image){
     cout << "Enter the dimensions of the new image:";
     while(!(cin >> width_) or !(cin >> height_)){
         cin.clear();
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Please enter a valid width or height (a positive integer.)" << endl;
     }
     // create a new image with the dimensions we got from the user.
@@ -1075,18 +1075,18 @@ void blur2(Image image){
             blue += image(i, j, 2);
             counter ++;
 
-
-            int radCount = -3;
+            int rad = 3;
+            int radCount = 1;
 
             // Up right
-            if (i + radCount < image.height && j - radCount >= 0){
+            while (i + radCount < image.height && j - radCount >= 0){
                 red += image(i + radCount, j - radCount, 0);
                 green += image(i + radCount, j - radCount, 1);
                 blue += image(i + radCount, j - radCount, 2);
                 counter ++;
                 radCount ++;
-                if (radCount > 3) {
-                    radCount = -3;
+                if (radCount > rad) {
+                    radCount = 1;
                     break;
                 }
             }
@@ -1099,8 +1099,8 @@ void blur2(Image image){
                 blue += image(i, j + radCount, 2);
                 counter ++;
                 radCount ++;
-                if (radCount > 3) {
-                    radCount = -3;
+                if (radCount > rad) {
+                    radCount = 1;
                     break;
                 }
             }
@@ -1113,8 +1113,8 @@ void blur2(Image image){
                 blue += image(i + radCount, j + radCount, 2);
                 counter ++;
                 radCount ++;
-                if (radCount > 3) {
-                    radCount = -3;
+                if (radCount > rad) {
+                    radCount = 1;
                     break;
                 }
             }
@@ -1127,8 +1127,8 @@ void blur2(Image image){
                 blue += image(i + radCount, j, 2);
                 counter ++;
                 radCount ++;
-                if (radCount > 3) {
-                    radCount = -3;
+                if (radCount > rad) {
+                    radCount = 1;
                     break;
                 }
             }
@@ -1141,8 +1141,8 @@ void blur2(Image image){
                 blue += image(i, j - radCount, 2);
                 counter ++;
                 radCount ++;
-                if (radCount > 3) {
-                    radCount = -3;
+                if (radCount > rad) {
+                    radCount = 1;
                     break;
                 }
             }
@@ -1155,8 +1155,8 @@ void blur2(Image image){
                 blue += image(i - radCount, j, 2);
                 counter ++;
                 radCount ++;
-                if (radCount > 3) {
-                    radCount = -3;
+                if (radCount > rad) {
+                    radCount = 1;
                     break;
                 }
             }
@@ -1169,8 +1169,8 @@ void blur2(Image image){
                 blue += image(i - radCount, j - radCount, 2);
                 counter ++;
                 radCount ++;
-                if (radCount > 3) {
-                    radCount = -3;
+                if (radCount > rad) {
+                    radCount = 1;
                     break;
                 }
             }
@@ -1183,8 +1183,8 @@ void blur2(Image image){
                 blue += image(i - radCount, j + radCount, 2);
                 counter ++;
                 radCount ++;
-                if (radCount > 3) {
-                    radCount = -3;
+                if (radCount > rad) {
+                    radCount = 1;
                     break;
                 }
             }
@@ -1211,162 +1211,33 @@ void blur2(Image image){
 }
 
 
-int prefix(const Image& image, int channel, vector <vector<int>> &pSum,
-            int x1, int y1, int x2, int y2){
-
-    pSum[0][0] = image(0, 0, channel);
-
-    // Prefix sum for the first row
-    for (int i = 1; i < image.width; ++i){
-        pSum[i][0] = pSum[i - 1][0] + image(i, 0, channel);
-    }
-    // Prefix sum for the first column
-    for (int i = 1; i < image.height; ++i){
-        pSum[0][i] = pSum[0][i - 1] + image(0, i, channel);
-    }
-    // Prefix sum for the rest of the image
-    for (int i = 1; i < image.width; ++i){
-        for (int j = 1; j < image.height; ++j){
-            pSum[i][j] = image(i, j, channel) + pSum[i - 1][j] + pSum[i][j - 1] - pSum[i-1][j-1];
-        }
-    }
-
-    return pSum[y2][x2] - pSum[y1][x1] - pSum[y2][x1] + pSum[y1][x1];
-}
-
-
-void blur3(const Image& image){
-
-    vector <vector<int>> pSum(image.width, vector<int>(image.height, 0));
-
-    int rad = 3;
-    int width = image.width;
-    int height = image.height;
-
-    Image blurred(width, height);
-
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
-
-            int red = 0, green = 0, blue = 0;
-
-            int x1 = max(0, x - rad);
-            int y1 = max(0, y - rad);
-            int x2 = min(width - 1, x + rad);
-            int y2 = min(height - 1, y + rad);
-
-            red = prefix(image, 0, pSum, x1, y1, x2, y2);
-            green = prefix(image, 1, pSum, x1, y1, x2, y2);
-            blue = prefix(image, 2, pSum, x1, y1, x2, y2);
-
-            int area = (x2 - x1 +1) * (y2 - y1 + 1);
-
-            blurred(x, y, 0) = red / area;
-            blurred(x, y, 1) = green / area;
-            blurred(x, y, 2) = blue / area;
-
-        }
-    }
-
-    while(true){
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            blurred.saveImage(newFileName);
-            break;
-        }
-
-        catch(...){}
-    }
-    cout << "Done!" << endl << endl;
-}
-
-
-void blur4(const Image& image){
-    int rad = 3;
-
-    int width = image.width;
-    int height = image.height;
-
-    Image blurred(width, height);
-    Image temp(width, height);
-
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
-            int red = 0, green = 0, blue = 0;
-
-            for (int kx = -rad; kx < rad; ++kx) {
-                int ix = max(0, x + kx);
-                if (ix < width){
-                    red += image(ix, y, 0);
-                    green += image(ix, y, 1);
-                    blue += image(ix, y, 2);
-                }
-            }
-
-            int area = rad * 2 + 1;
-            temp(x, y, 0) = red / area;
-            temp(x, y, 1) = green / area;
-            temp(x, y, 2) = blue / area;
-        }
-    }
-
-    for (int x = 0; x < width; ++x) {
-        for (int y = 0; y < height; ++y) {
-            int red = 0, green = 0, blue = 0;
-
-            for (int ky = -rad; ky < rad; ++ky) {
-                int iy = max(0, y + ky);
-                if (iy < height){
-                    red += temp(iy, y, 0);
-                    green += temp(iy, y, 1);
-                    blue += temp(iy, y, 2);
-                }
-            }
-
-            int area = rad * 2 + 1;
-            blurred(x, y, 0) = red / area;
-            blurred(x, y, 1) = green / area;
-            blurred(x, y, 2) = blue / area;
-        }
-    }
-
-    while(true){
-        try{
-            cout << "Please enter the new image name:";
-            cin >> newFileName;
-            blurred.saveImage(newFileName);
-            break;
-        }
-
-        catch(...){}
-    }
-    cout << "Done!" << endl << endl;
-}
-
 
 void purple(Image image) {
 
-    Image purpleImage(image.width, image.height);
-    double redRatio, greenRatio, blueRatio;
-    for (int i = 0; i < image.width; ++i) {
-        for (int j = 0; j < image.height; ++j) {
+    // the purple shade we are using in this filter is (R:200, G:160, B:255).
+    for (int i = 0; i < image.width; i++){
+        for (int j = 0; j < image.height; j++){
+            double redRatio, greenRatio, blueRatio;
+            // calculate the ratio for the red channel to use it in the color assigning.
             redRatio = image(i, j, 0) / 255.0;
-            purpleImage(i, j, 0) = min((int)(128  * redRatio * 1.5), 255);
+            // using the ratio and the prestated shade to assign the color to the red channel.
+            // same goes for the rest of the channels.
+            image(i, j, 0) = (int)(redRatio * 200);
             greenRatio = image(i, j, 1) / 255.0;
-            purpleImage(i, j, 1) = min((int)(50 * greenRatio * 1.5), 255);
+            image(i, j, 1) = (int)(greenRatio * 160);
             blueRatio = image(i, j, 2) / 255.0;
-            purpleImage(i, j, 2) = min((int)(128 * blueRatio * 1.5), 255);
+            image(i, j, 2) = (int)(blueRatio * 255);
         }
+
     }
 
-    // then we save the merged image and check the validity.
+    // then we save the image and check the validity.
     while(true){
 
         try{
             cout << "Please enter the new image name:";
             cin >> newFileName;
-            purpleImage.saveImage(newFileName);
+            image.saveImage(newFileName);
             cout << "Done!" << endl << endl;
             break;
         }
@@ -1374,6 +1245,8 @@ void purple(Image image) {
         catch(...){}
     }
 }
+
+
 
 
 void infrared(Image image){
@@ -1403,23 +1276,10 @@ void infrared(Image image){
 
 void sunlight(Image image){
 
-    for (int i = 0; i < image.width; ++i) {
-        for (int j = 0; j < image.height; ++j) {
-            int redTent = 40, greenTent = 30, blueTent = 30;
-
-            while (image(i, j, 0) + redTent > 255) redTent --;
-            image(i, j, 0) += redTent;
-            redTent = 40;
-
-            while (image(i, j, 1) + greenTent > 255) greenTent --;
-            image(i, j, 1) += greenTent;
-            greenTent = 30;
-
-            while (image(i, j, 2) - blueTent < 0) blueTent --;
-            image(i, j, 2) -= blueTent;
-            blueTent = 30;
-        }
-    }
+//    for (int i = 0; i < image.width; ++i) {
+//        for (int j = 0; j < image.height; ++j) {
+//        }
+//    }
 
     while(true){
         try{
@@ -1434,6 +1294,29 @@ void sunlight(Image image){
     cout << "Done!" << endl << endl;
 }
 
+
+void oil_painting (Image image) {
+
+//    for (int i = 0; i < image.width; i++){
+  //      for (int j = 0; j < image.height; j++){
+    //
+      //  }
+        //
+    // }
+
+
+    while(true){
+        try{
+            cout << "Please enter the new image name:";
+            cin >> newFileName;
+            image.saveImage(newFileName);
+            break;
+        }
+
+        catch(...){}
+    }
+    cout << "Done!" << endl << endl;
+}
 
 int main(){
 
@@ -1493,6 +1376,8 @@ int main(){
             cout << "13- Detect edges" << endl;
             cout << "14- infrared" << endl;
             cout << "15- Sunlight" << endl;
+            cout << "16- oil painting" << endl;
+            cout << "->";
 
             string filter;
             cin >> filter;
@@ -1539,13 +1424,15 @@ int main(){
             else if (filter == "11")
                 darken_lighten(image);
             else if (filter == "12")
-                blur4(image);
+                blur2(image);
             else if (filter == "13")
                 detect_edges(image);
             else if (filter== "14")
                 infrared(image);
             else if (filter == "15")
                 sunlight(image);
+            else if (filter == "16")
+                oil_painting(image);
             else
                 cout << "Invalid choice, try again" << endl << endl;
         }
