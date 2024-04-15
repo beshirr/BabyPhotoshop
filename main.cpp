@@ -980,8 +980,8 @@ int main(){
             else{
                 cout << "You have unsaved changes if you exit you are going to lose progress\n"
                         "are you sure you want to exit?\n"
-                        "(1) Exit without saving"
-                        "(2) Save then exit"
+                        "(1) Exit without saving \n"
+                        "(2) Save then exit\n"
                         "->";
 
                 string option;
@@ -1013,7 +1013,7 @@ int main(){
                     cout << "You have unsaved changes if you loaded a new image you are going to lose progress \n"
                             "make sure you save changes before loading a new image \n"
                             "(1) Load new image and discard changes\n"
-                            "(2) Save current then load new image \n";
+                            "(2) Save current then load new image";
                     string option;
                     cin >> option;
                     if (option == "1") {
