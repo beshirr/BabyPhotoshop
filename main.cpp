@@ -37,7 +37,6 @@ using namespace std;
 
 string fileName;
 
-
 void save_image(Image& image){
     while (true){
         try{
@@ -62,14 +61,12 @@ void save_image(Image& image){
 
             else
                 cout << "Invalid choice, try again." << endl << endl;
-
-
         }
 
         catch (...){}
     }
 
-    cout << "Image save successfully!" << endl << endl;
+    cout << "Image saved successfully!" << endl << endl;
 }
 
 
@@ -92,6 +89,7 @@ void load(Image& image){
 
 }
 
+
 void grayscale(Image& image){
     // iterate through the image matrix
     for (int i = 0; i < image.width; i++){
@@ -106,7 +104,6 @@ void grayscale(Image& image){
             image(i, j, 2) = avg;
         }
     }
-    save_image(image);
 }
 
 
@@ -132,7 +129,6 @@ void black_and_white(Image& image) {
             }
         }
     }
-    save_image(image);
 }
 
 
@@ -147,7 +143,6 @@ void invert(Image& image){
             }
         }
     }
-    save_image(image);
 }
 
 
@@ -192,7 +187,6 @@ void crop_merge(Image& image){
             }
         }
         image = mergedImage;
-        save_image(image);
     }
 
     // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
@@ -219,7 +213,6 @@ void crop_merge(Image& image){
             }
         }
         image = mergedImage;
-        save_image(image);
     }
     cout << "Done!" << endl << endl;
 }
@@ -321,7 +314,6 @@ void resize_merge(Image& image){
         }
         image = mergedImage;
     }
-    save_image(image);
 }
 
 
@@ -375,7 +367,6 @@ void flip(Image& image){
         }
     }
 
-    save_image(image);
 }
 
 
@@ -453,15 +444,12 @@ void rotate(Image& image){
         else
             cout << "Invalid degree." << endl;
     }
-    save_image(image);
 }
 
 
 void darken_lighten(Image& image) {
-
     // make user select darken or lighten
     string choice;
-
     // check validation of input
     while (true){
         cout << "Please select:\n1- Lighten filter \n2- Darken filter\nEnter your choice:";
@@ -482,7 +470,6 @@ void darken_lighten(Image& image) {
             cout << endl << "Invalid choice!" <<endl;
             continue;
         }
-
     }
     // Apply lighter filter
     if (choice == "1"){
@@ -497,10 +484,8 @@ void darken_lighten(Image& image) {
                 }
             }
         }
-
     }
-
-        //Apply darker filter
+    //Apply darker filter
     else if (choice== "2" ){
         // Iterate through each pixel of the image
         for (int i = 0; i < image.width; ++i) {
@@ -513,10 +498,7 @@ void darken_lighten(Image& image) {
                 }
             }
         }
-
     }
-
-    save_image(image);
 }
 
 
@@ -572,7 +554,6 @@ void crop(Image& image){
         }
     }
     image = croppedImage;
-    save_image(image);
 }
 
 
@@ -721,7 +702,6 @@ void frame(Image &image) {
         else
             cout << "Invalid option, try again" << endl;
     }
-    save_image(image);
 }
 
 
@@ -781,7 +761,6 @@ void detect_edges(Image &image) {
     }
 
     image = resultImage;
-    save_image(image);
 }
 
 
@@ -812,7 +791,6 @@ void resize(Image& image){
     }
 
     image = resizedImage;
-    save_image(image);
 }
 
 
@@ -878,7 +856,6 @@ void blur(Image& image){
     }
 
     image = blurred;
-    save_image(image);
 }
 
 
@@ -900,7 +877,6 @@ void purple(Image& image) {
         }
 
     }
-    save_image(image);
 }
 
 
@@ -915,7 +891,6 @@ void infrared(Image& image){
         }
 
     }
-    save_image(image);
 }
 
 
@@ -937,11 +912,7 @@ void sunlight(Image& image){
             blueTent = 30;
         }
     }
-    save_image(image);
 }
-
-
-
 
 
 int main(){
