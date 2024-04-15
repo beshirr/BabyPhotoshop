@@ -37,6 +37,61 @@ using namespace std;
 
 string fileName;
 
+
+void save_image(Image& image){
+    while (true){
+        try{
+            string choice;
+            string newFileName;
+            cout << "Do you want to save the same file (1) or change the file name (2)?";
+            cin >> choice;
+
+            if (choice == "1"){
+                image.saveImage(fileName);
+                break;
+            }
+
+            else if (choice == "2"){
+                cout << "Enter the new image name:" << endl;
+                cin.clear();
+                cin.ignore();
+                getline(cin, newFileName);
+                image.saveImage(newFileName);
+                break;
+            }
+
+            else
+                cout << "Invalid choice, try again." << endl << endl;
+
+
+        }
+
+        catch (...){}
+    }
+
+    cout << "Image save successfully!" << endl << endl;
+}
+
+
+void load(Image& image){
+
+    while (true){
+        cout << "Enter the image name:";
+        try{
+            cin.clear();
+            cin.ignore();
+            getline(cin, fileName);
+            image.loadNewImage(fileName);
+            break;
+        }
+
+        catch (...){}
+    }
+
+    cout << "New image loaded successfully!" << endl << endl;
+
+}
+
 void grayscale(Image& image){
     // iterate through the image matrix
     for (int i = 0; i < image.width; i++){
@@ -51,7 +106,7 @@ void grayscale(Image& image){
             image(i, j, 2) = avg;
         }
     }
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -77,7 +132,7 @@ void black_and_white(Image& image) {
             }
         }
     }
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -92,7 +147,7 @@ void invert(Image& image){
             }
         }
     }
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -137,6 +192,7 @@ void crop_merge(Image& image){
             }
         }
         image = mergedImage;
+        save_image(image);
     }
 
     // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
@@ -163,6 +219,7 @@ void crop_merge(Image& image){
             }
         }
         image = mergedImage;
+        save_image(image);
     }
     cout << "Done!" << endl << endl;
 }
@@ -264,7 +321,7 @@ void resize_merge(Image& image){
         }
         image = mergedImage;
     }
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -318,7 +375,7 @@ void flip(Image& image){
         }
     }
 
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -396,7 +453,7 @@ void rotate(Image& image){
         else
             cout << "Invalid degree." << endl;
     }
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -459,7 +516,7 @@ void darken_lighten(Image& image) {
 
     }
 
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -515,7 +572,7 @@ void crop(Image& image){
         }
     }
     image = croppedImage;
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -664,7 +721,7 @@ void frame(Image &image) {
         else
             cout << "Invalid option, try again" << endl;
     }
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -724,7 +781,7 @@ void detect_edges(Image &image) {
     }
 
     image = resultImage;
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -755,7 +812,7 @@ void resize(Image& image){
     }
 
     image = resizedImage;
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -821,7 +878,7 @@ void blur(Image& image){
     }
 
     image = blurred;
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -843,7 +900,7 @@ void purple(Image& image) {
         }
 
     }
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -858,7 +915,7 @@ void infrared(Image& image){
         }
 
     }
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
@@ -880,63 +937,11 @@ void sunlight(Image& image){
             blueTent = 30;
         }
     }
-    cout << "Done!" << endl << endl;
+    save_image(image);
 }
 
 
-void save(Image& image){
-    while (true){
-        try{
-            string choice;
-            string newFileName;
-            cout << "Do you want to save the same file (1) or change the file name (2)?";
-            cin >> choice;
 
-            if (choice == "1"){
-                image.saveImage(fileName);
-                break;
-            }
-
-            else if (choice == "2"){
-                cout << "Enter the new image name:" << endl;
-//                cin.ignore();
-//                getline(cin, newFileName);
-                cin >> newFileName;
-                image.saveImage(newFileName);
-                break;
-            }
-
-            else
-                cout << "Invalid choice, try again." << endl << endl;
-
-
-        }
-
-        catch (...){}
-    }
-
-    cout << "Image save successfully!" << endl << endl;
-}
-
-
-void load(Image& image){
-
-    while (true){
-        cout << "Enter the image name:";
-        try{
-//            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-//            getline(cin, fileName);
-            cin >> fileName;
-            image.loadNewImage(fileName);
-            break;
-        }
-
-        catch (...){}
-    }
-
-    cout << "New image loaded successfully!" << endl << endl;
-
-}
 
 
 int main(){
@@ -967,9 +972,9 @@ int main(){
         cout << "17- Infrared filter" << endl;
         cout << "18- Exit" << endl;
         cout << "->";
-        
+
         cin >> menu;
-        
+
         if (menu == "18"){
 
             if (saved){
@@ -993,7 +998,7 @@ int main(){
                 }
 
                 else if (option == "2"){
-                    save(image);
+                    save_image(image);
                     cout << "GoodBye!" << endl << endl;
                     break;
                 }
@@ -1002,7 +1007,7 @@ int main(){
                     cout << "Invalid option, try again" << endl << endl;
             }
         }
-        
+
         else if (menu == "1"){
             if (saved){
                 load(image);
@@ -1022,7 +1027,7 @@ int main(){
                         break;
                     }
                     else if (option == "2"){
-                        save(image);
+                        save_image(image);
                         load(image);
                         saved = false;
                         break;
@@ -1032,9 +1037,9 @@ int main(){
                 }
             }
         }
-        
+
         else if (menu == "2"){
-            save(image);
+            save_image(image);
             saved = true;
         }
 
