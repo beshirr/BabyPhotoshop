@@ -1,36 +1,41 @@
-// ======================================== Header ==================================================================
+/**
+@File: CS112_A3_part2B_21_20230161_20230109_20230476.cpp
+@Purpose: Photo Editor
+@Authors:
+    Zeyad Mohamed Arafat - 20230161   s21
+    John Ayman Demian    - 20230109   s21
+    Youssef Ahmed Beshir - 20230476   s21
+@GitHub: https://github.com/beshirr/BabyPhotoshop
+*/
+
 /*
-File: CS112_A3_part1_21_20230161_20230109_20230476.cpp
-Purpose: manipulating images with some filters.
-Authors:
-    Zeyad Mohamed Arafat - 20230161   s21   zeyadarafat833@gmail.com
-    John Ayman Demian    - 20230109   s21   johnayman03@gmail.com
-    Youssef Ahmed Beshir - 20230476   s21   youssefahmedbeshir@gmail.com
-
-Zeyad Mohamed Arafat:
+Zeyad Mohamed Arafat    zeyadarafat833@gmail.com:
     Gray scale filter.
-    Resize filter.
+    Resize image.
+    Merge images.
+    Crop image.
+    Purple filter.
 
-John Ayman Demian:
+
+John Ayman Demian       johnayman03@gmail.com:
     Black and White filter.
-    Flip filter.
-    Darken and Lighten Filter .
-    Detect edges Filter .
-    Infrared Filter .
+    Flip image.
+    Darken and Lighten Filter.
+    Detect edges Filter.
+    Infrared Filter.
 
-Youssef Ahmed Beshir:
-    Menu.
+Youssef Ahmed Beshir    youssefahmedbeshir@gmail.com:
     Invert filter.
-    Frame filter.
-    Rotate filter.
+    Frame to image.
+    Rotate image.
     Blur filter.
     Sunlight filter.
 */
-// ============================================================================================================================
 
 
 # include <bits/stdc++.h>
 # include "Image_Class.h"
+
 
 using namespace std;
 
@@ -76,7 +81,7 @@ void load(Image& image){
         cout << "Enter the image name:";
         try{
             cin.clear();
-            cin.ignore();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             getline(cin, fileName);
             image.loadNewImage(fileName);
             break;
@@ -919,7 +924,18 @@ int main(){
     cout << "Welcome to babyPhotoshop" << endl << endl;
 
     Image image;
-    load(image);
+    // Loading the image for the first time
+    while (true){
+        cout << "Enter the image name:";
+        try{
+            getline(cin, fileName);
+            image.loadNewImage(fileName);
+            break;
+        }
+        catch (...){}
+    }
+    cout << "New image loaded successfully!" << endl << endl;
+
     bool saved = false;
 
     while (true){
@@ -989,7 +1005,8 @@ int main(){
                     cout << "You have unsaved changes if you loaded a new image you are going to lose progress \n"
                             "make sure you save changes before loading a new image \n"
                             "(1) Load new image and discard changes\n"
-                            "(2) Save current then load new image";
+                            "(2) Save current then load new image\n"
+                            "->";
                     string option;
                     cin >> option;
                     if (option == "1") {
