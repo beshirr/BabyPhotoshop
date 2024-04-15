@@ -959,7 +959,6 @@ int main(){
         cout << "17- Infrared filter" << endl;
         cout << "18- Exit" << endl;
         cout << "->";
-
         cin >> menu;
 
         if (menu == "18"){
