@@ -924,8 +924,8 @@ void sunlight(Image& image){
 
 void oil_painting(Image& image){
     Image oilImage(image.width, image.height);
-        for (int i = 5; i < image.width - 5; i++){
-            for (int j = 5; j < image.height - 5; j++){
+        for (int i = 10; i < image.width - 10; i += 20){
+            for (int j = 10; j < image.height - 10; j += 20){
                 int bin_31_875 = 0, maxR1 = 0, maxG1=0, maxB1 =0;
                 int bin_63_75 = 0, maxR2 = 0, maxG2=0, maxB2 =0;
                 int bin_95_625 = 0, maxR3 = 0, maxG3=0, maxB3 =0;
@@ -933,126 +933,109 @@ void oil_painting(Image& image){
                 int bin_159_375 = 0, maxR5 = 0, maxG5=0, maxB5 =0;
                 int bin_191_25 = 0, maxR6 = 0, maxG6=0, maxB6 =0;
                 int bin_223_125 = 0, maxR7 = 0, maxG7=0, maxB7 =0;
-                int bin_225 = 0, maxR8 = 0, maxG8=0, maxB8 =0;
-                vector<int>intensity;
-                for (int x = i-5; x < i+6; x++){
-                    for (int y = j-5; y < j+6; y++){
+                int bin_255 = 0, maxR8 = 0, maxG8=0, maxB8 =0;
+                for (int x = i-10; x < i+11; x++){
+                    for (int y = j-10; y < j+11; y++){
                         double currentIntensity;
                         currentIntensity = (image(x, y, 0) + image(x, y, 1) + image(x, y, 2)) / 3.0;
-                        if (0 <= currentIntensity < 31.875){
-                            bin_31_875++;
-                            maxR1 += image(x, y, 0);
-                            maxG1 += image(x, y, 1);
-                            maxB1 += image(x, y, 2);
+                        if (currentIntensity >= 223.125){
+                            bin_255++;
+                            maxR8 += image(x, y, 0);
+                            maxG8 += image(x, y, 1);
+                            maxB8 += image(x, y, 2);
                         }
-                        else if (31.875 <= currentIntensity < 63.75){
-                            bin_63_75++;
-                            maxR2 += image(x, y, 0);
-                            maxG2 += image(x, y, 1);
-                            maxB2 += image(x, y, 2);
-                        }
-                        else if (63.75 <= currentIntensity < 95.625){
-                            bin_95_625++;
-                            maxR3 += image(x, y, 0);
-                            maxG3 += image(x, y, 1);
-                            maxB3 += image(x, y, 2);
-                        }
-                        else if (95.625 <= currentIntensity < 127.5){
-                            bin_127_5++;
-                            maxR4 += image(x, y, 0);
-                            maxG4 += image(x, y, 1);
-                            maxB4 += image(x, y, 2);
-                        }
-                        else if (127.5 <= currentIntensity < 159.375){
-                            bin_159_375++;
-                            maxR5 += image(x, y, 0);
-                            maxG5 += image(x, y, 1);
-                            maxB5 += image(x, y, 2);
-                        }
-                        else if (156.375 <= currentIntensity < 191.25){
-                            bin_191_25++;
-                            maxR6 += image(x, y, 0);
-                            maxG6 += image(x, y, 1);
-                            maxB6 += image(x, y, 2);
-                        }
-                        else if (191.25 <= currentIntensity < 223.125){
+                        else if (currentIntensity >= 191.25){
                             bin_223_125++;
                             maxR7 += image(x, y, 0);
                             maxG7 += image(x, y, 1);
                             maxB7 += image(x, y, 2);
                         }
-                        else if (223.125 <= currentIntensity <= 255){
-                            bin_225++;
-                            maxR8 += image(x, y, 0);
-                            maxG8 += image(x, y, 1);
-                            maxB8 += image(x, y, 2);
+                        else if (currentIntensity >= 159.375){
+                            bin_191_25++;
+                            maxR6 += image(x, y, 0);
+                            maxG6 += image(x, y, 1);
+                            maxB6 += image(x, y, 2);
+                        }
+                        else if (currentIntensity >= 127.5){
+                            bin_159_375++;
+                            maxR5 += image(x, y, 0);
+                            maxG5 += image(x, y, 1);
+                            maxB5 += image(x, y, 2);
+                        }
+                        else if (currentIntensity >= 95.625){
+                            bin_127_5++;
+                            maxR4 += image(x, y, 0);
+                            maxG4 += image(x, y, 1);
+                            maxB4 += image(x, y, 2);
+                        }
+                        else if (currentIntensity >= 63.75){
+                            bin_95_625++;
+                            maxR3 += image(x, y, 0);
+                            maxG3 += image(x, y, 1);
+                            maxB3 += image(x, y, 2);
+                        }
+                        else if (currentIntensity >= 31.875){
+                            bin_63_75++;
+                            maxR2 += image(x, y, 0);
+                            maxG2 += image(x, y, 1);
+                            maxB2 += image(x, y, 2);
+                        }
+                        else if (currentIntensity >= 0){
+                            bin_31_875++;
+                            maxR1 += image(x, y, 0);
+                            maxG1 += image(x, y, 1);
+                            maxB1 += image(x, y, 2);
                         }
                     }
                 }
-                vector<double> intensityList;
-                intensityList.push_back(bin_31_875);
-                intensityList.push_back(bin_63_75);
-                intensityList.push_back(bin_95_625);
-                intensityList.push_back(bin_127_5);
-                intensityList.push_back(bin_159_375);
-                intensityList.push_back(bin_191_25);
-                intensityList.push_back(bin_223_125);
-                intensityList.push_back(bin_225);
-                sort(intensityList.begin(), intensityList.end());
-                double maxIntensity;
-                double currentR, currentG, CurrentB;
-                if (bin_31_875 == intensityList[7]){
-                    maxIntensity = 31.875;
-                    currentR = maxR1 / intensityList[7];
-                    currentG = maxG1 / intensityList[7];
-                    CurrentB = maxB1 / intensityList[7];
-                }
-                else if (bin_63_75 == intensityList[7]){
-                    maxIntensity = 63.75;
-                    currentR = maxR2 / intensityList[7];
-                    currentG = maxG2 / intensityList[7];
-                    CurrentB = maxB2 / intensityList[7];
-                }
-                else if (bin_95_625 == intensityList[7]){
-                    maxIntensity = 95.625;
-                    currentR = maxR3 / intensityList[7];
-                    currentG = maxG3 / intensityList[7];
-                    CurrentB = maxB3 / intensityList[7];
-                }
-                else if (bin_127_5 == intensityList[7]){
-                    maxIntensity = 127.5;
-                    currentR = maxR4 / intensityList[7];
-                    currentG = maxG4 / intensityList[7];
-                    CurrentB = maxB4 / intensityList[7];
-                }
-                else if (bin_159_375 == intensityList[7]){
-                    maxIntensity = 159.375;
-                    currentR = maxR5 / intensityList[7];
-                    currentG = maxG5 / intensityList[7];
-                    CurrentB = maxB5 / intensityList[7];
-                }
-                else if (bin_191_25 == intensityList[7]){
-                    maxIntensity = 191.25;
-                    currentR = maxR6 / intensityList[7];
-                    currentG = maxG6 / intensityList[7];
-                    CurrentB = maxB6 / intensityList[7];
-                }
-                else if (bin_223_125 == intensityList[7]){
-                    maxIntensity = 223.125;
-                    currentR = maxR7 / intensityList[7];
-                    currentG = maxG7 / intensityList[7];
-                    CurrentB = maxB7 / intensityList[7];
-                }
-                else if (bin_225 == intensityList[7]){
-                    maxIntensity = 225;
-                    currentR = maxR8 / intensityList[7];
-                    currentG = maxG8 / intensityList[7];
-                    CurrentB = maxB8 / intensityList[7];
+
+                for (int x = i-10; x < i+11; x++){
+                    for (int y = j-10; y < j+11; y++){
+                        double currentIntensity;
+                        currentIntensity = (image(x, y, 0) + image(x, y, 1) + image(x, y, 2)) / 3.0;
+                        if (currentIntensity >= 223.125){
+                            image(x, y, 0) = maxR8 / bin_255;
+                            image(x, y, 1) = maxG8 / bin_255;
+                            image(x, y, 2) = maxB8 / bin_255;
+                        }
+                        else if (currentIntensity >= 191.25){
+                            image(x, y, 0) = maxR7 / bin_223_125;
+                            image(x, y, 1) = maxG7 / bin_223_125;
+                            image(x, y, 2) = maxB7 / bin_223_125;
+                        }
+                        else if (currentIntensity >= 159.375){
+                            image(x, y, 0) = maxR6 / bin_191_25;
+                            image(x, y, 1) = maxG6 / bin_191_25;
+                            image(x, y, 2) = maxB6 / bin_191_25;
+                        }
+                        else if (currentIntensity >= 127.5){
+                            image(x, y, 0) = maxR5 / bin_159_375;
+                            image(x, y, 1) = maxG5 / bin_159_375;
+                            image(x, y, 2) = maxB5 / bin_159_375;
+                        }
+                        else if (currentIntensity >= 95.625){
+                            image(x, y, 0) = maxR4 / bin_127_5;
+                            image(x, y, 1) = maxG4 / bin_127_5;
+                            image(x, y, 2) = maxB4 / bin_127_5;
+                        }
+                        else if (currentIntensity >= 63.75){
+                            image(x, y, 0) = maxR3 / bin_95_625;
+                            image(x, y, 1) = maxG3 / bin_95_625;
+                            image(x, y, 2) = maxB3 / bin_95_625;
+                        }
+                        else if (currentIntensity >= 31.875){
+                            image(x, y, 0) = maxR2 / bin_63_75;
+                            image(x, y, 1) = maxG2 / bin_63_75;
+                            image(x, y, 2) = maxB2 / bin_63_75;
+                        }
+                        else if (currentIntensity >= 0){
+                            image(x, y, 0) = maxR1 / bin_31_875;
+                            image(x, y, 1) = maxG1 / bin_31_875;
+                            image(x, y, 2) = maxB1 / bin_31_875;
+                        }
+                    }
                 }
 
-                image(i, j, 0) = (int)(currentR);
-                image(i, j, 1) = (int)(currentG);
-                image(i, j, 2) = (int)(CurrentB);
 
             }
         }
