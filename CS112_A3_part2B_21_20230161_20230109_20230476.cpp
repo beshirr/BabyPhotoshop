@@ -1043,6 +1043,40 @@ void oil_painting(Image& image){
 }
 
 
+void old_TV(Image& image){
+
+
+    //000
+
+    int counter = 0;
+    for (int i = 0; i < image.width; ++i) {
+            for (int j = 0; j < image.height; ++j) {
+
+            if (j % 10 != 0){
+                if (counter % 3 == 0){
+                image(i, j, 0) = image(i, j, 0);
+                image(i, j, 1) = image(i, j, 1);
+                image(i, j, 2) = image(i, j, 2);
+                counter++;
+                }
+                else if (counter % 3 == 1){
+                    image(i, j, 0) = image(i, j, 0);
+                    image(i, j, 1) = image(i, j, 1);
+                    image(i, j, 2) = image(i, j, 2);
+                    counter++;
+                }
+                else if (counter % 3 == 2){
+                    image(i, j, 0) = 0;
+                    image(i, j, 1) = 0;
+                    image(i, j, 2) = 0;
+                    counter++;
+                }
+            }
+        }
+    }
+
+    cout << "Done!" << endl;
+}
 
 
 int main(){
@@ -1083,6 +1117,7 @@ int main(){
         cout << "16- Purple filter" << endl;
         cout << "17- Infrared filter" << endl;
         cout << "18- Oil painting" << endl;
+        cout << "19- Old TV" << endl;
         cout << "23- Exit" << endl;
         cout << "->";
         cin >> menu;
@@ -1222,6 +1257,9 @@ int main(){
         }
         else if (menu == "18"){
             oil_painting(image);
+        }
+        else if (menu == "19"){
+            old_TV(image);
         }
 
         else
