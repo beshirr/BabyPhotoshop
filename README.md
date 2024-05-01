@@ -17,5 +17,5 @@ BabyPhotoshop is a lightweight image editor designed for basic photo manipulatio
    #### Box Blur Optimization:
    Box BLur algorithm takes a long runtime to apply. 
    Fortunately, we can optimise it by applying it in two independent passes: <br />
-      * First pass: Average along rows, considering the neighborhood for             each pixel within a row (Add these values to a temporary image).
-      * Second pass: Average along columns, considering the neighborhood for       each pixel within a column (using the blurred row values from the            first pass).
+* First pass: Average along rows, considering the neighborhood for each pixel within a row (Add these values to a temporary image).
+* Second pass: Average along columns, considering the neighborhood for  each pixel within a column (using the blurred row values from the first pass).
