@@ -29,7 +29,7 @@ BabyPhotoshop is a lightweight image editor designed for basic photo manipulatio
 ## How to run the code: 
 1. Clone this repository.
 2. Make sure you have the images in the same directory as the project files.
-3. If you are using CLion (or any other IDE that uses CMAke files), images should be in the cmake-build-debug directory.
+3. If you are using CLion (or any other IDE that uses CMake files), images should be in the cmake-build-debug directory.
 ## Authors:
 * Youssef Ahmed Beshir:
    * Email: youssefahmedbeshir@gmail.com
