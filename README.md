@@ -26,4 +26,19 @@ BabyPhotoshop is a lightweight image editor designed for basic photo manipulatio
    <br />
    ![download](https://github.com/beshirr/BabyPhotoshop/assets/154796903/3bf6e8cf-c78d-48e9-95ca-2df1b73b6874)
 ### 3. Oil Painting:
-
+## How to run the code: 
+1. Clone this repository.
+2. Make sure you have the images in the same directory as the project files.
+3. If you are using CLion (or any other IDE that uses CMAke files), images should be in the cmake-build-debug directory.
+## Authors:
+* Youssef Ahmed Beshir:
+   * Email: youssefahmedbeshir@gmail.com
+   * GitHub: https://github.com/beshirr
+* Zeyad Mohamed Arafat:
+   * Email: zeyadarafat833@gmail.com
+   * GitHub: https://github.com/ZeyadArafat
+* John Ayman: 
+   * Email: johnayman03@gmail.com
+   * GitHub: https://github.com/Johnayman1
+## Disclaimer: 
+BabyPhotoshop is a college assignment and a work in progress and may contain bugs or limitations.
