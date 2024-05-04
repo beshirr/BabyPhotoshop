@@ -1043,6 +1043,41 @@ void oil_painting(Image& image){
 }
 
 
+void old_TV(Image& image){
+
+
+    //000
+
+    int counter = 0;
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+
+            if (j % 10 != 0){
+                if (counter % 3 == 0){
+                    image(i, j, 0) = image(i, j, 0);
+                    image(i, j, 1) = image(i, j, 1);
+                    image(i, j, 2) = image(i, j, 2);
+                    counter++;
+                }
+                else if (counter % 3 == 1){
+                    image(i, j, 0) = image(i, j, 0);
+                    image(i, j, 1) = image(i, j, 1);
+                    image(i, j, 2) = image(i, j, 2);
+                    counter++;
+                }
+                else if (counter % 3 == 2){
+                    image(i, j, 0) = 0;
+                    image(i, j, 1) = 0;
+                    image(i, j, 2) = 0;
+                    counter++;
+                }
+            }
+        }
+    }
+
+    cout << "Done!" << endl;
+}
+
 int main(){
     cout << "Welcome to babyPhotoshop" << endl << endl;
 
