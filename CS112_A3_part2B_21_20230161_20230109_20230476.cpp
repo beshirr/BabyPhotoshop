@@ -1043,8 +1043,6 @@ void oil_painting(Image& image){
 }
 
 
-
-
 int main(){
     cout << "Welcome to babyPhotoshop" << endl << endl;
 
