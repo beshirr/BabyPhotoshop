@@ -1081,6 +1081,7 @@ int main(){
         cout << "16- Purple filter" << endl;
         cout << "17- Infrared filter" << endl;
         cout << "18- Oil painting" << endl;
+        cout << "19- Old TV" << endl;
         cout << "23- Exit" << endl;
         cout << "->";
         cin >> menu;
@@ -1220,6 +1221,9 @@ int main(){
         }
         else if (menu == "18"){
             oil_painting(image);
+        }
+        else if (menu == "19"){
+            old_TV(image);
         }
 
         else
