@@ -1,0 +1,3 @@
+D:/FCAI/Level 1/Second semester/CS-112/Assignment-3/BabyPhotoshop/cmake-build-debug/CMakeFiles/BabyPhotoshop.dir
+D:/FCAI/Level 1/Second semester/CS-112/Assignment-3/BabyPhotoshop/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/FCAI/Level 1/Second semester/CS-112/Assignment-3/BabyPhotoshop/cmake-build-debug/CMakeFiles/rebuild_cache.dir
