@@ -8,9 +8,6 @@
 */
 
 
-//#define STB_IMAGE_IMPLEMENTATION
-//#include "stb_image.h"
-//#include "Image_Class.h"
 #include "filters.h"
 #include "effects.h"
 #include "adjustments.h"
