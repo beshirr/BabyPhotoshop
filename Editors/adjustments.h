@@ -10,6 +10,7 @@ class adjustments {
 public:
     static void darken_lighten(Image& image){
         string choice;
+
         while (true){
             cout << "Please select:\n1- Lighten filter \n2- Darken filter\nEnter your choice:";
             cin >> choice;
@@ -21,22 +22,7 @@ public:
                     for (int j = 0; j < image.height; ++j) {
                         for (int k = 0; k < 3; ++k) {
                             // Make the image lighter by 50% by + 0.5 of light
-                            float new_Value = image(i, j, k) * 1.5;
-                            // make pixel value in range [0, 255]
-                            image(i, j, k) = static_cast<unsigned char>(min(max(new_Value, 0.0f), 255.0f));
-                        }
-                    }
-                }
-                break;
-            }
-                // Darken
-            else if (choice == "2"){
-                // Iterate through each pixel of the image
-                for (int i = 0; i < image.width; ++i) {
-                    for (int j = 0; j < image.height; ++j) {
-                        for (int k = 0; k < 3; ++k) {
-                            // Make the image lighter by 50% by - 0.5 of lights
-                            float new_Value = image(i, j, k) * 0.5;
+                            auto new_Value = static_cast<float>(image(i, j, k) * 1.5);
                             // make pixel value in range [0, 255]
                             image(i, j, k) = static_cast<unsigned char>(min(max(new_Value, 0.0f), 255.0f));
                         }
@@ -45,9 +31,23 @@ public:
                 break;
             }
 
-            else{
-                cout << endl << "Invalid choice!" <<endl;
+            // Darken
+            if (choice == "2"){
+                // Iterate through each pixel of the image
+                for (int i = 0; i < image.width; ++i) {
+                    for (int j = 0; j < image.height; ++j) {
+                        for (int k = 0; k < 3; ++k) {
+                            // Make the image lighter by 50% by - 0.5 of lights
+                            auto new_Value = static_cast<float>(image(i, j, k) * 0.5);
+                            // make pixel value in range [0, 255]
+                            image(i, j, k) = static_cast<unsigned char>(min(max(new_Value, 0.0f), 255.0f));
+                        }
+                    }
+                }
+                break;
             }
+
+            cout << endl << "Invalid choice!" <<endl;
         }
     }
 
@@ -485,33 +485,37 @@ public:
                     blue = 0;
                     break;
                 }
-                else if (color == "2") {
+
+                if (color == "2") {
                     red = 255;
                     green = 255;
                     blue = 255;
                     isWhite = true;
                     break;
                 }
-                else if (color == "3") {
+
+                if (color == "3") {
                     red = 176;
                     green = 91;
                     blue = 71;
                     break;
                 }
-                else if (color == "4") {
+
+                if (color == "4") {
                     red = 102;
                     green = 179;
                     blue = 80;
                     break;
                 }
-                else if (color == "5") {
+
+                if (color == "5") {
                     red = 65;
                     green = 105;
                     blue = 225;
                     break;
                 }
-                else
-                    cout << "Invalid option, try again" << endl << endl;
+
+                cout << "Invalid option, try again" << endl << endl;
             }
 
             string option;
@@ -522,17 +526,17 @@ public:
                              / (image.width + image.height)) * 0.05;
 
             if (option == "S" || option == "s") {
-                adjustments::simple_frame(image, red, green, blue, frameSize);
+                simple_frame(image, red, green, blue, frameSize);
                 break;
             }
 
-            else if (option == "F" || option == "f") {
-                adjustments::fancy_frame(image, red, green, blue, frameSize, isWhite);
+            if (option == "F" || option == "f") {
+                fancy_frame(image, red, green, blue, frameSize, isWhite);
                 break;
             }
 
-            else
-                cout << "Invalid option, try again" << endl;
+
+            cout << "Invalid option, try again" << endl;
         }
     }
 
@@ -566,4 +570,4 @@ public:
         image = resizedImage;
     }
 };
-#endif 
+#endif
