@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\FCAI\Level 1\Second semester\CS-112\Assignment-3\BabyPhotoshop\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\FCAI\Level 1\Second semester\CS-112\Assignment-3\BabyPhotoshop\Editors\filters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\FCAI\Level 1\Second semester\CS-112\Assignment-3\BabyPhotoshop\Editors\adjustments.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\FCAI\Level 1\Second semester\CS-112\Assignment-3\BabyPhotoshop\Editors\effects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\FCAI\Level 1\Second semester\CS-112\Assignment-3\BabyPhotoshop\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{CC71B4A0-A1FA-3398-88F5-52A4FF8C661D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{8A16E801-429A-3250-B0FE-66AFC4C31127}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
