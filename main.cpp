@@ -178,8 +178,13 @@ int main(){
         }
 
         else if (menu == "2"){
-            save_image(image);
-            saved = true;
+            if (saved){
+                cout << "Image is already saved!" << endl;
+            }
+            else{
+                save_image(image);
+                saved = true;
+            }
         }
 
         else if (menu == "3"){
