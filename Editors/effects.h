@@ -27,7 +27,7 @@ public:
             for (int j = 0; j < image.height; j++){
 
                 // calculating the average of all the colors(Green, Red, Blue) in each pixel.
-                int avg = (image(i, j, 0) + image(i, j, 1) +
+                const int avg = (image(i, j, 0) + image(i, j, 1) +
                            image(i, j, 2)) / 3;
                 // assigning the average to all the colors in each pixel to get a gray scale.
                 image(i, j, 0) = avg;
@@ -68,10 +68,10 @@ public:
                     valuey += image(i + 1, j + 1, k) * -1;
 
                     // Compute edge magnitude
-                    double edgeMagnitude = sqrt(valuex * valuex + valuey * valuey);
+                    const double edgeMagnitude = sqrt(valuex * valuex + valuey * valuey);
 
                     // Assign the edge magnitude to the corresponding pixel of the result image
-                    resultImage(i, j, k) = (edgeMagnitude > 100 ? 0 : 255);
+                    resultImage(i, j, k) = edgeMagnitude > 100 ? 0 : 255;
                 }
             }
         }
@@ -81,10 +81,9 @@ public:
 
 
     static void blur(Image& image){
-
-        int rad  = 9;
-        int width = image.width;
-        int height = image.height;
+        constexpr int rad  = 9;
+        const int width = image.width;
+        const int height = image.height;
 
         // Final image
         Image blurred(width, height);
@@ -105,14 +104,13 @@ public:
                 int red = 0, green = 0, blue = 0;
 
                 for (int x = -rad; x <= rad; ++x) {
-                    int ix = max(0, j + x);
-                    if (ix < width) {
+                    if (const int ix = max(0, j + x); ix < width) {
                         red += image(ix, i, 0);
                         green += image(ix, i, 1);
                         blue += image(ix, i, 2);
                     }
                 }
-                int divisor = rad * 2 + 1;
+                constexpr int divisor = rad * 2 + 1;
                 // Calculate the average
                 temp(j, i, 0) = red / divisor;
                 temp(j, i, 1) = green / divisor;
@@ -127,14 +125,13 @@ public:
                 int red = 0, green = 0, blue = 0;
 
                 for (int y = -rad; y <= rad; ++y) {
-                    int iy = max(0, j + y);
-                    if (iy < height) {
+                    if (const int iy = max(0, j + y); iy < height) {
                         red += temp(i, iy, 0);
                         green += temp(i, iy, 1);
                         blue += temp(i, iy, 2);
                     }
                 }
-                int divisor = rad * 2 + 1;
+                constexpr int divisor = rad * 2 + 1;
                 blurred(i, j, 0) = red / divisor;
                 blurred(i, j, 1) = green / divisor;
                 blurred(i, j, 2) = blue / divisor;
@@ -159,9 +156,7 @@ public:
                 int bin_255 = 0, maxR8 = 0, maxG8=0, maxB8 =0;
                 for (int x = i-10; x < i+11; x++){
                     for (int y = j-10; y < j+11; y++){
-                        double currentIntensity;
-                        currentIntensity = (image(x, y, 0) + image(x, y, 1) + image(x, y, 2)) / 3.0;
-                        if (currentIntensity >= 223.125){
+                        if (const double currentIntensity = (image(x, y, 0) + image(x, y, 1) + image(x, y, 2)) / 3.0; currentIntensity >= 223.125){
                             bin_255++;
                             maxR8 += image(x, y, 0);
                             maxG8 += image(x, y, 1);
@@ -214,9 +209,7 @@ public:
 
                 for (int x = i-10; x < i+11; x++){
                     for (int y = j-10; y < j+11; y++){
-                        double currentIntensity;
-                        currentIntensity = (image(x, y, 0) + image(x, y, 1) + image(x, y, 2)) / 3.0;
-                        if (currentIntensity >= 223.125){
+                        if (const double currentIntensity = (image(x, y, 0) + image(x, y, 1) + image(x, y, 2)) / 3.0; currentIntensity >= 223.125){
                             image(x, y, 0) = maxR8 / bin_255;
                             image(x, y, 1) = maxG8 / bin_255;
                             image(x, y, 2) = maxB8 / bin_255;
