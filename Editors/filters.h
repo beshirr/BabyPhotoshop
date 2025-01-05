@@ -1,7 +1,7 @@
 #ifndef BABYPHOTOSHOP_FILTERS_H
 #define BABYPHOTOSHOP_FILTERS_H
 
-#include "Image_Class.h"
+#include "Headers/Image_Class.h"
 
 class filters {
 public:

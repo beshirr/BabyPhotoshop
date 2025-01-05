@@ -1,7 +1,7 @@
 #ifndef BABYPHOTOSHOP_EFFECTS_H
 #define BABYPHOTOSHOP_EFFECTS_H
 
-#include "Image_Class.h"
+#include "Headers/Image_Class.h"
 
 using namespace std;
 
@@ -264,6 +264,8 @@ public:
         }
         cout << "Done!" << endl;
     }
+
+
     static void old_TV(Image& image){
         int counter = 0;
         for (int i = 0; i < image.width; ++i) {

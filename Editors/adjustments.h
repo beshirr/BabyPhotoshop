@@ -1,7 +1,7 @@
 #ifndef BABYPHOTOSHOP_ADJUSTMENTS_H
 #define BABYPHOTOSHOP_ADJUSTMENTS_H
 
-#include "Image_Class.h"
+#include "Headers/Image_Class.h"
 #include <string>
 
 using namespace std;
