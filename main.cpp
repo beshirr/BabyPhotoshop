@@ -8,9 +8,9 @@
 */
 
 
-#include "filters.h"
-#include "effects.h"
-#include "adjustments.h"
+#include "Editors/filters.h"
+#include "Editors/effects.h"
+#include "Editors/adjustments.h"
 
 using namespace std;
 
