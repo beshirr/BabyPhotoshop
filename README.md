@@ -25,11 +25,9 @@ BabyPhotoshop is a lightweight image editor designed for basic photo manipulatio
    The Sobel operator is a popular edge detection algorithm used in image processing to identify locations in an image where there's a significant change in intensity (brightness) of pixels. It estimates the gradient of the image intensity function, which often corresponds to edges.'
    <br />
    ![download](https://github.com/beshirr/BabyPhotoshop/assets/154796903/3bf6e8cf-c78d-48e9-95ca-2df1b73b6874)
-### 3. Oil Painting:
 ## How to run the code: 
 1. Clone this repository.
-2. Make sure you have the images in the same directory as the project files.
-3. If you are using CLion (or any other IDE that uses CMake files), images should be in the cmake-build-debug directory.
+2. Make sure you have the images in the same directory as the project files, cmake-build directory if you are using CMake, or enter the full image path.
 ## Authors:
 * Youssef Ahmed Beshir:
    * Email: youssefahmedbeshir@gmail.com
