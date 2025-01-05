@@ -11,7 +11,7 @@ public:
             for (int j = 0; j < image.height; j++){
 
                 // calculating the average of all the colors(Green, Red, Blue) in each pixel.
-                int avg = (image(i, j, 0) + image(i, j, 1) +
+                const int avg = (image(i, j, 0) + image(i, j, 1) +
                            image(i, j, 2)) / 3;
                 // assigning the average to all the colors in each pixel to get a gray scale.
                 image(i, j, 0) = avg;
@@ -50,18 +50,16 @@ public:
         // the purple shade we are using in this filter is (R:200, G:160, B:255).
         for (int i = 0; i < image.width; i++){
             for (int j = 0; j < image.height; j++){
-                double redRatio, greenRatio, blueRatio;
                 // calculate the ratio for the red channel to use it in the color assigning.
-                redRatio = image(i, j, 0) / 255.0;
+                const double redRatio = image(i, j, 0) / 255.0;
+                const double greenRatio = image(i, j, 1) / 255.0;
+                const double blueRatio = image(i, j, 2) / 255.0;
                 // using the ratio and the prestated shade to assign the color to the red channel.
                 // same goes for the rest of the channels.
-                image(i, j, 0) = (int)(redRatio * 200);
-                greenRatio = image(i, j, 1) / 255.0;
-                image(i, j, 1) = (int)(greenRatio * 160);
-                blueRatio = image(i, j, 2) / 255.0;
-                image(i, j, 2) = (int)(blueRatio * 255);
+                image(i, j, 0) = static_cast<int>(redRatio * 200);
+                image(i, j, 1) = static_cast<int>(greenRatio * 160);
+                image(i, j, 2) = static_cast<int>(blueRatio * 255);
             }
-
         }
     }
 
@@ -73,9 +71,7 @@ public:
                 image(i,j,0) = 255;
                 image(i,j,1) = 255 - image(i,j,1) ;
                 image(i,j,2) = 255 - image(i,j,2) ;
-
             }
-
         }
     }
 
@@ -99,4 +95,3 @@ public:
 };
 
 #endif
-
