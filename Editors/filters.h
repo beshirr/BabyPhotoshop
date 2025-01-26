@@ -4,15 +4,16 @@
 #include "Headers/Image_Class.h"
 
 class filters {
-public:
-    static void grayscale(Image& image){
+  public:
+    static void grayscale(Image &image) {
         // iterate through the image matrix
-        for (int i = 0; i < image.width; i++){
-            for (int j = 0; j < image.height; j++){
+        for (int i = 0; i < image.width; i++) {
+            for (int j = 0; j < image.height; j++) {
 
                 // calculating the average of all the colors(Green, Red, Blue) in each pixel.
                 const int avg = (image(i, j, 0) + image(i, j, 1) +
-                           image(i, j, 2)) / 3;
+                                 image(i, j, 2)) /
+                                3;
                 // assigning the average to all the colors in each pixel to get a gray scale.
                 image(i, j, 0) = avg;
                 image(i, j, 1) = avg;
@@ -22,7 +23,7 @@ public:
     }
 
 
-    static void black_and_white(Image& image){
+    static void black_and_white(Image &image) {
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height; ++j) {
 
@@ -46,10 +47,10 @@ public:
     }
 
 
-    static void purple(Image& image){
+    static void purple(Image &image) {
         // the purple shade we are using in this filter is (R:200, G:160, B:255).
-        for (int i = 0; i < image.width; i++){
-            for (int j = 0; j < image.height; j++){
+        for (int i = 0; i < image.width; i++) {
+            for (int j = 0; j < image.height; j++) {
                 // calculate the ratio for the red channel to use it in the color assigning.
                 const double redRatio = image(i, j, 0) / 255.0;
                 const double greenRatio = image(i, j, 1) / 255.0;
@@ -64,30 +65,33 @@ public:
     }
 
 
-    static void infrared(Image& image){
+    static void infrared(Image &image) {
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height; ++j) {
                 // set the red 255 and invert green and blue
-                image(i,j,0) = 255;
-                image(i,j,1) = 255 - image(i,j,1) ;
-                image(i,j,2) = 255 - image(i,j,2) ;
+                image(i, j, 0) = 255;
+                image(i, j, 1) = 255 - image(i, j, 1);
+                image(i, j, 2) = 255 - image(i, j, 2);
             }
         }
     }
 
 
-    static void sunlight(Image& image){
+    static void sunlight(Image &image) {
         for (int i = 0; i < image.width; ++i) {
             for (int j = 0; j < image.height; ++j) {
                 int redTent = 40, greenTent = 30, blueTent = 30;
 
-                while (image(i, j, 0) + redTent > 255) redTent --;
+                while (image(i, j, 0) + redTent > 255)
+                    redTent--;
                 image(i, j, 0) += redTent;
 
-                while (image(i, j, 1) + greenTent > 255) greenTent --;
+                while (image(i, j, 1) + greenTent > 255)
+                    greenTent--;
                 image(i, j, 1) += greenTent;
 
-                while (image(i, j, 2) - blueTent < 0) blueTent --;
+                while (image(i, j, 2) - blueTent < 0)
+                    blueTent--;
                 image(i, j, 2) -= blueTent;
             }
         }

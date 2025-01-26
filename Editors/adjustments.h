@@ -7,16 +7,16 @@
 using namespace std;
 
 class adjustments {
-public:
-    static void darken_lighten(Image& image){
+  public:
+    static void darken_lighten(Image &image) {
         string choice;
 
-        while (true){
+        while (true) {
             cout << "Please select:\n1- Lighten filter \n2- Darken filter\nEnter your choice:";
             cin >> choice;
 
             // lighten
-            if (choice == "1"){
+            if (choice == "1") {
                 // Iterate through each pixel of the image
                 for (int i = 0; i < image.width; ++i) {
                     for (int j = 0; j < image.height; ++j) {
@@ -32,7 +32,7 @@ public:
             }
 
             // Darken
-            if (choice == "2"){
+            if (choice == "2") {
                 // Iterate through each pixel of the image
                 for (int i = 0; i < image.width; ++i) {
                     for (int j = 0; j < image.height; ++j) {
@@ -47,45 +47,45 @@ public:
                 break;
             }
 
-            cout << endl << "Invalid choice!" <<endl;
+            cout << endl
+                 << "Invalid choice!" << endl;
         }
     }
 
 
-    static void crop_merge(Image& image){
+    static void crop_merge(Image &image) {
 
         // the counter will help in the merging part.
         int counter = 0;
         string mergeFileName;
         Image mergeImage;
-        while (true){
-            try{
+        while (true) {
+            try {
                 cout << "Enter the name of the image you want to merge:" << endl;
                 cout << "->";
                 cin >> mergeFileName;
                 mergeImage.loadNewImage(mergeFileName);
                 break;
-            }
-            catch(...){// Handled in Image_Class.h
+            } catch (...) { // Handled in Image_Class.h
             }
         }
 
         // if the two images have the same width and height we start merging them directly.
-        if ((image.width == mergeImage.width) and (image.height == mergeImage.height)){
+        if ((image.width == mergeImage.width) and (image.height == mergeImage.height)) {
             Image mergedImage(image.width, image.height);
 
             // the merging is done by taking a pixel of each image (one pixel from an image then one pixel from the other one)
             for (int i = 0; i < mergedImage.width; ++i) {
                 for (int j = 0; j < mergedImage.height; ++j) {
 
-                    if (counter % 2 == 0){
+                    if (counter % 2 == 0) {
                         mergedImage(i, j, 0) = image(i, j, 0);
                         mergedImage(i, j, 1) = image(i, j, 1);
                         mergedImage(i, j, 2) = image(i, j, 2);
                         counter++;
                     }
 
-                    else{
+                    else {
                         mergedImage(i, j, 0) = mergeImage(i, j, 0);
                         mergedImage(i, j, 1) = mergeImage(i, j, 1);
                         mergedImage(i, j, 2) = mergeImage(i, j, 2);
@@ -96,21 +96,21 @@ public:
             image = mergedImage;
         }
 
-            // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
-        else{
-            Image mergedImage(min(image.width , mergeImage.width), min(image.height , mergeImage.height));
+        // if the two images don't have the same width or height, we do the merge and crop a part from the bigger image.
+        else {
+            Image mergedImage(min(image.width, mergeImage.width), min(image.height, mergeImage.height));
 
             for (int i = 0; i < mergedImage.width; ++i) {
                 for (int j = 0; j < mergedImage.height; ++j) {
 
-                    if (counter % 2 == 0){
+                    if (counter % 2 == 0) {
                         mergedImage(i, j, 0) = image(i, j, 0);
                         mergedImage(i, j, 1) = image(i, j, 1);
                         mergedImage(i, j, 2) = image(i, j, 2);
                         counter++;
                     }
 
-                    else{
+                    else {
                         mergedImage(i, j, 0) = mergeImage(i, j, 0);
                         mergedImage(i, j, 1) = mergeImage(i, j, 1);
                         mergedImage(i, j, 2) = mergeImage(i, j, 2);
@@ -120,17 +120,18 @@ public:
             }
             image = mergedImage;
         }
-        cout << "Done!" << endl << endl;
+        cout << "Done!" << endl
+             << endl;
     }
 
 
-    static void resize_merge(Image& image){
+    static void resize_merge(Image &image) {
         // the counter will help in the merging part.
         int counter = 0;
         string mergeFileName;
         Image mergeImage;
-        while (true){
-            try{
+        while (true) {
+            try {
                 cout << "Enter the name of the image you want to merge:" << endl;
                 cout << "->";
                 cin >> mergeFileName;
@@ -138,12 +139,12 @@ public:
                 break;
             }
 
-            catch(...){ // Handled in Image_Class.h
+            catch (...) { // Handled in Image_Class.h
             }
         }
 
         // if the two images have the same width and height we start merging without resizing them.
-        if ((image.width == mergeImage.width) and (image.height == mergeImage.height)){
+        if ((image.width == mergeImage.width) and (image.height == mergeImage.height)) {
             Image mergedImage(image.width, image.height);
 
             // the merging is done by taking a pixel of each image (one pixel from image 1then one pixel from image2)
@@ -151,14 +152,14 @@ public:
             for (int i = 0; i < mergedImage.width; ++i) {
                 for (int j = 0; j < mergedImage.height; ++j) {
 
-                    if (counter % 2 == 0){
+                    if (counter % 2 == 0) {
                         mergedImage(i, j, 0) = image(i, j, 0);
                         mergedImage(i, j, 1) = image(i, j, 1);
                         mergedImage(i, j, 2) = image(i, j, 2);
                         counter++;
                     }
 
-                    else{
+                    else {
                         mergedImage(i, j, 0) = mergeImage(i, j, 0);
                         mergedImage(i, j, 1) = mergeImage(i, j, 1);
                         mergedImage(i, j, 2) = mergeImage(i, j, 2);
@@ -169,17 +170,17 @@ public:
             image = mergedImage;
         }
 
-            // if both images don't have the same width or height, then we'll first resize them before merging.
-        else{
-            Image mergedImage(max(image.width , mergeImage.width), max(image.height , mergeImage.height));
+        // if both images don't have the same width or height, then we'll first resize them before merging.
+        else {
+            Image mergedImage(max(image.width, mergeImage.width), max(image.height, mergeImage.height));
 
             // resizing the first image.
             // using the same algorithm as in the resizing function.
-            Image resizedImage_1(max(image.width, mergeImage.width), max(image.height , mergeImage.height));
-            double widthRatio = static_cast<double>(image.width) / max(image.width , mergeImage.width);
-            double heightRatio = static_cast<double>(image.height) / max(image.height , mergeImage.height);
-            for (int i = 0; i < max(image.width , mergeImage.width); ++i) {
-                for (int j = 0; j < max(image.height , mergeImage.height); ++j) {
+            Image resizedImage_1(max(image.width, mergeImage.width), max(image.height, mergeImage.height));
+            double widthRatio = static_cast<double>(image.width) / max(image.width, mergeImage.width);
+            double heightRatio = static_cast<double>(image.height) / max(image.height, mergeImage.height);
+            for (int i = 0; i < max(image.width, mergeImage.width); ++i) {
+                for (int j = 0; j < max(image.height, mergeImage.height); ++j) {
                     resizedImage_1(i, j, 0) = image(floor(i * widthRatio), floor(j * heightRatio), 0);
                     resizedImage_1(i, j, 1) = image(floor(i * widthRatio), floor(j * heightRatio), 1);
                     resizedImage_1(i, j, 2) = image(floor(i * widthRatio), floor(j * heightRatio), 2);
@@ -187,11 +188,11 @@ public:
             }
 
             // resizing the second image.
-            Image resizedImage_2(max(image.width, mergeImage.width), max(image.height , mergeImage.height));
-            widthRatio = static_cast<double>(mergeImage.width) / max(image.width , mergeImage.width);
-            heightRatio = static_cast<double>(mergeImage.height) / max(image.height , mergeImage.height);
-            for (int i = 0; i < max(image.width , mergeImage.width); ++i) {
-                for (int j = 0; j < max(image.height , mergeImage.height); ++j) {
+            Image resizedImage_2(max(image.width, mergeImage.width), max(image.height, mergeImage.height));
+            widthRatio = static_cast<double>(mergeImage.width) / max(image.width, mergeImage.width);
+            heightRatio = static_cast<double>(mergeImage.height) / max(image.height, mergeImage.height);
+            for (int i = 0; i < max(image.width, mergeImage.width); ++i) {
+                for (int j = 0; j < max(image.height, mergeImage.height); ++j) {
                     resizedImage_2(i, j, 0) = mergeImage(floor(i * widthRatio), floor(j * heightRatio), 0);
                     resizedImage_2(i, j, 1) = mergeImage(floor(i * widthRatio), floor(j * heightRatio), 1);
                     resizedImage_2(i, j, 2) = mergeImage(floor(i * widthRatio), floor(j * heightRatio), 2);
@@ -202,14 +203,14 @@ public:
             for (int i = 0; i < mergedImage.width; ++i) {
                 for (int j = 0; j < mergedImage.height; ++j) {
 
-                    if (counter % 2 == 0){
+                    if (counter % 2 == 0) {
                         mergedImage(i, j, 0) = resizedImage_1(i, j, 0);
                         mergedImage(i, j, 1) = resizedImage_1(i, j, 1);
                         mergedImage(i, j, 2) = resizedImage_1(i, j, 2);
                         counter++;
                     }
 
-                    else{
+                    else {
                         mergedImage(i, j, 0) = resizedImage_2(i, j, 0);
                         mergedImage(i, j, 1) = resizedImage_2(i, j, 1);
                         mergedImage(i, j, 2) = resizedImage_2(i, j, 2);
@@ -222,14 +223,14 @@ public:
     }
 
 
-    static void flip(Image& image){
+    static void flip(Image &image) {
         string choice;
-        while (true){
+        while (true) {
             cout << "Please select:\n1- Horizontal flip \n2- Vertical flip \nEnter your choice:";
             cin >> choice;
 
             // Horizontal flip
-            if (choice == "1"){
+            if (choice == "1") {
                 for (int i = 0; i < image.width / 2; ++i) {
                     for (int j = 0; j < image.height; ++j) {
                         for (int k = 0; k < 3; ++k) {
@@ -239,8 +240,8 @@ public:
                 }
                 break;
             }
-                // Vertical flip
-            else if (choice == "2"){
+            // Vertical flip
+            else if (choice == "2") {
                 for (int i = 0; i < image.width; ++i) {
                     for (int j = 0; j < image.height / 2; ++j) {
                         for (int k = 0; k < 3; ++k) {
@@ -252,24 +253,25 @@ public:
 
             }
 
-            else{
-                cout << endl << "Invalid choice!" << endl;
+            else {
+                cout << endl
+                     << "Invalid choice!" << endl;
             }
         }
     }
 
 
-    static void rotate(Image& image){
+    static void rotate(Image &image) {
         int newHeight, newWidth;
 
         string degree;
 
-        while (true){
+        while (true) {
             cout << "(90, 180, 270)?" << endl;
             cout << "->";
             cin >> degree;
 
-            if (degree == "90"){
+            if (degree == "90") {
                 // New image dimensions
                 newHeight = image.width;
                 newWidth = image.height;
@@ -277,28 +279,27 @@ public:
                 Image newImage(newWidth, newHeight);
 
                 // Transposing the image matrix 90 degrees
-                for (int i = 0 ; i < newWidth ; ++i){
-                    for (int j = 0 ; j < newHeight ; ++j){
+                for (int i = 0; i < newWidth; ++i) {
+                    for (int j = 0; j < newHeight; ++j) {
 
-                        for (int k = 0; k < 3 ; ++k){
+                        for (int k = 0; k < 3; ++k) {
                             newImage(i, j, k) = image(j, newWidth - i - 1, k);
                         }
-
                     }
                 }
                 image = newImage;
                 break;
             }
 
-            else if (degree == "180"){
+            else if (degree == "180") {
 
                 Image newImage(image.width, image.height);
 
                 // Transposing the image matrix 180 degree
-                for (int i = 0; i < image.width; ++i){
-                    for (int j = 0; j < image.height; ++j){
+                for (int i = 0; i < image.width; ++i) {
+                    for (int j = 0; j < image.height; ++j) {
 
-                        for (int k = 0; k < 3; ++k){
+                        for (int k = 0; k < 3; ++k) {
                             newImage(i, j, k) = image(i, (image.height) - j - 1, k);
                         }
                     }
@@ -307,7 +308,7 @@ public:
                 break;
             }
 
-            else if (degree == "270"){
+            else if (degree == "270") {
 
                 // New image dimensions
                 newHeight = image.width;
@@ -316,13 +317,12 @@ public:
                 Image newImage(newWidth, newHeight);
 
                 // Transposing the image matrix 270 degree
-                for (int i = 0 ; i < newWidth ; ++i){
-                    for (int j = 0 ; j < newHeight ; ++j){
+                for (int i = 0; i < newWidth; ++i) {
+                    for (int j = 0; j < newHeight; ++j) {
 
-                        for (int k = 0; k < 3 ; ++k){
-                            newImage(i, j , k) = image(j, i , k);
+                        for (int k = 0; k < 3; ++k) {
+                            newImage(i, j, k) = image(j, i, k);
                         }
-
                     }
                 }
                 image = newImage;
@@ -335,7 +335,7 @@ public:
     }
 
 
-    static void crop(Image& image){
+    static void crop(Image &image) {
         int x, y, h, w;
         cout << "Enter the index of the starting point(ex: 600 500): ";
         cin >> x >> y;
@@ -346,13 +346,11 @@ public:
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cin >> x >> y;
-            }
-            else if ((x > image.width) or (y > image.height)){
+            } else if ((x > image.width) or (y > image.height)) {
                 cout << "This index seems too big for the image!" << endl;
                 cout << "Enter the index of the starting point(ex: 600 500): ";
                 cin >> x >> y;
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -366,13 +364,11 @@ public:
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cin >> x >> y;
-            }
-            else if ((w + x > image.width) or (h + y > image.height)) {
+            } else if ((w + x > image.width) or (h + y > image.height)) {
                 cout << "This size seems too high for the image you are trying to crop!" << endl;
                 cout << "Enter the size of the cropped image(ex: 600 900): ";
                 cin >> w >> h;
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -382,16 +378,16 @@ public:
         for (int i = 0; i < w; ++i) {
             for (int j = 0; j < h; ++j) {
                 // fill each pixel in the cropped image with the colors from the original one to show the cropped part.
-                croppedImage(i, j, 0) = image(i+x, j+y, 0);
-                croppedImage(i, j, 1) = image(i+x, j+y, 1);
-                croppedImage(i, j, 2) = image(i+x, j+y, 2);
+                croppedImage(i, j, 0) = image(i + x, j + y, 0);
+                croppedImage(i, j, 1) = image(i + x, j + y, 1);
+                croppedImage(i, j, 2) = image(i + x, j + y, 2);
             }
         }
         image = croppedImage;
     }
 
 
-    static void simple_frame(Image& image, int red, int green, int blue, int frameSize){
+    static void simple_frame(Image &image, int red, int green, int blue, int frameSize) {
 
         int currentFrameSize = frameSize;
 
@@ -431,37 +427,40 @@ public:
     }
 
 
-    static void fancy_frame(Image& image, int red, int green, int blue, int frameSize, bool isWhite){
+    static void fancy_frame(Image &image, int red, int green, int blue, int frameSize, bool isWhite) {
         int color;
-        if (isWhite){
+        if (isWhite) {
             color = 0;
-        }
-        else
+        } else
             color = 255;
 
         frameSize = (((image.width * image.height) /
-                      (image.width + image.height)) * 0.07);
+                      (image.width + image.height)) *
+                     0.07);
 
         simple_frame(image, color, color, color, frameSize);
 
         frameSize = (((image.width * image.height) /
-                      (image.width + image.height)) * 0.06);
+                      (image.width + image.height)) *
+                     0.06);
 
         simple_frame(image, red, green, blue, frameSize);
 
         frameSize = (((image.width * image.height) /
-                      (image.width + image.height)) * 0.04);
+                      (image.width + image.height)) *
+                     0.04);
 
         simple_frame(image, color, color, color, frameSize);
 
         frameSize = (((image.width * image.height) /
-                      (image.width + image.height)) * 0.03);
+                      (image.width + image.height)) *
+                     0.03);
 
         simple_frame(image, red, green, blue, frameSize);
     }
 
 
-    static void frame(Image& image){
+    static void frame(Image &image) {
 
         bool isWhite = false;
 
@@ -515,15 +514,15 @@ public:
                     break;
                 }
 
-                cout << "Invalid option, try again" << endl << endl;
+                cout << "Invalid option, try again" << endl
+                     << endl;
             }
 
             string option;
             cout << "Simple (S/s) or Fancy (F/f) frame?";
             cin >> option;
 
-            int frameSize = ((image.width * image.height)
-                             / (image.width + image.height)) * 0.05;
+            int frameSize = ((image.width * image.height) / (image.width + image.height)) * 0.05;
 
             if (option == "S" || option == "s") {
                 simple_frame(image, red, green, blue, frameSize);
@@ -541,12 +540,12 @@ public:
     }
 
 
-    static void resize(Image& image){
+    static void resize(Image &image) {
 
         // getting the dimensions of the resized image from the user.
         int width_, height_;
         cout << "Enter the dimensions of the new image:";
-        while(!(cin >> width_) or !(cin >> height_)){
+        while (!(cin >> width_) or !(cin >> height_)) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Please enter a valid width or height (a positive integer.)" << endl;

@@ -39,15 +39,15 @@
  * @brief Represents an image with functionalities for loading, saving, and manipulating pixels.
  */
 class Image {
-private:
+  private:
     /**
      * @brief Checks if the given filename has a valid extension.
      *
      * @param filename The filename to check.
      * @return True if the filename has a valid extension, false otherwise.
      */
-    bool isValidFilename(const std::string& filename) {
-        const char* extension = strrchr(filename.c_str(), '.');
+    bool isValidFilename(const std::string &filename) {
+        const char *extension = strrchr(filename.c_str(), '.');
         if (extension == nullptr) {
             std::cerr << "Invalid filename: " << filename << std::endl;
             return false;
@@ -63,7 +63,7 @@ private:
      * @return The type of image format.
      */
 
-    short getExtensionType(const char* extension) {
+    short getExtensionType(const char *extension) {
         if (strcmp(extension, ".png") == 0) {
             return PNG_TYPE;
         }
@@ -81,14 +81,14 @@ private:
         return UNSUPPORTED_TYPE;
     }
 
-private:
+  private:
     std::string filename; ///< Stores the filename of the image.
 
-public:
-    int width = 0; ///< Width of the image.
-    int height = 0; ///< Height of the image.
-    int channels = 3; ///< Number of color channels in the image.
-    unsigned char* imageData = nullptr; ///< Pointer to the image data.
+  public:
+    int width = 0;                      ///< Width of the image.
+    int height = 0;                     ///< Height of the image.
+    int channels = 3;                   ///< Number of color channels in the image.
+    unsigned char *imageData = nullptr; ///< Pointer to the image data.
 
     /**
      * @brief Default constructor for the Image class.
@@ -113,7 +113,7 @@ public:
     Image(int mWidth, int mHeight) {
         this->width = mWidth;
         this->height = mHeight;
-        this->imageData = (unsigned char*)malloc(mWidth * mHeight * this->channels);
+        this->imageData = (unsigned char *)malloc(mWidth * mHeight * this->channels);
     }
 
     /**
@@ -121,7 +121,7 @@ public:
      *
      * @param other The Image we want to copy.
      */
-    Image(const Image& other) {
+    Image(const Image &other) {
         *this = other;
     }
 
@@ -133,8 +133,8 @@ public:
      * @return *this after copying data.
      */
 
-    Image& operator=(const Image& image) {
-        if (this == &image){
+    Image &operator=(const Image &image) {
+        if (this == &image) {
             return *this;
         }
 
@@ -144,7 +144,7 @@ public:
         this->width = image.width;
         this->height = image.height;
         this->channels = image.channels;
-        imageData = static_cast<unsigned char*>(malloc(width * height * channels));
+        imageData = static_cast<unsigned char *>(malloc(width * height * channels));
 
         for (int i = 0; i < image.width * image.height * this->channels; i++) {
             this->imageData[i] = image.imageData[i];
@@ -172,13 +172,13 @@ public:
      * @return True if the image is loaded successfully, false otherwise.
      * @throws std::invalid_argument If the filename or file format is invalid.
      */
-    bool loadNewImage(const std::string& filename) {
+    bool loadNewImage(const std::string &filename) {
         if (!isValidFilename(filename)) {
             std::cerr << "Couldn't Load Image" << '\n';
             throw std::invalid_argument("The file extension does not exist");
         }
 
-        const char* extension = strrchr(filename.c_str(), '.');
+        const char *extension = strrchr(filename.c_str(), '.');
         short extensionType = getExtensionType(extension);
         if (extensionType == UNSUPPORTED_TYPE) {
             std::cerr << "Unsupported File Format" << '\n';
@@ -206,14 +206,14 @@ public:
      * @throws std::invalid_argument If the output filename or file format is invalid.
      */
 
-    bool saveImage(const std::string& outputFilename) {
+    bool saveImage(const std::string &outputFilename) {
         if (!isValidFilename(outputFilename)) {
             std::cerr << "Not Supported Format" << '\n';
             throw std::invalid_argument("The file extension does not exist");
         }
 
         // Determine image type based on filename extension
-        const char* extension = strrchr(outputFilename.c_str(), '.');
+        const char *extension = strrchr(outputFilename.c_str(), '.');
         short extensionType = getExtensionType(extension);
         if (extensionType == UNSUPPORTED_TYPE) {
             std::cerr << "File Extension is not supported, Only .JPG, JPEG, .BMP, .PNG, .TGA are supported" << '\n';
@@ -222,14 +222,11 @@ public:
 
         if (extensionType == PNG_TYPE) {
             stbi_write_png(outputFilename.c_str(), width, height, STBI_rgb, imageData, width * 3);
-        }
-        else if (extensionType == BMP_TYPE) {
+        } else if (extensionType == BMP_TYPE) {
             stbi_write_bmp(outputFilename.c_str(), width, height, STBI_rgb, imageData);
-        }
-        else if (extensionType == TGA_TYPE) {
+        } else if (extensionType == TGA_TYPE) {
             stbi_write_tga(outputFilename.c_str(), width, height, STBI_rgb, imageData);
-        }
-        else if (extensionType == JPG_TYPE) {
+        } else if (extensionType == JPG_TYPE) {
             stbi_write_jpg(outputFilename.c_str(), width, height, STBI_rgb, imageData, 90);
         }
 
@@ -245,7 +242,7 @@ public:
      * @return Reference to the pixel value.
      * @throws std::out_of_range If the coordinates or channel index is out of bounds.
      */
-    unsigned char& getPixel(int x, int y, int c) {
+    unsigned char &getPixel(int x, int y, int c) {
         if (x > width || x < 0) {
             std::cerr << "Out of width bounds" << '\n';
             throw std::out_of_range("Out of bounds, Cannot exceed width value");
@@ -262,7 +259,7 @@ public:
         return imageData[(y * width + x) * channels + c];
     }
 
-    const unsigned char& getPixel(int x, int y, int c) const {
+    const unsigned char &getPixel(int x, int y, int c) const {
         if (x > width || x < 0) {
             std::cerr << "Out of width bounds" << '\n';
             throw std::out_of_range("Out of bounds, Cannot exceed width value");
@@ -312,11 +309,11 @@ public:
      * @param channel The color channel index (0 for red, 1 for green, 2 for blue).
      * @return Reference to the pixel value.
      */
-    const unsigned char& operator()(int row, int col, int channel) const {
+    const unsigned char &operator()(int row, int col, int channel) const {
         return getPixel(row, col, channel);
     }
 
-    unsigned char& operator()(int row, int col, int channel) {
+    unsigned char &operator()(int row, int col, int channel) {
         return getPixel(row, col, channel);
     }
 };

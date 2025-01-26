@@ -9,7 +9,7 @@
 
 
 #include "Editors/filters.h"
-#include "Editors/effects.h"
+#include "Editors/effects.h "
 #include "Editors/adjustments.h"
 
 using namespace std;
@@ -17,20 +17,20 @@ using namespace std;
 
 string file;
 
-void save_image(Image& image){
-    while (true){
-        try{
+void save_image(Image &image) {
+    while (true) {
+        try {
             string choice;
             string newFileName;
             cout << "Do you want to save the same file (1) or change the file name (2)?";
             cin >> choice;
 
-            if (choice == "1"){
+            if (choice == "1") {
                 image.saveImage(file);
                 break;
             }
 
-            else if (choice == "2"){
+            else if (choice == "2") {
                 cout << "Enter the new image name:" << endl;
                 cin.clear();
                 cin.ignore();
@@ -40,20 +40,23 @@ void save_image(Image& image){
             }
 
             else
-                cout << "Invalid choice, try again." << endl << endl;
+                cout << "Invalid choice, try again." << endl
+                     << endl;
         }
 
-        catch (...){}
+        catch (...) {
+        }
     }
 
-    cout << "Image saved successfully!" << endl << endl;
+    cout << "Image saved successfully!" << endl
+         << endl;
 }
 
-void load(Image& image){
+void load(Image &image) {
 
-    while (true){
+    while (true) {
         cout << "Enter the image name:";
-        try{
+        try {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             getline(cin, file);
@@ -61,34 +64,36 @@ void load(Image& image){
             break;
         }
 
-        catch (...){}
+        catch (...) {
+        }
     }
 
-    cout << "New image loaded successfully!" << endl << endl;
-
+    cout << "New image loaded successfully!" << endl
+         << endl;
 }
 
 
-int main(){
-    cout << "Welcome to babyPhotoshop" << endl << endl;
+int main() {
+    cout << "Welcome to babyPhotoshop" << endl
+         << endl;
 
     Image image;
     // Loading the image for the first time
-    while (true){
+    while (true) {
         cout << "Enter the image name:";
-        try{
+        try {
             getline(cin, file);
             image.loadNewImage(file);
             break;
-        }
-        catch (...){// Handled in Image_Class
+        } catch (...) { // Handled in Image_Class
         }
     }
-    cout << "New image loaded successfully!" << endl << endl;
+    cout << "New image loaded successfully!" << endl
+         << endl;
 
     bool saved = false;
 
-    while (true){
+    while (true) {
         string menu;
         cout << "1- Load new image" << endl;
         cout << "2- Save current image" << endl;
@@ -113,14 +118,14 @@ int main(){
         cout << "->";
         cin >> menu;
 
-        if (menu == "23"){
+        if (menu == "23") {
 
-            if (saved){
+            if (saved) {
                 cout << "GoodBye!" << endl;
                 break;
             }
 
-            else{
+            else {
                 cout << "You have unsaved changes if you exit you are going to lose progress\n"
                         "are you sure you want to exit?\n"
                         "(1) Exit without saving \n"
@@ -130,73 +135,70 @@ int main(){
                 string option;
                 cin >> option;
 
-                if (option == "1"){
-                    cout << "GoodBye!" << endl << endl;
+                if (option == "1") {
+                    cout << "GoodBye!" << endl
+                         << endl;
                     break;
                 }
 
-                else if (option == "2"){
+                else if (option == "2") {
                     save_image(image);
-                    cout << "GoodBye!" << endl << endl;
+                    cout << "GoodBye!" << endl
+                         << endl;
                     break;
                 }
 
                 else
-                    cout << "Invalid option, try again" << endl << endl;
+                    cout << "Invalid option, try again" << endl
+                         << endl;
             }
         }
 
-        else if (menu == "1"){
-            if (saved){
+        else if (menu == "1") {
+            if (saved) {
                 load(image);
                 saved = false;
-            }
-            else{
-                while (true){
+            } else {
+                while (true) {
                     cout << "You have unsaved changes if you loaded a new image you are going to lose progress \n"
                             "make sure you save changes before loading a new image \n"
                             "(1) Load new image and discard changes\n"
                             "(2) Save current then load new image\n"
                             "->";
                     string option;
-                    cin >> option;
+                    cin >> option;          
                     if (option == "1") {
                         load(image);
                         saved = false;
                         break;
-                    }
-                    else if (option == "2"){
+                    } else if (option == "2") {
                         save_image(image);
                         load(image);
                         saved = false;
                         break;
-                    }
-                    else
-                        cout << "Invalid choice, try again" << endl << endl;
+                    } else
+                        cout << "Invalid choice, try again" << endl
+                             << endl;
                 }
             }
         }
 
-        else if (menu == "2"){
-            if (saved){
+        else if (menu == "2") {
+            if (saved) {
                 cout << "Image is already saved!" << endl;
-            }
-            else{
+            } else {
                 save_image(image);
                 saved = true;
             }
         }
 
-        else if (menu == "3"){
+        else if (menu == "3") {
             filters::grayscale(image);
-        }
-        else if (menu == "4"){
+        } else if (menu == "4") {
             filters::black_and_white(image);
-        }
-        else if (menu == "5"){
+        } else if (menu == "5") {
             effects::invert(image);
-        }
-        else if (menu == "6"){
+        } else if (menu == "6") {
             string mergeType;
             cout << "Choose the type of merging:" << endl;
             cout << "1- merge by resize" << endl;
@@ -207,59 +209,45 @@ int main(){
                 if (mergeType == "1") {
                     adjustments::resize_merge(image);
                     break;
-                }
-                else if (mergeType == "2") {
+                } else if (mergeType == "2") {
                     adjustments::crop_merge(image);
                     break;
-                }
-                else {
+                } else {
                     cout << "Please choose a valid option" << endl;
                     cin >> mergeType;
                 }
             }
-        }
-        else if (menu == "7"){
+        } else if (menu == "7") {
             adjustments::flip(image);
-        }
-        else if (menu == "8"){
+        } else if (menu == "8") {
             adjustments::rotate(image);
-        }
-        else if (menu == "9"){
+        } else if (menu == "9") {
             adjustments::darken_lighten(image);
-        }
-        else if (menu == "10"){
+        } else if (menu == "10") {
             adjustments::crop(image);
-        }
-        else if (menu == "11"){
+        } else if (menu == "11") {
             adjustments::frame(image);
-        }
-        else if (menu == "12"){
+        } else if (menu == "12") {
             effects::detect_edges(image);
-        }
-        else if (menu == "13"){
+        } else if (menu == "13") {
             adjustments::resize(image);
-        }
-        else if (menu == "14"){
+        } else if (menu == "14") {
             effects::blur(image);
-        }
-        else if (menu == "15"){
+        } else if (menu == "15") {
             filters::sunlight(image);
-        }
-        else if (menu == "16"){
+        } else if (menu == "16") {
             filters::purple(image);
-        }
-        else if (menu == "17"){
+        } else if (menu == "17") {
             filters::infrared(image);
-        }
-        else if (menu == "18"){
+        } else if (menu == "18") {
             effects::oil_painting(image);
-        }
-        else if (menu == "19"){
+        } else if (menu == "19") {
             effects::old_TV(image);
         }
 
         else
-            cout << "Invalid choice, Try again." << endl << endl;
+            cout << "Invalid choice, Try again." << endl
+                 << endl;
     }
     return 0;
 }
